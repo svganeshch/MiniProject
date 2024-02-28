@@ -20,7 +20,7 @@ public class SprintJumpState : State
         timePassed = 0f;
         character.animator.SetTrigger("sprintJump");
 
-        jumpTime = 1f;
+        jumpTime = 0.9f;
     }
 
     public override void Exit()

@@ -10,6 +10,8 @@ public class IdleState : State
     bool jump;
     bool sprint;
     bool isGrounded;
+    bool drawWeapon;
+
     float playerSpeed;
     float gravityValue;
 
@@ -25,6 +27,7 @@ public class IdleState : State
 
         jump = false;
         sprint = false;
+        drawWeapon = false;
         input = Vector2.zero;
         velocity = Vector3.zero;
         gravityVelocity.y = 0;
@@ -44,6 +47,9 @@ public class IdleState : State
         if (sprintAction.triggered)
             sprint = true;
 
+        if (drawWeaponAction.triggered)
+            drawWeapon = true;
+
         input = moveAction.ReadValue<Vector2>();
         velocity = new Vector3(input.x, 0, input.y);
 
@@ -55,13 +61,19 @@ public class IdleState : State
     {
         base.LogicUpdate();
 
-        character.animator.SetFloat("speed", input.magnitude - 0.5f, character.speedDampTime, Time.deltaTime);
+        character.animator.SetFloat("speed", input.magnitude, character.speedDampTime, Time.deltaTime);
 
         if (jump)
             stateMachine.ChangeState(character.jumpState);
 
         if (sprint)
             stateMachine.ChangeState(character.sprintState);
+
+        if (drawWeapon)
+        {
+            character.animator.SetTrigger("drawWeapon");
+            stateMachine.ChangeState(character.combatState);
+        }
     }
 
     public override void PhysicsUpdate()

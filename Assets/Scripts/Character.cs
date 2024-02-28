@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
 {
     [Header("Character controls")]
     public float playerSpeed = 5f;
+    public float sprintSpeed = 10f;
     public float jumpHeight = 0.8f;
     public float gravityMultiplier = 2f;
 
@@ -14,7 +15,7 @@ public class Character : MonoBehaviour
     [Range(0, 1)]
     public float speedDampTime = 0.1f;
     [Range(0, 1)]
-    public float velocityDampTime = 0.5f;
+    public float velocityDampTime = 0.25f;
     [Range(0, 1)]
     public float rotationDampTime = 0.2f;
     [Range(0, 1)]
@@ -34,6 +35,8 @@ public class Character : MonoBehaviour
     public PlayerInput playerInput;
     [HideInInspector]
     public Transform cameraTransform;
+    [HideInInspector]
+    public WeaponEquipment weaponEquipment;
 
     //FSM
     [HideInInspector]
@@ -46,6 +49,10 @@ public class Character : MonoBehaviour
     public SprintState sprintState;
     [HideInInspector]
     public SprintJumpState sprintJumpState;
+    [HideInInspector]
+    public CombatState combatState;
+    [HideInInspector]
+    public AttackState attackState;
 
     private void Start()
     {
@@ -53,12 +60,15 @@ public class Character : MonoBehaviour
         cameraTransform = Camera.main.transform;
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
+        weaponEquipment = GetComponent<WeaponEquipment>();
         
         characterMovementSM = new StateMachine();
         idleState = new IdleState(this, characterMovementSM);
         jumpState = new JumpState(this, characterMovementSM);
         sprintState = new SprintState(this, characterMovementSM);
         sprintJumpState = new SprintJumpState(this, characterMovementSM);
+        combatState = new CombatState(this, characterMovementSM);
+        attackState = new AttackState(this, characterMovementSM);
 
         characterMovementSM.Initialize(idleState);
 

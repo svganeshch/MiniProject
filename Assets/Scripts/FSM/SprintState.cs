@@ -31,7 +31,7 @@ public class SprintState : State
         currentVelocity = Vector3.zero;
         gravityVelocity.y = 0;
 
-        playerSpeed = character.playerSpeed;
+        playerSpeed = character.sprintSpeed;
         gravityValue = character.GRAVITY_VALUE;
         isGrounded = character.controller.isGrounded;
     }
@@ -67,7 +67,7 @@ public class SprintState : State
 
         if (sprint)
         {
-            character.animator.SetFloat("speed", input.magnitude + 0.5f, character.speedDampTime, Time.deltaTime);
+            character.animator.SetFloat("speed", input.magnitude + 1f, character.speedDampTime, Time.deltaTime);
         }
         else
         {
