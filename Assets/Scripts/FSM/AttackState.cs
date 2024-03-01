@@ -9,6 +9,8 @@ public class AttackState : State
     private float clipLength;
     private float clipSpeed;
 
+    private int weaponLayerIndex;
+
     public AttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
         character = _character;
@@ -24,6 +26,8 @@ public class AttackState : State
         timePassed = 0f;
         character.animator.SetTrigger("attack");
         character.animator.SetFloat("speed", 0f);
+
+        weaponLayerIndex = character.weaponEquipment.GetCurrentWeapon().weaponAnimLayerIndex;
     }
 
     public override void HandleInput()
@@ -42,10 +46,10 @@ public class AttackState : State
 
         timePassed += Time.deltaTime;
 
-        Debug.Log(character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.name);
+        Debug.Log(character.animator.GetCurrentAnimatorClipInfo(weaponLayerIndex)[0].clip.name);
 
-        clipLength = character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
-        clipSpeed = character.animator.GetCurrentAnimatorStateInfo(1).speed;
+        clipLength = character.animator.GetCurrentAnimatorClipInfo(weaponLayerIndex)[0].clip.length;
+        clipSpeed = character.animator.GetCurrentAnimatorStateInfo(weaponLayerIndex).speed;
 
         if (timePassed >= clipLength / clipSpeed && attack)
         {
@@ -53,8 +57,8 @@ public class AttackState : State
         }
         if (timePassed >= clipLength / clipSpeed)
         {
-            stateMachine.ChangeState(character.combatState);
             character.animator.SetTrigger("move");
+            stateMachine.ChangeState(character.combatState);
         }
     }
 

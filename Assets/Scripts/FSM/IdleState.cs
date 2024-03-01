@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class IdleState : State
@@ -71,6 +72,11 @@ public class IdleState : State
 
         if (drawWeapon)
         {
+            if (character.weaponEquipment.GetCurrentWeapon() != null)
+                character.weaponEquipment.EnableWeaponAnimLayer(true);
+            else
+                return;
+
             character.animator.SetTrigger("drawWeapon");
             stateMachine.ChangeState(character.combatState);
         }

@@ -77,6 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0671a2f3ee147ca45b4a0d6316b67374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponAnimLayerIndex: 1
+  weaponAnimArmsLayerIndex: 2
   damageLayerMask:
     serializedVersion: 2
     m_Bits: 128
