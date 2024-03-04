@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class CombatState : State
 {
@@ -10,6 +11,8 @@ public class CombatState : State
     bool isGrounded;
     bool holsterWeapon;
     bool attackState;
+    bool heavyAttackState;
+    bool swapTrigger;
 
     Vector3 currentVelocity;
     Vector3 smoothVelocity;
@@ -26,6 +29,8 @@ public class CombatState : State
 
         holsterWeapon = false;
         attackState = false;
+        heavyAttackState = false;
+        swapWeapon = false;
         input = Vector2.zero;
         currentVelocity = Vector3.zero;
         gravityVelocity.y = 0;
@@ -45,9 +50,35 @@ public class CombatState : State
             holsterWeapon = true;
         }
 
-        if (attackWeaponAction.triggered)
+        if (heavyAttackWeaponAction.triggered)
+        {
+            heavyAttackState = true;
+        }
+
+        if (attackWeaponAction.triggered && !heavyAttackState)
         {
             attackState = true;
+        }
+
+        if (weapon1Action.triggered)
+        {
+            swapWeaponTo = 1;
+            swapWeapon = true;
+        }
+        if (weapon2Action.triggered)
+        {
+            swapWeaponTo = 2;
+            swapWeapon = true;
+        }
+        if (weapon3Action.triggered)
+        {
+            swapWeaponTo = 3;
+            swapWeapon = true;
+        }
+        if (weapon4Action.triggered)
+        {
+            swapWeaponTo = 4;
+            swapWeapon = true;
         }
 
         input = moveAction.ReadValue<Vector2>();
@@ -68,11 +99,45 @@ public class CombatState : State
             stateMachine.ChangeState(character.idleState);
         }
 
+        if (heavyAttackState)
+        {
+            character.animator.SetTrigger("heavyAttack");
+            stateMachine.ChangeState(character.heavyAttackState);
+        }
+
         if (attackState)
         {
             character.animator.SetTrigger("attack");
             stateMachine.ChangeState(character.attackState);
         }
+
+        if (swapWeapon)
+        {
+            character.animator.SetTrigger("holsterWeapon");
+
+            swapTrigger = true;
+            swapWeapon = false;
+        }
+
+        if (swapTrigger)
+        {
+            if (character.weaponEquipment.weaponHolsterDone)
+            {
+                if (character.animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("idle"))
+                {
+                    swapTrigger = false;
+                    character.weaponEquipment.weaponHolsterDone = false;
+                    character.StartCoroutine(SwapWeapon());
+                }  
+            }
+        }
+    }
+
+    private IEnumerator SwapWeapon()
+    {
+        yield return new WaitForSeconds(0.1f);
+        character.animator.SetTrigger("drawWeapon");
+        character.weaponEquipment.SetWeapon(swapWeaponTo);
     }
 
     public override void PhysicsUpdate()

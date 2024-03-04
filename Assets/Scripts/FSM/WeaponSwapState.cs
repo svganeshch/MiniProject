@@ -1,23 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class IdleState : State
+public class WeaponSwapState : State
 {
+    float gravityValue;
+    float playerSpeed;
+
+    bool isGrounded;
+    bool holsterWeapon;
+    bool attackState;
+    bool heavyAttackState;
+
     Vector3 currentVelocity;
     Vector3 smoothVelocity;
+    private float timePassed;
+    private float clipLength;
+    private float clipSpeed;
 
-    bool jump;
-    bool sprint;
-    bool isGrounded;
-    bool drawWeapon;
-
-    int weaponSlot = 1;
-    float playerSpeed;
-    float gravityValue;
-
-    public IdleState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
+    public WeaponSwapState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
         character = _character;
         stateMachine = _stateMachine;
@@ -27,55 +28,66 @@ public class IdleState : State
     {
         base.Enter();
 
-        jump = false;
-        sprint = false;
-        drawWeapon = false;
+        holsterWeapon = false;
+        attackState = false;
+        heavyAttackState = false;
+        swapWeapon = false;
         input = Vector2.zero;
-        velocity = Vector3.zero;
+        currentVelocity = Vector3.zero;
         gravityVelocity.y = 0;
 
+        velocity = character.playerVelocity;
         playerSpeed = character.playerSpeed;
-        gravityValue = character.GRAVITY_VALUE;
         isGrounded = character.controller.isGrounded;
+        gravityValue = character.GRAVITY_VALUE;
     }
 
     public override void HandleInput()
     {
         base.HandleInput();
 
-        if (jumpAction.triggered)
-            jump = true;
-
-        if (sprintAction.triggered)
-            sprint = true;
-
         if (drawWeaponAction.triggered)
-            drawWeapon = true;
+        {
+            holsterWeapon = true;
+        }
+
+        if (heavyAttackWeaponAction.triggered)
+        {
+            heavyAttackState = true;
+        }
+
+        if (attackWeaponAction.triggered && !heavyAttackState)
+        {
+            attackState = true;
+        }
 
         if (weapon1Action.triggered)
         {
-            weaponSlot = 1;
-            drawWeapon = true;
+            swapWeaponTo = 1;
+            swapWeapon = true;
+            //holsterWeapon = true;
         }
         if (weapon2Action.triggered)
         {
-            weaponSlot = 2;
-            drawWeapon = true;
+            swapWeaponTo = 2;
+            swapWeapon = true;
+            //holsterWeapon = true;
         }
         if (weapon3Action.triggered)
         {
-            weaponSlot = 3;
-            drawWeapon = true;
+            swapWeaponTo = 3;
+            swapWeapon = true;
+            //holsterWeapon = true;
         }
         if (weapon4Action.triggered)
         {
-            weaponSlot = 4;
-            drawWeapon = true;
+            swapWeaponTo = 4;
+            swapWeapon = true;
+            //holsterWeapon = true;
         }
 
         input = moveAction.ReadValue<Vector2>();
         velocity = new Vector3(input.x, 0, input.y);
-
         velocity = velocity.x * character.cameraTransform.right.normalized + velocity.z * character.cameraTransform.forward.normalized;
         velocity.y = 0f;
     }
@@ -86,33 +98,18 @@ public class IdleState : State
 
         character.animator.SetFloat("speed", input.magnitude, character.speedDampTime, Time.deltaTime);
 
-        if (jump)
-            stateMachine.ChangeState(character.jumpState);
+        timePassed += Time.deltaTime;
 
-        if (sprint)
-            stateMachine.ChangeState(character.sprintState);
+        Debug.Log(character.animator.GetCurrentAnimatorClipInfo(character.weaponEquipment.GetCurrentWeapon().weaponAnimLayerIndex)[0].clip.name);
 
-        if (drawWeapon)
+        clipLength = character.animator.GetCurrentAnimatorClipInfo(character.weaponEquipment.GetCurrentWeapon().weaponAnimLayerIndex)[0].clip.length;
+        clipSpeed = character.animator.GetCurrentAnimatorStateInfo(character.weaponEquipment.GetCurrentWeapon().weaponAnimLayerIndex).speed;
+
+        if (timePassed >= clipLength / clipSpeed)
         {
-            character.weaponEquipment.SetWeapon(weaponSlot);
-            character.animator.SetTrigger("drawWeapon");
+            character.animator.SetTrigger("move");
             stateMachine.ChangeState(character.combatState);
         }
-
-        //if (swapWeapon)
-        //{
-        //    Debug.Log("swap enabled");
-        //    if (character.weaponEquipment.weaponHolsterDone)
-        //    {
-        //        weaponSlot = swapWeaponTo;
-        //        drawWeapon = true;
-
-        //        swapWeapon = false;
-        //        character.weaponEquipment.weaponHolsterDone = false;
-
-        //        Debug.Log("swapping weapon to " + swapWeaponTo);
-        //    }
-        //}
     }
 
     public override void PhysicsUpdate()
@@ -120,6 +117,7 @@ public class IdleState : State
         base.PhysicsUpdate();
 
         gravityVelocity.y += gravityValue * Time.deltaTime;
+        isGrounded = character.controller.isGrounded;
 
         if (isGrounded && gravityVelocity.y < 0)
         {
@@ -127,13 +125,13 @@ public class IdleState : State
         }
 
         currentVelocity = Vector3.SmoothDamp(currentVelocity, velocity, ref smoothVelocity, character.velocityDampTime);
-
         character.controller.Move(currentVelocity * Time.deltaTime * playerSpeed + gravityVelocity * Time.deltaTime);
 
         if (velocity.sqrMagnitude > 0)
         {
             character.transform.rotation = Quaternion.Slerp(character.transform.rotation, Quaternion.LookRotation(velocity), character.rotationDampTime);
         }
+
     }
 
     public override void Exit()
@@ -147,5 +145,6 @@ public class IdleState : State
         {
             character.transform.rotation = Quaternion.LookRotation(velocity);
         }
+
     }
 }

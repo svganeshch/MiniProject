@@ -12,6 +12,8 @@ public class State
     protected Vector2 input;
     protected Vector3 velocity;
     protected Vector3 gravityVelocity;
+    public static bool swapWeapon;
+    protected static int swapWeaponTo;
 
     public InputAction moveAction;
     public InputAction jumpAction;
@@ -19,6 +21,12 @@ public class State
 
     public InputAction drawWeaponAction;
     public InputAction attackWeaponAction;
+    public InputAction heavyAttackWeaponAction;
+
+    public InputAction weapon1Action;
+    public InputAction weapon2Action;
+    public InputAction weapon3Action;
+    public InputAction weapon4Action;
 
     public State(Character _character, StateMachine _stateMachine)
     {
@@ -30,6 +38,12 @@ public class State
         sprintAction = character.playerInput.actions["Sprint"];
         drawWeaponAction = character.playerInput.actions["DrawWeapon"];
         attackWeaponAction = character.playerInput.actions["Attack"];
+        heavyAttackWeaponAction = character.playerInput.actions["HeavyAttack"];
+
+        weapon1Action = character.playerInput.actions["Weapon1"];
+        weapon2Action = character.playerInput.actions["Weapon2"];
+        weapon3Action = character.playerInput.actions["Weapon3"];
+        weapon4Action = character.playerInput.actions["Weapon4"];
     }
 
     public virtual void Enter()

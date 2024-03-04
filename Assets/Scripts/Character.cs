@@ -53,6 +53,8 @@ public class Character : MonoBehaviour
     public CombatState combatState;
     [HideInInspector]
     public AttackState attackState;
+    [HideInInspector]
+    public HeavyAttackState heavyAttackState;
 
     private void Start()
     {
@@ -69,6 +71,7 @@ public class Character : MonoBehaviour
         sprintJumpState = new SprintJumpState(this, characterMovementSM);
         combatState = new CombatState(this, characterMovementSM);
         attackState = new AttackState(this, characterMovementSM);
+        heavyAttackState = new HeavyAttackState(this, characterMovementSM);
 
         characterMovementSM.Initialize(idleState);
 
@@ -84,5 +87,11 @@ public class Character : MonoBehaviour
     private void FixedUpdate()
     {
         characterMovementSM.currentState.PhysicsUpdate();
+    }
+
+    void OnGUI()
+    {
+        GUI.color = Color.red;
+        GUI.Label(new Rect(0, 0, 200, 20), characterMovementSM.currentState.ToString());
     }
 }

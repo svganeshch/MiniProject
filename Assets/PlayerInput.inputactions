@@ -38,7 +38,7 @@
                     "id": "6e67cd82-7e81-4f6e-8d37-1766bb7958ad",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
@@ -63,6 +63,15 @@
                     "name": "Attack",
                     "type": "Button",
                     "id": "3ebba863-26b3-4b42-bcc0-ed19584ce397",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HeavyAttack",
+                    "type": "Button",
+                    "id": "3d5d161a-c0ee-46fe-a0bb-57c65d3fff1c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -413,6 +422,39 @@
                     "action": "Weapon4",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "HeavyAttackModifier",
+                    "id": "966fb25f-a5a1-4aad-99e7-d564ccaae5b1",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeavyAttack",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "a9d82e3c-d2e7-4c81-9e2c-4da26b8d132d",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeavyAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "a92a1ed4-22f6-43c4-9a85-b1597e42c3b7",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeavyAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

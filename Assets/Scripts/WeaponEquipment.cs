@@ -24,29 +24,19 @@ public class WeaponEquipment : MonoBehaviour
     public List<WeaponList> weapons = new List<WeaponList>();
     
     private GameObject currentWeapon;
-    private int currentWeaponSlot = 0;
+    private int currentWeaponSlot = 1;
 
     private Animator animator;
-    private PlayerInput playerInput;
 
-    private InputAction weapon1Action;
-    private InputAction weapon2Action;
-    private InputAction weapon3Action;
-    private InputAction weapon4Action;
+    public bool weaponHolsterDone = false;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        playerInput = GetComponent<PlayerInput>();
     }
 
     private void Start()
     {
-        weapon1Action = playerInput.actions["Weapon1"];
-        weapon2Action = playerInput.actions["Weapon2"];
-        weapon3Action = playerInput.actions["Weapon3"];
-        weapon4Action = playerInput.actions["Weapon4"];
-
         foreach (var weapon in weapons)
         {
             GameObject weaponObj = Instantiate(weapon.weaponPrefab, weapon.weaponHolsterPosition);
@@ -54,49 +44,13 @@ public class WeaponEquipment : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void SetWeapon(int weaponSlot)
     {
-        if (weapon1Action.triggered)
-        {
-            SetWeapon(1);
-        }
-        else if (weapon2Action.triggered)
-        {
-            SetWeapon(2);
-        }
-        else if (weapon3Action.triggered)
-        {
-            SetWeapon(3);
-        }
-        else if(weapon4Action.triggered)
-        {
-            SetWeapon(4);
-        }
-    }
+        currentWeapon = weapons.Find(weapon => weapon.weaponSlot == weaponSlot).weaponObj;
+        currentWeaponSlot = weapons.Find(weapon => weapon.weaponSlot == weaponSlot).weaponSlot;
+        EnableWeaponAnimLayer(true);
 
-    private void SetWeapon(int weaponSlot)
-    {
-        //foreach (var weapon in weapons)
-        //{
-        //    if (weapon.weaponSlot == weaponSlot)
-        //    {
-        //        currentWeaponSlot = weaponSlot;
-        //    }
-        //}
-
-        if (weaponSlot == currentWeaponSlot)
-        {
-            return;
-        }
-        else if (weaponSlot != currentWeaponSlot)
-        {
-            if (currentWeaponSlot != 0)
-                EnableWeaponAnimLayer(false);
-
-            currentWeapon = weapons.Find(weapon => weapon.weaponSlot == weaponSlot).weaponObj;
-            currentWeaponSlot = weapons.Find(weapon => weapon.weaponSlot == weaponSlot).weaponSlot;
-            EnableWeaponAnimLayer(true);
-        }
+        Debug.Log("Set weapon to " + weaponSlot);
     }
 
     public void DrawWeapon()
@@ -109,8 +63,8 @@ public class WeaponEquipment : MonoBehaviour
     {
         currentWeapon.transform.parent = GetCurrentWeapon().weaponHolsterPosition.transform;
         currentWeapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-
         EnableWeaponAnimLayer(false);
+        weaponHolsterDone = true;
     }
 
     public void EnableWeaponAnimLayer(bool state)
