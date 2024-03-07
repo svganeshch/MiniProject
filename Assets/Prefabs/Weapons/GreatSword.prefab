@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 6651614009911566574}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.3771, z: 0}
+  m_LocalPosition: {x: -0, y: 0.739, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -77,8 +77,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d805088fed951e14b95afbd721911a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponAnimLayerIndex: 3
-  weaponAnimArmsLayerIndex: 4
   damageLayerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -111,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 6843134599310825226}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0.624, z: -0}
+  m_LocalPosition: {x: -0, y: 0, z: -0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []

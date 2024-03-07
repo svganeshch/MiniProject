@@ -9,8 +9,6 @@ public class HeavyAttackState : State
     private float clipLength;
     private float clipSpeed;
 
-    private int weaponLayerIndex;
-
     public HeavyAttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
         character = _character;
@@ -26,8 +24,6 @@ public class HeavyAttackState : State
         timePassed = 0f;
         character.animator.SetTrigger("heavyAttack");
         character.animator.SetFloat("speed", 0f);
-
-        weaponLayerIndex = character.weaponEquipment.GetCurrentWeapon().weaponAnimLayerIndex;
     }
 
     public override void HandleInput()
@@ -46,10 +42,12 @@ public class HeavyAttackState : State
 
         timePassed += Time.deltaTime;
 
-        Debug.Log(character.animator.GetCurrentAnimatorClipInfo(weaponLayerIndex)[0].clip.name);
+        character.transform.rotation = Quaternion.Euler(0f, character.cameraTransform.eulerAngles.y, 0f);
 
-        clipLength = character.animator.GetCurrentAnimatorClipInfo(weaponLayerIndex)[0].clip.length;
-        clipSpeed = character.animator.GetCurrentAnimatorStateInfo(weaponLayerIndex).speed;
+        Debug.Log(character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.name);
+
+        clipLength = character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
+        clipSpeed = character.animator.GetCurrentAnimatorStateInfo(1).speed;
 
         if (timePassed >= clipLength / clipSpeed && attack)
         {

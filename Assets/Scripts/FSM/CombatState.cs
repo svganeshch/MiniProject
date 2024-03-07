@@ -8,10 +8,13 @@ public class CombatState : State
     float gravityValue;
     float playerSpeed;
 
+    int swapWeaponTo;
+
     bool isGrounded;
     bool holsterWeapon;
     bool attackState;
     bool heavyAttackState;
+    bool swapWeapon;
     bool swapTrigger;
 
     Vector3 currentVelocity;
@@ -31,6 +34,7 @@ public class CombatState : State
         attackState = false;
         heavyAttackState = false;
         swapWeapon = false;
+        swapTrigger = false;
         input = Vector2.zero;
         currentVelocity = Vector3.zero;
         gravityVelocity.y = 0;
@@ -113,6 +117,16 @@ public class CombatState : State
 
         if (swapWeapon)
         {
+            if (character.weaponEquipment.GetCurrentWeapon().weaponSlot == swapWeaponTo)
+            {
+                swapWeapon = false;
+                character.animator.SetTrigger("holsterWeapon");
+                return;
+            }
+
+            character.animator.SetFloat("holsterSpeed", 2);
+            character.animator.SetFloat("drawSpeed", 2);
+
             character.animator.SetTrigger("holsterWeapon");
 
             swapTrigger = true;
@@ -128,16 +142,9 @@ public class CombatState : State
                     swapTrigger = false;
                     character.weaponEquipment.weaponHolsterDone = false;
                     character.StartCoroutine(SwapWeapon());
-                }  
+                }
             }
         }
-    }
-
-    private IEnumerator SwapWeapon()
-    {
-        yield return new WaitForSeconds(0.1f);
-        character.animator.SetTrigger("drawWeapon");
-        character.weaponEquipment.SetWeapon(swapWeaponTo);
     }
 
     public override void PhysicsUpdate()
@@ -174,5 +181,12 @@ public class CombatState : State
             character.transform.rotation = Quaternion.LookRotation(velocity);
         }
 
+    }
+
+    private IEnumerator SwapWeapon()
+    {
+        yield return new WaitForSeconds(2f);
+        character.animator.SetTrigger("drawWeapon");
+        character.weaponEquipment.SetWeapon(swapWeaponTo);
     }
 }

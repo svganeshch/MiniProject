@@ -12,8 +12,6 @@ public class State
     protected Vector2 input;
     protected Vector3 velocity;
     protected Vector3 gravityVelocity;
-    public static bool swapWeapon;
-    protected static int swapWeaponTo;
 
     public InputAction moveAction;
     public InputAction jumpAction;

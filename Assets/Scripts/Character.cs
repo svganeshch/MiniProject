@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ public class Character : MonoBehaviour
     public float sprintSpeed = 10f;
     public float jumpHeight = 0.8f;
     public float gravityMultiplier = 2f;
+    public LayerMask enemyLayerMask;
 
     [Header("Animation Smoothing")]
     [Range(0, 1)]
@@ -58,6 +60,8 @@ public class Character : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+
         animator = GetComponent<Animator>();
         cameraTransform = Camera.main.transform;
         controller = GetComponent<CharacterController>();

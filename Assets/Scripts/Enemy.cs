@@ -5,25 +5,31 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    internal void HitVFX(Vector3 point)
+    [SerializeField] float health = 100;
+
+    GameObject player;
+    Animator animator;
+
+    private void Start()
     {
-        throw new NotImplementedException();
+        animator = GetComponent<Animator>();
+        player = GameObject.FindWithTag("Player");
     }
 
-    internal void TakeDamage(float weaponDamage)
+    public void TakeDamage(float weaponDamage)
     {
+        health -= weaponDamage;
+        animator.SetTrigger("damage");
+
+        if (health <= 0)
+        {
+            Die();
+        }
         Debug.Log("Enemy damage received");
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Die()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Destroy(gameObject);
     }
 }

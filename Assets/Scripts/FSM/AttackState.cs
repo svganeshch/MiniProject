@@ -9,8 +9,6 @@ public class AttackState : State
     private float clipLength;
     private float clipSpeed;
 
-    private int weaponLayerIndex;
-
     public AttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
         character = _character;
@@ -26,8 +24,6 @@ public class AttackState : State
         timePassed = 0f;
         character.animator.SetTrigger("attack");
         character.animator.SetFloat("speed", 0f);
-
-        weaponLayerIndex = character.weaponEquipment.GetCurrentWeapon().weaponAnimLayerIndex;
     }
 
     public override void HandleInput()
@@ -46,10 +42,13 @@ public class AttackState : State
 
         timePassed += Time.deltaTime;
 
-        Debug.Log(character.animator.GetCurrentAnimatorClipInfo(weaponLayerIndex)[0].clip.name);
+        character.transform.rotation = Quaternion.Euler(0f, character.cameraTransform.eulerAngles.y, 0f);
 
-        clipLength = character.animator.GetCurrentAnimatorClipInfo(weaponLayerIndex)[0].clip.length;
-        clipSpeed = character.animator.GetCurrentAnimatorStateInfo(weaponLayerIndex).speed;
+        CheckEnemy();
+        Debug.Log(character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.name);
+
+        clipLength = character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
+        clipSpeed = character.animator.GetCurrentAnimatorStateInfo(1).speed;
 
         if (timePassed >= clipLength / clipSpeed && attack)
         {
@@ -62,9 +61,26 @@ public class AttackState : State
         }
     }
 
+    private void CheckEnemy()
+    {
+        Collider[] enemyColliders = Physics.OverlapSphere(character.transform.position, 2.5f, character.enemyLayerMask);
+
+        foreach (var enemy in enemyColliders)
+        {
+            character.transform.LookAt(enemy.transform);
+            Debug.Log(enemy.transform.position);
+        }
+    }
+
     public override void Exit()
     {
         base.Exit();
         character.animator.applyRootMotion = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(character.transform.position, 2.5f);
     }
 }

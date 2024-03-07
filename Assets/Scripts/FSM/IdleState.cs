@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class IdleState : State
@@ -98,21 +95,6 @@ public class IdleState : State
             character.animator.SetTrigger("drawWeapon");
             stateMachine.ChangeState(character.combatState);
         }
-
-        //if (swapWeapon)
-        //{
-        //    Debug.Log("swap enabled");
-        //    if (character.weaponEquipment.weaponHolsterDone)
-        //    {
-        //        weaponSlot = swapWeaponTo;
-        //        drawWeapon = true;
-
-        //        swapWeapon = false;
-        //        character.weaponEquipment.weaponHolsterDone = false;
-
-        //        Debug.Log("swapping weapon to " + swapWeaponTo);
-        //    }
-        //}
     }
 
     public override void PhysicsUpdate()

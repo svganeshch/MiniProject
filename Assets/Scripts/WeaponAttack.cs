@@ -27,7 +27,6 @@ public abstract class WeaponAttack : MonoBehaviour
                 if (hit.transform.TryGetComponent(out Enemy enemy) && !hasDealtDamage.Contains(hit.transform.gameObject))
                 {
                     enemy.TakeDamage(weaponDamage);
-                    enemy.HitVFX(hit.point);
                     hasDealtDamage.Add(hit.transform.gameObject);
                 }
             }
