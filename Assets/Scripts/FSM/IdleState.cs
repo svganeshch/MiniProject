@@ -46,6 +46,12 @@ public class IdleState : State
         if (sprintAction.triggered)
             sprint = true;
 
+        if (dodgeAction.triggered)
+        {
+            if (character.animator.GetFloat("speed") > 0.01f)
+                character.animator.SetTrigger("dodge");
+        }
+
         if (drawWeaponAction.triggered)
             drawWeapon = true;
 

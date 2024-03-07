@@ -22,6 +22,8 @@ public class AttackState : State
         attack = false;
         character.animator.applyRootMotion = true;
         timePassed = 0f;
+
+        character.animator.SetBool("isCombat", true);
         character.animator.SetTrigger("attack");
         character.animator.SetFloat("speed", 0f);
     }
@@ -29,6 +31,12 @@ public class AttackState : State
     public override void HandleInput()
     {
         base.HandleInput();
+
+        if (dodgeAction.triggered)
+        {
+            character.animator.SetTrigger("dodge");
+            stateMachine.ChangeState(character.combatState);
+        }
 
         if (attackWeaponAction.triggered)
         {

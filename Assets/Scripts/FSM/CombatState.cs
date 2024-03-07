@@ -43,11 +43,19 @@ public class CombatState : State
         playerSpeed = character.playerSpeed;
         isGrounded = character.controller.isGrounded;
         gravityValue = character.GRAVITY_VALUE;
+
+        character.animator.SetBool("isCombat", true);
     }
 
     public override void HandleInput()
     {
         base.HandleInput();
+
+        if (dodgeAction.triggered)
+        {
+            if (character.animator.GetFloat("speed") > 0.01f)
+                character.animator.SetTrigger("dodge");
+        }
 
         if (drawWeaponAction.triggered)
         {
@@ -181,6 +189,7 @@ public class CombatState : State
             character.transform.rotation = Quaternion.LookRotation(velocity);
         }
 
+        character.animator.SetBool("isCombat", false);
     }
 
     private IEnumerator SwapWeapon()

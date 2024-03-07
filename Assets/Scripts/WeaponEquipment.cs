@@ -80,7 +80,7 @@ public class WeaponEquipment : MonoBehaviour
                 animator.SetBool("hasRecovery", true);
             }
 
-            Debug.Log("clip : " +  overrideCl);
+            //Debug.Log("clip : " +  overrideCl);
         }
 
         animator.SetBool("reverseDraw", currentWeapon.reverseDraw);
