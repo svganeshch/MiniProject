@@ -56,7 +56,7 @@ public class AttackState : State
         Debug.Log(character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.name);
 
         clipLength = character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
-        clipSpeed = character.animator.GetCurrentAnimatorStateInfo(1).speed;
+        clipSpeed = character.animator.GetCurrentAnimatorStateInfo(1).speed * character.animator.GetCurrentAnimatorStateInfo(1).speedMultiplier;
 
         if (timePassed >= clipLength / clipSpeed && attack)
         {

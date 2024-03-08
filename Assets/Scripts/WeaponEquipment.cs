@@ -14,6 +14,7 @@ public class Weapon
     public Transform weaponHolsterPosition;
 
     public int weaponSlot;
+    public float attackSpeedMultiplier = 1f;
     public bool reverseHolster = false;
     public bool reverseDraw = false;
     public bool isDagger = false;
@@ -85,6 +86,7 @@ public class WeaponEquipment : MonoBehaviour
 
         animator.SetBool("reverseDraw", currentWeapon.reverseDraw);
         animator.SetBool("reverseHolster", currentWeapon.reverseHolster);
+        animator.SetFloat("attackSpeed", currentWeapon.attackSpeedMultiplier);
 
         Debug.Log("Set weapon to " + weaponSlot);
     }

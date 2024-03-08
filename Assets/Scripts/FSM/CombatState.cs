@@ -40,7 +40,7 @@ public class CombatState : State
         gravityVelocity.y = 0;
 
         velocity = character.playerVelocity;
-        playerSpeed = character.playerSpeed;
+        playerSpeed = character.combatSpeed;
         isGrounded = character.controller.isGrounded;
         gravityValue = character.GRAVITY_VALUE;
 

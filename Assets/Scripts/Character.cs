@@ -8,6 +8,7 @@ public class Character : MonoBehaviour
 {
     [Header("Character controls")]
     public float playerSpeed = 5f;
+    public float combatSpeed = 6f;
     public float sprintSpeed = 10f;
     public float jumpHeight = 0.8f;
     public float gravityMultiplier = 2f;
