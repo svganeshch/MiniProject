@@ -129,6 +129,7 @@ public class CombatState : State
             {
                 swapWeapon = false;
                 character.animator.SetTrigger("holsterWeapon");
+                stateMachine.ChangeState(character.idleState);
                 return;
             }
 

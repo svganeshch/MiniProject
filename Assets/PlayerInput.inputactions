@@ -24,9 +24,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Fire",
+                    "name": "Attack",
                     "type": "Button",
                     "id": "ad773308-b27d-45cb-b96b-11163ff08b4a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HeavyAttack",
+                    "type": "Button",
+                    "id": "3d5d161a-c0ee-46fe-a0bb-57c65d3fff1c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -63,24 +72,6 @@
                     "name": "DrawWeapon",
                     "type": "Button",
                     "id": "d8052094-4a59-4c96-b41d-6e2b2739bf6f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Attack",
-                    "type": "Button",
-                    "id": "3ebba863-26b3-4b42-bcc0-ed19584ce397",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "HeavyAttack",
-                    "type": "Button",
-                    "id": "3d5d161a-c0ee-46fe-a0bb-57c65d3fff1c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -258,6 +249,17 @@
                 },
                 {
                     "name": "",
+                    "id": "4a1ed081-4980-43f9-9202-86b7d7ee4f48",
+                    "path": "<XInputController>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c1f7a91b-d0fd-4a62-997e-7fb9b69bf235",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
@@ -291,12 +293,23 @@
                 },
                 {
                     "name": "",
+                    "id": "a43f6320-b7d1-4dd3-bee9-b0cfba8ea649",
+                    "path": "<XInputController>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "05f6913d-c316-48b2-a6bb-e225f14c7960",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Fire",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -307,18 +320,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Touch",
-                    "action": "Fire",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "ee3d0cd2-254e-47a7-a8cb-bc94d9658c54",
-                    "path": "<Joystick>/trigger",
+                    "path": "<XInputController>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Fire",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -329,7 +342,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Fire",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb0aa8f0-d90d-4a2e-8b1e-40658de1d52e",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -337,6 +361,17 @@
                     "name": "",
                     "id": "a10b74a6-ee53-4dce-bce4-93421ecd427f",
                     "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e540c402-e0eb-48b6-8916-386900532883",
+                    "path": "<XInputController>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -357,34 +392,23 @@
                 },
                 {
                     "name": "",
+                    "id": "c94ccaee-0e88-4a59-8e0a-dbaa0dacb560",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "17234f56-578b-4578-b707-5dbf40884dc8",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "DrawWeapon",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "25eada0f-e887-4bb3-83ad-aad6a3c9acec",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0aa55209-b33a-4549-9aef-bff3354da51a",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -478,8 +502,30 @@
                 },
                 {
                     "name": "",
+                    "id": "14d3f968-db2b-4e8d-9ff5-7861e6cd0b5f",
+                    "path": "<Keyboard>/alt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "582e26da-575f-4730-9eed-d09c0318a917",
+                    "path": "<XInputController>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "143bb1cd-cc10-4eca-a2f0-a3664166fe91",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<XInputController>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -519,17 +565,6 @@
                     "action": "HeavyAttack",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "14d3f968-db2b-4e8d-9ff5-7861e6cd0b5f",
-                    "path": "<Keyboard>/alt",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dodge",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
