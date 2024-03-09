@@ -108,6 +108,7 @@ public class IdleState : State
         base.PhysicsUpdate();
 
         gravityVelocity.y += gravityValue * Time.deltaTime;
+        isGrounded = character.controller.isGrounded;
 
         if (isGrounded && gravityVelocity.y < 0)
         {
