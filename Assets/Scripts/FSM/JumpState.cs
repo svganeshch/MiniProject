@@ -48,8 +48,9 @@ public class JumpState : State
 
         if (isGrounded)
         {
-            character.animator.SetTrigger("move");
-            stateMachine.ChangeState(character.idleState);
+            //character.animator.SetTrigger("move");
+            //stateMachine.ChangeState(character.idleState);
+            stateMachine.ChangeState(character.landState);
         }
     }
 

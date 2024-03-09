@@ -49,6 +49,8 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public JumpState jumpState;
     [HideInInspector]
+    public LandState landState;
+    [HideInInspector]
     public SprintState sprintState;
     [HideInInspector]
     public SprintJumpState sprintJumpState;
@@ -72,6 +74,7 @@ public class Character : MonoBehaviour
         characterMovementSM = new StateMachine();
         idleState = new IdleState(this, characterMovementSM);
         jumpState = new JumpState(this, characterMovementSM);
+        landState = new LandState(this, characterMovementSM);
         sprintState = new SprintState(this, characterMovementSM);
         sprintJumpState = new SprintJumpState(this, characterMovementSM);
         combatState = new CombatState(this, characterMovementSM);

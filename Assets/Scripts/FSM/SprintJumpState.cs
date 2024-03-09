@@ -20,13 +20,7 @@ public class SprintJumpState : State
         timePassed = 0f;
         character.animator.SetTrigger("sprintJump");
 
-        jumpTime = 0.9f;
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-        character.animator.applyRootMotion = false;
+        jumpTime = 0.75f;
     }
 
     public override void LogicUpdate()
@@ -39,5 +33,11 @@ public class SprintJumpState : State
             stateMachine.ChangeState(character.sprintState);
         }
         timePassed += Time.deltaTime;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        character.animator.applyRootMotion = false;
     }
 }
