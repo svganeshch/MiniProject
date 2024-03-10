@@ -79,7 +79,7 @@ public class IdleState : State
         input = moveAction.ReadValue<Vector2>();
         velocity = new Vector3(input.x, 0, input.y);
 
-        velocity = velocity.x * character.cameraTransform.right.normalized + velocity.z * character.cameraTransform.forward.normalized;
+        velocity = velocity.x * character.mainCameraTransform.right.normalized + velocity.z * character.mainCameraTransform.forward.normalized;
         velocity.y = 0f;
     }
 
@@ -88,6 +88,9 @@ public class IdleState : State
         base.LogicUpdate();
 
         character.animator.SetFloat("speed", input.magnitude, character.speedDampTime, Time.deltaTime);
+
+        //character.animator.SetFloat("speedX", input.x, character.speedDampTime, Time.deltaTime);
+        //character.animator.SetFloat("speedY", input.y, character.speedDampTime, Time.deltaTime);
 
         if (jump)
             stateMachine.ChangeState(character.jumpState);

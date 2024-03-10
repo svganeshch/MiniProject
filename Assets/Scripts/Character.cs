@@ -1,6 +1,9 @@
+using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +15,17 @@ public class Character : MonoBehaviour
     public float sprintSpeed = 10f;
     public float jumpHeight = 0.8f;
     public float gravityMultiplier = 2f;
+    public Transform targetLockCast;
+    public Transform playerFollow;
+
+    [Header("Layer Masks")]
     public LayerMask enemyLayerMask;
+    public LayerMask obstaclesLayerMask;
+
+    [Header("Camera controls")]
+    public Animator cinemachineAnimator;
+    public CinemachineFreeLook cinemachineFollowCamera;
+    public CinemachineVirtualCamera cinemachineTargetLockCamera;
 
     [Header("Animation Smoothing")]
     [Range(0, 1)]
@@ -37,7 +50,7 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public PlayerInput playerInput;
     [HideInInspector]
-    public Transform cameraTransform;
+    public Transform mainCameraTransform;
     [HideInInspector]
     public WeaponEquipment weaponEquipment;
 
@@ -61,12 +74,14 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public HeavyAttackState heavyAttackState;
 
+    public CameraTargetLock cameraTargetLock;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
         animator = GetComponent<Animator>();
-        cameraTransform = Camera.main.transform;
+        mainCameraTransform = Camera.main.transform;
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         weaponEquipment = GetComponent<WeaponEquipment>();
@@ -80,8 +95,9 @@ public class Character : MonoBehaviour
         combatState = new CombatState(this, characterMovementSM);
         attackState = new AttackState(this, characterMovementSM);
         heavyAttackState = new HeavyAttackState(this, characterMovementSM);
-
         characterMovementSM.Initialize(idleState);
+
+        cameraTargetLock = new CameraTargetLock(this);
 
         GRAVITY_VALUE *= gravityMultiplier;
     }

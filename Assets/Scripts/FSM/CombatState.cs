@@ -1,3 +1,5 @@
+using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +7,14 @@ using UnityEngine.TextCore.Text;
 
 public class CombatState : State
 {
+    Enemy currentTarget;
+    bool isLockedOn = false;
+
     float gravityValue;
     float playerSpeed;
+
+    float XAxis;
+    float YAxis;
 
     int swapWeaponTo;
 
@@ -16,6 +24,7 @@ public class CombatState : State
     bool heavyAttackState;
     bool swapWeapon;
     bool swapTrigger;
+    bool lockOnTrigger;
 
     Vector3 currentVelocity;
     Vector3 smoothVelocity;
@@ -35,6 +44,8 @@ public class CombatState : State
         heavyAttackState = false;
         swapWeapon = false;
         swapTrigger = false;
+        lockOnTrigger = false;
+
         input = Vector2.zero;
         currentVelocity = Vector3.zero;
         gravityVelocity.y = 0;
@@ -93,9 +104,14 @@ public class CombatState : State
             swapWeapon = true;
         }
 
+        if (lockOnAction.triggered)
+        {
+            lockOnTrigger = true;
+        }
+
         input = moveAction.ReadValue<Vector2>();
         velocity = new Vector3(input.x, 0, input.y);
-        velocity = velocity.x * character.cameraTransform.right.normalized + velocity.z * character.cameraTransform.forward.normalized;
+        velocity = velocity.x * character.mainCameraTransform.right.normalized + velocity.z * character.mainCameraTransform.forward.normalized;
         velocity.y = 0f;
     }
 
@@ -154,6 +170,74 @@ public class CombatState : State
                 }
             }
         }
+
+        if (isLockedOn)
+        {
+            Debug.Log("current target : " + currentTarget.name);
+            if (currentTarget == null)
+                return;
+
+            if (currentTarget.isDead)
+            {
+                ResetTargetLock();
+                isLockedOn = false;
+            }
+        }
+        if (lockOnTrigger)
+        {
+            HandleTargetLockOn();
+        }
+    }
+
+    private void HandleTargetLockOn()
+    {
+        if (lockOnTrigger && isLockedOn)
+        {
+            lockOnTrigger = false;
+
+            character.cameraTargetLock.ClearLockOnTargets();
+            isLockedOn = false;
+
+            ResetTargetLock();
+
+            return;
+        }
+
+        if (lockOnTrigger && !isLockedOn)
+        {
+            lockOnTrigger = false;
+
+            character.cameraTargetLock.FindLockOnTarget();
+
+            if (character.cameraTargetLock.nearestTarget != null)
+            {
+                SetTarget(character.cameraTargetLock.nearestTarget);
+                isLockedOn = true;
+            }
+        }
+    }
+
+    private void SetTarget(Enemy nearestTarget)
+    {
+        if (nearestTarget != null)
+        {
+            currentTarget = nearestTarget;
+
+            character.cinemachineTargetLockCamera.LookAt = nearestTarget.targetLock;
+            character.cinemachineAnimator.SetTrigger("setTargetCam");
+
+            //Debug.Log("locked onto : " + nearestTarget.name);
+        }
+        else
+        {
+            currentTarget = null;
+        }
+    }
+
+    private void ResetTargetLock()
+    {
+        character.cinemachineAnimator.SetTrigger("setFollowCam");
+        character.cinemachineTargetLockCamera.LookAt = null;
     }
 
     public override void PhysicsUpdate()
@@ -171,11 +255,11 @@ public class CombatState : State
         currentVelocity = Vector3.SmoothDamp(currentVelocity, velocity, ref smoothVelocity, character.velocityDampTime);
         character.controller.Move(currentVelocity * Time.deltaTime * playerSpeed + gravityVelocity * Time.deltaTime);
 
+
         if (velocity.sqrMagnitude > 0)
         {
             character.transform.rotation = Quaternion.Slerp(character.transform.rotation, Quaternion.LookRotation(velocity), character.rotationDampTime);
         }
-
     }
 
     public override void Exit()

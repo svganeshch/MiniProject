@@ -64,9 +64,9 @@ public class JumpState : State
             velocity = character.playerVelocity;
             airVelocity = new Vector3(input.x, 0, input.y);
 
-            velocity = velocity.x * character.cameraTransform.right.normalized + velocity.z * character.cameraTransform.forward.normalized;
+            velocity = velocity.x * character.mainCameraTransform.right.normalized + velocity.z * character.mainCameraTransform.forward.normalized;
             velocity.y = 0f;
-            airVelocity = airVelocity.x * character.cameraTransform.right.normalized + airVelocity.z * character.cameraTransform.forward.normalized;
+            airVelocity = airVelocity.x * character.mainCameraTransform.right.normalized + airVelocity.z * character.mainCameraTransform.forward.normalized;
             airVelocity.y = 0f;
             character.controller.Move(gravityVelocity * Time.deltaTime + (airVelocity * character.airControl + velocity * (1 - character.airControl)) * playerSpeed * Time.deltaTime);
         }

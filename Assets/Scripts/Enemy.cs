@@ -6,9 +6,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] float health = 100;
+    [SerializeField] public Transform targetLock;
 
     GameObject player;
     Animator animator;
+
+    [HideInInspector] public bool isDead = false;
 
     private void Start()
     {
@@ -30,6 +33,8 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        Destroy(gameObject);
+        isDead = true;
+        animator.SetTrigger("isDead");
+        //Destroy(gameObject, 5f);
     }
 }

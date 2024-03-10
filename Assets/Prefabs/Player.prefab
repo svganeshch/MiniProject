@@ -452,6 +452,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1584801426842514322}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 16.691}
+--- !u!1 &8866050801883960717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2792782978014464322}
+  m_Layer: 6
+  m_Name: TargetLockCast
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2792782978014464322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8866050801883960717}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0.202}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2673677973890063387}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2309824974735314036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -466,15 +497,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 36.12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.439
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.26
+      value: -13.69
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -803,6 +834,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5465940246521907071, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1584801426842514322}
+    - targetCorrespondingSourceObject: {fileID: 366175167995203695, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2792782978014464322}
     - targetCorrespondingSourceObject: {fileID: 6502182839619065283, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3408340676089729766}
@@ -829,6 +863,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 342063041972361010}
   m_SourcePrefab: {fileID: 100100000, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
+--- !u!4 &2673677973890063387 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 366175167995203695, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
+  m_PrefabInstance: {fileID: 2309824974735314036}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2847573414293662623 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
@@ -851,15 +890,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c876a3e33bb7a04faeebb2da8590bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 5
-  sprintSpeed: 10
-  jumpHeight: 0.8
+  playerSpeed: 3.5
+  combatSpeed: 4
+  sprintSpeed: 6
+  jumpHeight: 0.75
   gravityMultiplier: 2
+  targetLockCast: {fileID: 2792782978014464322}
+  playerFollow: {fileID: 3874505488766782055}
   enemyLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  speedDampTime: 0.1
-  velocityDampTime: 0.25
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  cinemachineAnimator: {fileID: 0}
+  cinemachineFollowCamera: {fileID: 0}
+  cinemachineTargetLockCamera: {fileID: 0}
+  speedDampTime: 0.25
+  velocityDampTime: 0.4
   rotationDampTime: 0.2
   airControl: 0.5
   GRAVITY_VALUE: -9.81
@@ -867,7 +915,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   controller: {fileID: 0}
   playerInput: {fileID: 0}
-  cameraTransform: {fileID: 0}
+  mainCameraTransform: {fileID: 0}
   weaponEquipment: {fileID: 0}
 --- !u!114 &7592572223178561286
 MonoBehaviour:
@@ -887,6 +935,7 @@ MonoBehaviour:
     weaponHolderPosition: {fileID: 538736580346194846}
     weaponHolsterPosition: {fileID: 7867259438974082854}
     weaponSlot: 1
+    attackSpeedMultiplier: 1.2
     reverseHolster: 0
     reverseDraw: 0
     isDagger: 0
@@ -898,6 +947,7 @@ MonoBehaviour:
     weaponHolderPosition: {fileID: 3325900071238961482}
     weaponHolsterPosition: {fileID: 854773711046539094}
     weaponSlot: 2
+    attackSpeedMultiplier: 1
     reverseHolster: 1
     reverseDraw: 0
     isDagger: 0
@@ -909,6 +959,7 @@ MonoBehaviour:
     weaponHolderPosition: {fileID: 2627380128159753939}
     weaponHolsterPosition: {fileID: 8200036844016761304}
     weaponSlot: 3
+    attackSpeedMultiplier: 1
     reverseHolster: 0
     reverseDraw: 1
     isDagger: 1
@@ -920,6 +971,7 @@ MonoBehaviour:
     weaponHolderPosition: {fileID: 538736580346194846}
     weaponHolsterPosition: {fileID: 854773711046539094}
     weaponSlot: 4
+    attackSpeedMultiplier: 1.5
     reverseHolster: 1
     reverseDraw: 0
     isDagger: 0
@@ -931,6 +983,7 @@ MonoBehaviour:
     weaponHolderPosition: {fileID: 3408340676089729766}
     weaponHolsterPosition: {fileID: 7298846690386179628}
     weaponSlot: 0
+    attackSpeedMultiplier: 1
     reverseHolster: 0
     reverseDraw: 0
     isDagger: 1
