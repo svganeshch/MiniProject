@@ -10,11 +10,11 @@ public class CombatState : State
     Enemy currentTarget;
     bool isLockedOn = false;
 
+    Vector3 cameraPos;
+    Quaternion cameraRot;
+
     float gravityValue;
     float playerSpeed;
-
-    float XAxis;
-    float YAxis;
 
     int swapWeaponTo;
 
@@ -173,7 +173,9 @@ public class CombatState : State
 
         if (isLockedOn)
         {
-            Debug.Log("current target : " + currentTarget.name);
+            cameraPos = character.mainCameraTransform.position;
+            cameraRot = character.mainCameraTransform.rotation;
+
             if (currentTarget == null)
                 return;
 
@@ -223,8 +225,8 @@ public class CombatState : State
         {
             currentTarget = nearestTarget;
 
-            character.cinemachineTargetLockCamera.LookAt = nearestTarget.targetLock;
-            character.cinemachineAnimator.SetTrigger("setTargetCam");
+            character.cinemachineTargetLockCamera.LookAt = currentTarget.targetLock;
+            character.cinemachineTargetLockCamera.Priority = 11;
 
             //Debug.Log("locked onto : " + nearestTarget.name);
         }
@@ -236,7 +238,9 @@ public class CombatState : State
 
     private void ResetTargetLock()
     {
-        character.cinemachineAnimator.SetTrigger("setFollowCam");
+        //character.cinemachineFollowCamera.ForceCameraPosition(cameraPos, cameraRot);
+
+        character.cinemachineTargetLockCamera.Priority = 10;
         character.cinemachineTargetLockCamera.LookAt = null;
     }
 
@@ -254,7 +258,6 @@ public class CombatState : State
 
         currentVelocity = Vector3.SmoothDamp(currentVelocity, velocity, ref smoothVelocity, character.velocityDampTime);
         character.controller.Move(currentVelocity * Time.deltaTime * playerSpeed + gravityVelocity * Time.deltaTime);
-
 
         if (velocity.sqrMagnitude > 0)
         {

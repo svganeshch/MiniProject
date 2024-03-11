@@ -23,7 +23,6 @@ public class Character : MonoBehaviour
     public LayerMask obstaclesLayerMask;
 
     [Header("Camera controls")]
-    public Animator cinemachineAnimator;
     public CinemachineFreeLook cinemachineFollowCamera;
     public CinemachineVirtualCamera cinemachineTargetLockCamera;
 
