@@ -28,10 +28,8 @@ public class Character : MonoBehaviour
     [Header("Animation Smoothing")]
     [Range(0, 1)]
     public float speedDampTime = 0.1f;
-    [Range(0, 1)]
-    public float velocityDampTime = 0.25f;
-    [Range(0, 1)]
-    public float rotationDampTime = 0.2f;
+    [Range(0, 50)]
+    public float rotationDampTime = 15f;
     [Range(0, 1)]
     public float airControl = 0.5f;
 

@@ -1240,6 +1240,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7886445140113422620, guid: 2b647b13953992046a9d62b3015e7845, type: 3}
+      propertyPath: rotationDampTime
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7886445140113422620, guid: 2b647b13953992046a9d62b3015e7845, type: 3}
       propertyPath: cinemachineAnimator
       value: 
       objectReference: {fileID: 0}
@@ -1264,17 +1268,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 583203072531928303, guid: ff2ea1a99e12be34283763f5bf3d15a3, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 2745785940921550095, guid: ff2ea1a99e12be34283763f5bf3d15a3, type: 3}
       propertyPath: m_Name
       value: PlayerCamera
-      objectReference: {fileID: 0}
-    - target: {fileID: 2745785940921550095, guid: ff2ea1a99e12be34283763f5bf3d15a3, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4514210633645560833, guid: ff2ea1a99e12be34283763f5bf3d15a3, type: 3}
       propertyPath: playerInput
@@ -1284,14 +1280,6 @@ PrefabInstance:
       propertyPath: followTarget
       value: 
       objectReference: {fileID: 1798192930}
-    - target: {fileID: 5876413045896002731, guid: ff2ea1a99e12be34283763f5bf3d15a3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7861794934421314678, guid: ff2ea1a99e12be34283763f5bf3d15a3, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 8116169642250123877, guid: ff2ea1a99e12be34283763f5bf3d15a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -75,7 +75,7 @@ public class PlayerCamera : MonoBehaviour
     {
         HandleFollowTarget();
         HandleRotations();
-        //HandleCollisions();
+        HandleCollisions();
     }
 
     private void HandleFollowTarget()

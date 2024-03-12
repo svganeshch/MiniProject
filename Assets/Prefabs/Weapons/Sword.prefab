@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5333971732858046732}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3916981126432027702}
   - component: {fileID: 575230588014526306}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WeaponScript
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,8 +77,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0671a2f3ee147ca45b4a0d6316b67374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponAnimLayerIndex: 1
-  weaponAnimArmsLayerIndex: 2
   damageLayerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -96,7 +94,7 @@ GameObject:
   - component: {fileID: 4514660835357160161}
   - component: {fileID: 7031687279731124756}
   - component: {fileID: 6107667953644894247}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Blade
   m_TagString: Untagged
   m_Icon: {fileID: 0}

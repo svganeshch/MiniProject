@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5876413045896002731}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CameraPivotUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8116169642250123877}
   - component: {fileID: 4514210633645560833}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ MonoBehaviour:
   cameraPivotTransform: {fileID: 5876413045896002731}
   followTarget: {fileID: 0}
   playerInput: {fileID: 0}
-  cameraSmoothSpeed: 1.5
+  cameraSmoothSpeed: 0.25
   upDownRotationSpeed: 50
   leftRightRotationSpeed: 40
   minimumPivot: -30
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 7144099461333022512}
   - component: {fileID: 5824512183474025208}
   - component: {fileID: 7026722588428696576}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ Transform:
   m_GameObject: {fileID: 7861794934421314678}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -2.5}
+  m_LocalPosition: {x: 0, y: 1, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -10,9 +10,6 @@ public class SprintState : State
     float playerSpeed;
     float gravityValue;
 
-    Vector3 currentVelocity;
-    Vector3 smoothVelocity;
-
     public SprintState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
         character = _character;
@@ -28,7 +25,7 @@ public class SprintState : State
 
         input = Vector2.zero;
         moveVelocity = Vector3.zero;
-        currentVelocity = Vector3.zero;
+        targetDirection = Vector3.zero;
         gravityVelocity.y = 0;
 
         playerSpeed = character.sprintSpeed;
@@ -41,10 +38,8 @@ public class SprintState : State
         base.HandleInput();
 
         input = moveAction.ReadValue<Vector2>();
-        moveVelocity = new Vector3(input.x, 0, input.y);
-
-        moveVelocity = moveVelocity.x * PlayerCamera.instance.transform.right.normalized + moveVelocity.z * PlayerCamera.instance.transform.forward.normalized;
-        moveVelocity.y = 0f;
+        verticalInput = input.y;
+        horizontalInput = input.x;
 
         if (sprintAction.triggered || input.sqrMagnitude == 0f)
         {
@@ -65,9 +60,14 @@ public class SprintState : State
     {
         base.LogicUpdate();
 
+        moveVelocity = PlayerCamera.instance.transform.forward * verticalInput;
+        moveVelocity += PlayerCamera.instance.transform.right * horizontalInput;
+        moveVelocity.Normalize();
+        moveVelocity.y = 0;
+
         if (sprint)
         {
-            character.animator.SetFloat("speed", input.magnitude + 1f, character.speedDampTime, Time.deltaTime);
+            character.animator.SetFloat("speedY", input.magnitude + 1f, character.speedDampTime, Time.deltaTime);
         }
         else
         {
@@ -83,7 +83,7 @@ public class SprintState : State
     {
         base.PhysicsUpdate();
 
-        gravityVelocity.y += gravityValue * Time.deltaTime;
+        gravityVelocity.y += gravityValue * Time.fixedDeltaTime;
         isGrounded = character.controller.isGrounded;
 
         if (isGrounded && gravityVelocity.y < 0)
@@ -91,23 +91,15 @@ public class SprintState : State
             gravityVelocity.y = 0f;
         }
 
-        if (moveAmount > 0.5f)
-        {
-            // running speed
-            character.controller.Move(character.runningSpeed * Time.deltaTime * moveVelocity + gravityVelocity * Time.deltaTime);
-        }
-        else if (moveAmount <= 0.5f)
-        {
-            // walking speed
-            character.controller.Move(character.walkingSpeed * Time.deltaTime * moveVelocity + gravityVelocity * Time.deltaTime);
-        }
+        // running speed
+        character.controller.Move(playerSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
 
         HandleRotation();
     }
 
     private void HandleRotation()
     {
-        Vector3 targetDirection = Vector3.zero;
+        targetDirection = Vector3.zero;
         targetDirection = PlayerCamera.instance.cameraObj.transform.forward * verticalInput;
         targetDirection += PlayerCamera.instance.cameraObj.transform.right * horizontalInput;
         targetDirection.Normalize();
@@ -119,7 +111,7 @@ public class SprintState : State
         }
 
         Quaternion newRotation = Quaternion.LookRotation(targetDirection);
-        Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.deltaTime);
+        Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.fixedDeltaTime);
         character.transform.rotation = targetRotation;
     }
 }

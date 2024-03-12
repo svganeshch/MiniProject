@@ -41,6 +41,7 @@ public class CombatState : State
         lockOnTrigger = false;
 
         input = Vector2.zero;
+        targetDirection = Vector3.zero;
         gravityVelocity.y = 0;
 
         moveVelocity = character.playerVelocity;
@@ -57,7 +58,7 @@ public class CombatState : State
 
         if (dodgeAction.triggered)
         {
-            if (character.animator.GetFloat("speed") > 0.01f)
+            if (character.animator.GetFloat("speedY") >= 0.5f)
                 character.animator.SetTrigger("dodge");
         }
 
@@ -127,7 +128,7 @@ public class CombatState : State
         moveVelocity.Normalize();
         moveVelocity.y = 0;
 
-        character.animator.SetFloat("speed", input.magnitude, character.speedDampTime, Time.deltaTime);
+        character.animator.SetFloat("speedY", input.magnitude, character.speedDampTime, Time.deltaTime);
 
         if (holsterWeapon)
         {
@@ -247,7 +248,7 @@ public class CombatState : State
     {
         base.PhysicsUpdate();
 
-        gravityVelocity.y += gravityValue * Time.deltaTime;
+        gravityVelocity.y += gravityValue * Time.fixedDeltaTime;
         isGrounded = character.controller.isGrounded;
 
         if (isGrounded && gravityVelocity.y < 0)
@@ -258,12 +259,12 @@ public class CombatState : State
         if (moveAmount > 0.5f)
         {
             // running speed
-            character.controller.Move(character.runningSpeed * Time.deltaTime * moveVelocity + gravityVelocity * Time.deltaTime);
+            character.controller.Move(playerSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
         }
         else if (moveAmount <= 0.5f)
         {
             // walking speed
-            character.controller.Move(character.walkingSpeed * Time.deltaTime * moveVelocity + gravityVelocity * Time.deltaTime);
+            character.controller.Move(character.walkingSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
         }
 
         HandleRotation();
@@ -283,7 +284,7 @@ public class CombatState : State
         }
 
         Quaternion newRotation = Quaternion.LookRotation(targetDirection);
-        Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.deltaTime);
+        Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.fixedDeltaTime);
         character.transform.rotation = targetRotation;
     }
 

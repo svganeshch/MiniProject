@@ -29,7 +29,7 @@ public class JumpState : State
         playerSpeed = character.walkingSpeed;
         gravityVelocity.y = 0;
 
-        character.animator.SetFloat("speed", 0);
+        character.animator.SetFloat("speedY", 0);
         character.animator.SetTrigger("jump");
 
         Jump();
@@ -50,8 +50,6 @@ public class JumpState : State
 
         if (isGrounded)
         {
-            //character.animator.SetTrigger("move");
-            //stateMachine.ChangeState(character.idleState);
             stateMachine.ChangeState(character.landState);
         }
     }
@@ -71,10 +69,10 @@ public class JumpState : State
             airVelocity = airVelocity.x * PlayerCamera.instance.transform.right.normalized + airVelocity.z * PlayerCamera.instance.transform.forward.normalized;
             airVelocity.y = 0f;
 
-            character.controller.Move(gravityVelocity * Time.deltaTime + playerSpeed * Time.deltaTime * (airVelocity * character.airControl + moveVelocity * (1 - character.airControl)));
+            character.controller.Move(gravityVelocity * Time.fixedDeltaTime + playerSpeed * Time.fixedDeltaTime * (airVelocity * character.airControl + moveVelocity * (1 - character.airControl)));
         }
 
-        gravityVelocity.y += gravityValue * Time.deltaTime;
+        gravityVelocity.y += gravityValue * Time.fixedDeltaTime;
         isGrounded = character.controller.isGrounded;
     }
 

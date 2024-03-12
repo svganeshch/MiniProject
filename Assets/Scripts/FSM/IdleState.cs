@@ -9,7 +9,6 @@ public class IdleState : State
     bool drawWeapon;
 
     int weaponSlot = 1;
-    float playerSpeed;
     float gravityValue;
 
     public IdleState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
@@ -27,9 +26,9 @@ public class IdleState : State
         drawWeapon = false;
         input = Vector2.zero;
         moveVelocity = Vector3.zero;
+        targetDirection = Vector3.zero;
         gravityVelocity.y = 0;
 
-        playerSpeed = character.walkingSpeed;
         gravityValue = character.GRAVITY_VALUE;
         isGrounded = character.controller.isGrounded;
     }
@@ -46,7 +45,7 @@ public class IdleState : State
 
         if (dodgeAction.triggered)
         {
-            if (character.animator.GetFloat("speed") > 0.01f)
+            if (character.animator.GetFloat("speedY") >= 0.5f)
                 character.animator.SetTrigger("dodge");
         }
 
@@ -99,8 +98,8 @@ public class IdleState : State
         moveVelocity.Normalize();
         moveVelocity.y = 0;
 
-        //character.animator.SetFloat("speedX", input.x, character.speedDampTime, Time.deltaTime);
-        character.animator.SetFloat("speedY", input.y, character.speedDampTime, Time.deltaTime);
+        //character.animator.SetFloat("speedX", 0, character.speedDampTime, Time.deltaTime);
+        character.animator.SetFloat("speedY", moveAmount, character.speedDampTime, Time.deltaTime);
 
         if (jump)
             stateMachine.ChangeState(character.jumpState);
@@ -120,7 +119,7 @@ public class IdleState : State
     {
         base.PhysicsUpdate();
 
-        gravityVelocity.y += gravityValue * Time.deltaTime;
+        gravityVelocity.y += gravityValue * Time.fixedDeltaTime;
         isGrounded = character.controller.isGrounded;
 
         if (isGrounded && gravityVelocity.y < 0)
@@ -131,12 +130,12 @@ public class IdleState : State
         if (moveAmount > 0.5f)
         {
             // running speed
-            character.controller.Move(character.runningSpeed * Time.deltaTime * moveVelocity + gravityVelocity * Time.deltaTime);
+            character.controller.Move(character.runningSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
         }
         else if (moveAmount <= 0.5f)
         {
             // walking speed
-            character.controller.Move(character.walkingSpeed * Time.deltaTime * moveVelocity + gravityVelocity * Time.deltaTime);
+            character.controller.Move(character.walkingSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
         }
 
         HandleRotation();
@@ -156,7 +155,7 @@ public class IdleState : State
         }
 
         Quaternion newRotation = Quaternion.LookRotation(targetDirection);
-        Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.deltaTime);
+        Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.fixedDeltaTime);
         character.transform.rotation = targetRotation;
     }
 
