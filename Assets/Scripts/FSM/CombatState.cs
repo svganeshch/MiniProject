@@ -10,9 +10,6 @@ public class CombatState : State
     Enemy currentTarget;
     bool isLockedOn = false;
 
-    Vector3 cameraPos;
-    Quaternion cameraRot;
-
     float gravityValue;
     float playerSpeed;
 
@@ -25,9 +22,6 @@ public class CombatState : State
     bool swapWeapon;
     bool swapTrigger;
     bool lockOnTrigger;
-
-    Vector3 currentVelocity;
-    Vector3 smoothVelocity;
 
     public CombatState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
@@ -47,10 +41,9 @@ public class CombatState : State
         lockOnTrigger = false;
 
         input = Vector2.zero;
-        currentVelocity = Vector3.zero;
         gravityVelocity.y = 0;
 
-        velocity = character.playerVelocity;
+        moveVelocity = character.playerVelocity;
         playerSpeed = character.combatSpeed;
         isGrounded = character.controller.isGrounded;
         gravityValue = character.GRAVITY_VALUE;
@@ -110,14 +103,29 @@ public class CombatState : State
         }
 
         input = moveAction.ReadValue<Vector2>();
-        velocity = new Vector3(input.x, 0, input.y);
-        velocity = velocity.x * character.mainCameraTransform.right.normalized + velocity.z * character.mainCameraTransform.forward.normalized;
-        velocity.y = 0f;
+        verticalInput = input.y;
+        horizontalInput = input.x;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
+
+        if (moveAmount <= 0.5 && moveAmount > 0)
+        {
+            moveAmount = 0.5f;
+        }
+        else if (moveAmount > 0.5f && moveAmount <= 1)
+        {
+            moveAmount = 1;
+        }
+
+        moveVelocity = PlayerCamera.instance.transform.forward * verticalInput;
+        moveVelocity += PlayerCamera.instance.transform.right * horizontalInput;
+        moveVelocity.Normalize();
+        moveVelocity.y = 0;
 
         character.animator.SetFloat("speed", input.magnitude, character.speedDampTime, Time.deltaTime);
 
@@ -173,9 +181,6 @@ public class CombatState : State
 
         if (isLockedOn)
         {
-            cameraPos = character.mainCameraTransform.position;
-            cameraRot = character.mainCameraTransform.rotation;
-
             if (currentTarget == null)
                 return;
 
@@ -225,9 +230,6 @@ public class CombatState : State
         {
             currentTarget = nearestTarget;
 
-            character.cinemachineTargetLockCamera.LookAt = currentTarget.targetLock;
-            character.cinemachineTargetLockCamera.Priority = 11;
-
             //Debug.Log("locked onto : " + nearestTarget.name);
         }
         else
@@ -238,10 +240,7 @@ public class CombatState : State
 
     private void ResetTargetLock()
     {
-        //character.cinemachineFollowCamera.ForceCameraPosition(cameraPos, cameraRot);
 
-        character.cinemachineTargetLockCamera.Priority = 10;
-        character.cinemachineTargetLockCamera.LookAt = null;
     }
 
     public override void PhysicsUpdate()
@@ -256,13 +255,36 @@ public class CombatState : State
             gravityVelocity.y = 0f;
         }
 
-        currentVelocity = Vector3.SmoothDamp(currentVelocity, velocity, ref smoothVelocity, character.velocityDampTime);
-        character.controller.Move(currentVelocity * Time.deltaTime * playerSpeed + gravityVelocity * Time.deltaTime);
-
-        if (velocity.sqrMagnitude > 0)
+        if (moveAmount > 0.5f)
         {
-            character.transform.rotation = Quaternion.Slerp(character.transform.rotation, Quaternion.LookRotation(velocity), character.rotationDampTime);
+            // running speed
+            character.controller.Move(character.runningSpeed * Time.deltaTime * moveVelocity + gravityVelocity * Time.deltaTime);
         }
+        else if (moveAmount <= 0.5f)
+        {
+            // walking speed
+            character.controller.Move(character.walkingSpeed * Time.deltaTime * moveVelocity + gravityVelocity * Time.deltaTime);
+        }
+
+        HandleRotation();
+    }
+
+    private void HandleRotation()
+    {
+        targetDirection = Vector3.zero;
+        targetDirection = PlayerCamera.instance.cameraObj.transform.forward * verticalInput;
+        targetDirection += PlayerCamera.instance.cameraObj.transform.right * horizontalInput;
+        targetDirection.Normalize();
+        targetDirection.y = 0f;
+
+        if (targetDirection == Vector3.zero)
+        {
+            targetDirection = character.transform.forward;
+        }
+
+        Quaternion newRotation = Quaternion.LookRotation(targetDirection);
+        Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.deltaTime);
+        character.transform.rotation = targetRotation;
     }
 
     public override void Exit()
@@ -271,11 +293,7 @@ public class CombatState : State
 
         gravityVelocity.y = 0f;
         character.playerVelocity = new Vector3(input.x, 0, input.y);
-
-        if (velocity.sqrMagnitude > 0)
-        {
-            character.transform.rotation = Quaternion.LookRotation(velocity);
-        }
+        character.transform.rotation = Quaternion.LookRotation(targetDirection);
 
         character.animator.SetBool("isCombat", false);
     }

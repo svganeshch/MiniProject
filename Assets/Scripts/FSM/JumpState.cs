@@ -26,7 +26,7 @@ public class JumpState : State
         isGrounded = false;
         gravityValue = character.GRAVITY_VALUE;
         jumpHeight = character.jumpHeight;
-        playerSpeed = character.playerSpeed;
+        playerSpeed = character.walkingSpeed;
         gravityVelocity.y = 0;
 
         character.animator.SetFloat("speed", 0);
@@ -40,6 +40,8 @@ public class JumpState : State
         base.HandleInput();
 
         input = moveAction.ReadValue<Vector2>();
+        verticalInput = input.y;
+        horizontalInput = input.x;
     }
 
     public override void LogicUpdate()
@@ -60,15 +62,16 @@ public class JumpState : State
 
         if (!isGrounded)
         {
-
-            velocity = character.playerVelocity;
+            moveVelocity = character.playerVelocity;
             airVelocity = new Vector3(input.x, 0, input.y);
 
-            velocity = velocity.x * character.mainCameraTransform.right.normalized + velocity.z * character.mainCameraTransform.forward.normalized;
-            velocity.y = 0f;
-            airVelocity = airVelocity.x * character.mainCameraTransform.right.normalized + airVelocity.z * character.mainCameraTransform.forward.normalized;
+            moveVelocity = horizontalInput * PlayerCamera.instance.transform.right + moveVelocity.z * PlayerCamera.instance.transform.forward.normalized;
+            moveVelocity.y = 0f;
+
+            airVelocity = airVelocity.x * PlayerCamera.instance.transform.right.normalized + airVelocity.z * PlayerCamera.instance.transform.forward.normalized;
             airVelocity.y = 0f;
-            character.controller.Move(gravityVelocity * Time.deltaTime + (airVelocity * character.airControl + velocity * (1 - character.airControl)) * playerSpeed * Time.deltaTime);
+
+            character.controller.Move(gravityVelocity * Time.deltaTime + playerSpeed * Time.deltaTime * (airVelocity * character.airControl + moveVelocity * (1 - character.airControl)));
         }
 
         gravityVelocity.y += gravityValue * Time.deltaTime;

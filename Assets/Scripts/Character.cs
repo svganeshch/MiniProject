@@ -9,8 +9,11 @@ using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
+    public static Character instance;
+
     [Header("Character controls")]
-    public float playerSpeed = 5f;
+    public float walkingSpeed = 2.5f;
+    public float runningSpeed = 5f;
     public float combatSpeed = 6f;
     public float sprintSpeed = 10f;
     public float jumpHeight = 0.8f;
@@ -21,10 +24,6 @@ public class Character : MonoBehaviour
     [Header("Layer Masks")]
     public LayerMask enemyLayerMask;
     public LayerMask obstaclesLayerMask;
-
-    [Header("Camera controls")]
-    public CinemachineFreeLook cinemachineFollowCamera;
-    public CinemachineVirtualCamera cinemachineTargetLockCamera;
 
     [Header("Animation Smoothing")]
     [Range(0, 1)]
@@ -48,8 +47,6 @@ public class Character : MonoBehaviour
     public CharacterController controller;
     [HideInInspector]
     public PlayerInput playerInput;
-    [HideInInspector]
-    public Transform mainCameraTransform;
     [HideInInspector]
     public WeaponEquipment weaponEquipment;
 
@@ -75,12 +72,23 @@ public class Character : MonoBehaviour
 
     public CameraTargetLock cameraTargetLock;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
         animator = GetComponent<Animator>();
-        mainCameraTransform = Camera.main.transform;
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         weaponEquipment = GetComponent<WeaponEquipment>();
@@ -110,6 +118,11 @@ public class Character : MonoBehaviour
     private void FixedUpdate()
     {
         characterMovementSM.currentState.PhysicsUpdate();
+    }
+
+    private void LateUpdate()
+    {
+        PlayerCamera.instance.CameraActions();
     }
 
     void OnGUI()

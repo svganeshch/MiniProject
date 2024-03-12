@@ -27,7 +27,7 @@ public class SprintState : State
         sprintJump = false;
 
         input = Vector2.zero;
-        velocity = Vector3.zero;
+        moveVelocity = Vector3.zero;
         currentVelocity = Vector3.zero;
         gravityVelocity.y = 0;
 
@@ -41,10 +41,10 @@ public class SprintState : State
         base.HandleInput();
 
         input = moveAction.ReadValue<Vector2>();
-        velocity = new Vector3(input.x, 0, input.y);
+        moveVelocity = new Vector3(input.x, 0, input.y);
 
-        velocity = velocity.x * character.mainCameraTransform.right.normalized + velocity.z * character.mainCameraTransform.forward.normalized;
-        velocity.y = 0f;
+        moveVelocity = moveVelocity.x * PlayerCamera.instance.transform.right.normalized + moveVelocity.z * PlayerCamera.instance.transform.forward.normalized;
+        moveVelocity.y = 0f;
 
         if (sprintAction.triggered || input.sqrMagnitude == 0f)
         {
@@ -85,17 +85,41 @@ public class SprintState : State
 
         gravityVelocity.y += gravityValue * Time.deltaTime;
         isGrounded = character.controller.isGrounded;
+
         if (isGrounded && gravityVelocity.y < 0)
         {
             gravityVelocity.y = 0f;
         }
-        currentVelocity = Vector3.SmoothDamp(currentVelocity, velocity, ref smoothVelocity, character.velocityDampTime);
 
-        character.controller.Move(currentVelocity * Time.deltaTime * playerSpeed + gravityVelocity * Time.deltaTime);
-
-        if (velocity.sqrMagnitude > 0)
+        if (moveAmount > 0.5f)
         {
-            character.transform.rotation = Quaternion.Slerp(character.transform.rotation, Quaternion.LookRotation(velocity), character.rotationDampTime);
+            // running speed
+            character.controller.Move(character.runningSpeed * Time.deltaTime * moveVelocity + gravityVelocity * Time.deltaTime);
         }
+        else if (moveAmount <= 0.5f)
+        {
+            // walking speed
+            character.controller.Move(character.walkingSpeed * Time.deltaTime * moveVelocity + gravityVelocity * Time.deltaTime);
+        }
+
+        HandleRotation();
+    }
+
+    private void HandleRotation()
+    {
+        Vector3 targetDirection = Vector3.zero;
+        targetDirection = PlayerCamera.instance.cameraObj.transform.forward * verticalInput;
+        targetDirection += PlayerCamera.instance.cameraObj.transform.right * horizontalInput;
+        targetDirection.Normalize();
+        targetDirection.y = 0f;
+
+        if (targetDirection == Vector3.zero)
+        {
+            targetDirection = character.transform.forward;
+        }
+
+        Quaternion newRotation = Quaternion.LookRotation(targetDirection);
+        Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.deltaTime);
+        character.transform.rotation = targetRotation;
     }
 }

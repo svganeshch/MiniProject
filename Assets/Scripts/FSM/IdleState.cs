@@ -1,10 +1,8 @@
+using System;
 using UnityEngine;
 
 public class IdleState : State
 {
-    Vector3 currentVelocity;
-    Vector3 smoothVelocity;
-
     bool jump;
     bool sprint;
     bool isGrounded;
@@ -28,10 +26,10 @@ public class IdleState : State
         sprint = false;
         drawWeapon = false;
         input = Vector2.zero;
-        velocity = Vector3.zero;
+        moveVelocity = Vector3.zero;
         gravityVelocity.y = 0;
 
-        playerSpeed = character.playerSpeed;
+        playerSpeed = character.walkingSpeed;
         gravityValue = character.GRAVITY_VALUE;
         isGrounded = character.controller.isGrounded;
     }
@@ -77,20 +75,32 @@ public class IdleState : State
         }
 
         input = moveAction.ReadValue<Vector2>();
-        velocity = new Vector3(input.x, 0, input.y);
-
-        velocity = velocity.x * character.mainCameraTransform.right.normalized + velocity.z * character.mainCameraTransform.forward.normalized;
-        velocity.y = 0f;
+        verticalInput = input.y;
+        horizontalInput = input.x;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        character.animator.SetFloat("speed", input.magnitude, character.speedDampTime, Time.deltaTime);
+        moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
+
+        if (moveAmount <= 0.5 && moveAmount > 0)
+        {
+            moveAmount = 0.5f;
+        }
+        else if (moveAmount > 0.5f && moveAmount <= 1)
+        {
+            moveAmount = 1;
+        }
+
+        moveVelocity = PlayerCamera.instance.transform.forward * verticalInput;
+        moveVelocity += PlayerCamera.instance.transform.right * horizontalInput;
+        moveVelocity.Normalize();
+        moveVelocity.y = 0;
 
         //character.animator.SetFloat("speedX", input.x, character.speedDampTime, Time.deltaTime);
-        //character.animator.SetFloat("speedY", input.y, character.speedDampTime, Time.deltaTime);
+        character.animator.SetFloat("speedY", input.y, character.speedDampTime, Time.deltaTime);
 
         if (jump)
             stateMachine.ChangeState(character.jumpState);
@@ -118,14 +128,36 @@ public class IdleState : State
             gravityVelocity.y = 0f;
         }
 
-        currentVelocity = Vector3.SmoothDamp(currentVelocity, velocity, ref smoothVelocity, character.velocityDampTime);
-
-        character.controller.Move(currentVelocity * Time.deltaTime * playerSpeed + gravityVelocity * Time.deltaTime);
-
-        if (velocity.sqrMagnitude > 0)
+        if (moveAmount > 0.5f)
         {
-            character.transform.rotation = Quaternion.Slerp(character.transform.rotation, Quaternion.LookRotation(velocity), character.rotationDampTime);
+            // running speed
+            character.controller.Move(character.runningSpeed * Time.deltaTime * moveVelocity + gravityVelocity * Time.deltaTime);
         }
+        else if (moveAmount <= 0.5f)
+        {
+            // walking speed
+            character.controller.Move(character.walkingSpeed * Time.deltaTime * moveVelocity + gravityVelocity * Time.deltaTime);
+        }
+
+        HandleRotation();
+    }
+
+    private void HandleRotation()
+    {
+        targetDirection = Vector3.zero;
+        targetDirection = PlayerCamera.instance.cameraObj.transform.forward * verticalInput;
+        targetDirection += PlayerCamera.instance.cameraObj.transform.right * horizontalInput;
+        targetDirection.Normalize();
+        targetDirection.y = 0f;
+
+        if (targetDirection == Vector3.zero)
+        {
+            targetDirection = character.transform.forward;
+        }
+
+        Quaternion newRotation = Quaternion.LookRotation(targetDirection);
+        Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.deltaTime);
+        character.transform.rotation = targetRotation;
     }
 
     public override void Exit()
@@ -134,10 +166,6 @@ public class IdleState : State
 
         gravityVelocity.y = 0f;
         character.playerVelocity = new Vector3(input.x, 0, input.y);
-
-        if (velocity.sqrMagnitude > 0)
-        {
-            character.transform.rotation = Quaternion.LookRotation(velocity);
-        }
+        character.transform.rotation = Quaternion.LookRotation(targetDirection);
     }
 }

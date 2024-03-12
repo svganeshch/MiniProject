@@ -33,7 +33,7 @@ public class CameraTargetLock
             {
                 Vector3 lockOnTargetDirection = lockOnTarget.transform.position - character.transform.position;
                 float distanceFromTarget = Vector3.Distance(character.transform.position, lockOnTarget.transform.position);
-                float viewableAngle = Vector3.Angle(lockOnTargetDirection, character.mainCameraTransform.forward);
+                float viewableAngle = Vector3.Angle(lockOnTargetDirection, PlayerCamera.instance.transform.forward);
 
                 if (lockOnTarget.isDead)
                     continue;

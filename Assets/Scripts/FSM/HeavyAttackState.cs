@@ -50,9 +50,9 @@ public class HeavyAttackState : State
 
         timePassed += Time.deltaTime;
 
-        character.transform.rotation = Quaternion.Euler(0f, character.mainCameraTransform.eulerAngles.y, 0f);
+        //character.transform.rotation = Quaternion.Euler(0f, character.mainCameraTransform.eulerAngles.y, 0f);
 
-        CheckEnemy();
+        //CheckEnemy();
         Debug.Log(character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.name);
 
         clipLength = character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;

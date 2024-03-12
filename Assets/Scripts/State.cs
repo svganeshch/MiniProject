@@ -10,7 +10,11 @@ public class State
     protected StateMachine stateMachine;
 
     protected Vector2 input;
-    protected Vector3 velocity;
+    protected float verticalInput;
+    protected float horizontalInput;
+    protected float moveAmount;
+    protected Vector3 moveVelocity;
+    protected Vector3 targetDirection;
     protected Vector3 gravityVelocity;
 
     public InputAction moveAction;
@@ -53,11 +57,20 @@ public class State
         //Debug.Log("Entered state " + this.ToString());
     }
 
-    public virtual void HandleInput() { }
+    public virtual void HandleInput()
+    {
+        
+    }
 
-    public virtual void LogicUpdate() { }
+    public virtual void LogicUpdate()
+    {
+       
+    }
 
-    public virtual void PhysicsUpdate() { }
+    public virtual void PhysicsUpdate()
+    {
+        
+    }
 
     public virtual void Exit()
     {
