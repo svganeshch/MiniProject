@@ -497,7 +497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4.543
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -505,7 +505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.69
+      value: -22.48
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -890,7 +890,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c876a3e33bb7a04faeebb2da8590bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 3.5
+  walkingSpeed: 2.5
+  runningSpeed: 5
   combatSpeed: 4
   sprintSpeed: 6
   jumpHeight: 0.75
@@ -903,19 +904,14 @@ MonoBehaviour:
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 1
-  cinemachineAnimator: {fileID: 0}
-  cinemachineFollowCamera: {fileID: 0}
-  cinemachineTargetLockCamera: {fileID: 0}
   speedDampTime: 0.25
-  velocityDampTime: 0.4
-  rotationDampTime: 0.2
+  rotationDampTime: 15
   airControl: 0.5
   GRAVITY_VALUE: -9.81
   playerVelocity: {x: 0, y: 0, z: 0}
   animator: {fileID: 0}
   controller: {fileID: 0}
   playerInput: {fileID: 0}
-  mainCameraTransform: {fileID: 0}
   weaponEquipment: {fileID: 0}
 --- !u!114 &7592572223178561286
 MonoBehaviour:

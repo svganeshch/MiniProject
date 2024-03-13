@@ -3,12 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 using UnityEngine.TextCore.Text;
 
 public class CombatState : State
 {
-    Enemy currentTarget;
-    bool isLockedOn = false;
+    public Enemy currentTarget;
+    public bool isLockedOn = false;
 
     float gravityValue;
     float playerSpeed;
@@ -22,6 +24,10 @@ public class CombatState : State
     bool swapWeapon;
     bool swapTrigger;
     bool lockOnTrigger;
+    bool leftLockOnTrigger;
+    bool rightLockOnTrigger;
+
+    Coroutine lockOnCoroutine;
 
     public CombatState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
@@ -39,6 +45,8 @@ public class CombatState : State
         swapWeapon = false;
         swapTrigger = false;
         lockOnTrigger = false;
+        leftLockOnTrigger = false;
+        rightLockOnTrigger = false;
 
         input = Vector2.zero;
         targetDirection = Vector3.zero;
@@ -103,6 +111,37 @@ public class CombatState : State
             lockOnTrigger = true;
         }
 
+        if (isLockedOn)
+        {
+            if (leftLockOnAction.triggered || rightLockOnAction.triggered)
+            {
+                if (character.playerInput.devices[0] is Gamepad)
+                {
+                    if (leftLockOnAction.triggered)
+                    {
+                        leftLockOnTrigger = true;
+                    }
+
+                    if (rightLockOnAction.triggered)
+                    {
+                        rightLockOnTrigger = true;
+                    }
+                }
+                else if (character.playerInput.devices[0] is Keyboard)
+                {
+                    if (leftLockOnAction.ReadValue<float>() <= -PlayerCamera.instance.mouseLockOnSwitchTreshold)
+                    {
+                        leftLockOnTrigger = true;
+                    }
+
+                    if (rightLockOnAction.ReadValue<float>() >= PlayerCamera.instance.mouseLockOnSwitchTreshold)
+                    {
+                        rightLockOnTrigger = true;
+                    }
+                }
+            }
+        }
+
         input = moveAction.ReadValue<Vector2>();
         verticalInput = input.y;
         horizontalInput = input.x;
@@ -128,7 +167,16 @@ public class CombatState : State
         moveVelocity.Normalize();
         moveVelocity.y = 0;
 
-        character.animator.SetFloat("speedY", input.magnitude, character.speedDampTime, Time.deltaTime);
+        if (isLockedOn)
+        {
+            character.animator.SetFloat("speedX", moveAmount, character.speedDampTime, Time.deltaTime);
+            character.animator.SetFloat("speedY", moveAmount, character.speedDampTime, Time.deltaTime);
+        }
+        else
+        {
+            character.animator.SetFloat("speedX", 0, character.speedDampTime, Time.deltaTime);
+            character.animator.SetFloat("speedY", moveAmount, character.speedDampTime, Time.deltaTime);
+        }
 
         if (holsterWeapon)
         {
@@ -182,18 +230,32 @@ public class CombatState : State
 
         if (isLockedOn)
         {
-            if (currentTarget == null)
-                return;
-
-            if (currentTarget.isDead)
-            {
-                ResetTargetLock();
-                isLockedOn = false;
-            }
+            CheckLockOn();
         }
         if (lockOnTrigger)
         {
             HandleTargetLockOn();
+        }
+        if (leftLockOnTrigger || rightLockOnTrigger)
+        {
+            HandleTargetLockOnSwitch();
+        }
+    }
+
+    private void CheckLockOn()
+    {
+        if (currentTarget == null)
+            return;
+
+        if (currentTarget.isDead)
+        {
+            SetTarget(null);
+            isLockedOn = false;
+
+            if (lockOnCoroutine != null)
+                character.StopCoroutine(lockOnCoroutine);
+
+            lockOnCoroutine = character.StartCoroutine(PlayerCamera.instance.WaitFindNewTarget());
         }
     }
 
@@ -203,10 +265,9 @@ public class CombatState : State
         {
             lockOnTrigger = false;
 
-            character.cameraTargetLock.ClearLockOnTargets();
+            PlayerCamera.instance.ClearLockOnTargets();
+            SetTarget(null);
             isLockedOn = false;
-
-            ResetTargetLock();
 
             return;
         }
@@ -215,33 +276,61 @@ public class CombatState : State
         {
             lockOnTrigger = false;
 
-            character.cameraTargetLock.FindLockOnTarget();
+            PlayerCamera.instance.FindLockOnTarget();
 
-            if (character.cameraTargetLock.nearestTarget != null)
+            if (PlayerCamera.instance.nearestTarget != null)
             {
-                SetTarget(character.cameraTargetLock.nearestTarget);
+                SetTarget(PlayerCamera.instance.nearestTarget);
                 isLockedOn = true;
             }
         }
     }
 
-    private void SetTarget(Enemy nearestTarget)
+    private void HandleTargetLockOnSwitch()
+    {
+        if (leftLockOnTrigger)
+        {
+            leftLockOnTrigger = false;
+
+            if (isLockedOn)
+            {
+                PlayerCamera.instance.FindLockOnTarget();
+
+                if (PlayerCamera.instance.leftLockOnTarget != null)
+                {
+                    SetTarget(PlayerCamera.instance.leftLockOnTarget);
+                }
+            }
+        }
+
+        if (rightLockOnTrigger)
+        {
+            rightLockOnTrigger = false;
+
+            if (isLockedOn)
+            {
+                PlayerCamera.instance.FindLockOnTarget();
+
+                if (PlayerCamera.instance.rightLockOnTarget != null)
+                {
+                    SetTarget(PlayerCamera.instance.rightLockOnTarget);
+                }
+            }
+        }
+    }
+
+    public void SetTarget(Enemy nearestTarget)
     {
         if (nearestTarget != null)
         {
             currentTarget = nearestTarget;
-
-            //Debug.Log("locked onto : " + nearestTarget.name);
         }
         else
         {
             currentTarget = null;
         }
-    }
 
-    private void ResetTargetLock()
-    {
-
+        PlayerCamera.instance.SetLockOnCameraHeight();
     }
 
     public override void PhysicsUpdate()
@@ -272,20 +361,37 @@ public class CombatState : State
 
     private void HandleRotation()
     {
-        targetDirection = Vector3.zero;
-        targetDirection = PlayerCamera.instance.cameraObj.transform.forward * verticalInput;
-        targetDirection += PlayerCamera.instance.cameraObj.transform.right * horizontalInput;
-        targetDirection.Normalize();
-        targetDirection.y = 0f;
-
-        if (targetDirection == Vector3.zero)
+        if (isLockedOn)
         {
-            targetDirection = character.transform.forward;
-        }
+            if (currentTarget == null)
+                return;
 
-        Quaternion newRotation = Quaternion.LookRotation(targetDirection);
-        Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.fixedDeltaTime);
-        character.transform.rotation = targetRotation;
+            Vector3 targetDirection;
+            targetDirection = currentTarget.transform.position - character.transform.position;
+            targetDirection.y = 0f;
+            targetDirection.Normalize();
+
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            Quaternion finalRotation = Quaternion.Slerp(character.transform.rotation, targetRotation, character.rotationDampTime * Time.fixedDeltaTime);
+            character.transform.rotation = finalRotation;
+        }
+        else
+        {
+            targetDirection = Vector3.zero;
+            targetDirection = PlayerCamera.instance.cameraObj.transform.forward * verticalInput;
+            targetDirection += PlayerCamera.instance.cameraObj.transform.right * horizontalInput;
+            targetDirection.Normalize();
+            targetDirection.y = 0f;
+
+            if (targetDirection == Vector3.zero)
+            {
+                targetDirection = character.transform.forward;
+            }
+
+            Quaternion newRotation = Quaternion.LookRotation(targetDirection);
+            Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.fixedDeltaTime);
+            character.transform.rotation = targetRotation;
+        }
     }
 
     public override void Exit()
@@ -293,8 +399,8 @@ public class CombatState : State
         base.Exit();
 
         gravityVelocity.y = 0f;
-        character.playerVelocity = new Vector3(input.x, 0, input.y);
-        character.transform.rotation = Quaternion.LookRotation(targetDirection);
+        //character.playerVelocity = new Vector3(input.x, 0, input.y);
+        //character.transform.rotation = Quaternion.LookRotation(targetDirection);
 
         character.animator.SetBool("isCombat", false);
     }

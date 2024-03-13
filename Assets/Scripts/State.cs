@@ -26,6 +26,8 @@ public class State
     public InputAction attackWeaponAction;
     public InputAction heavyAttackWeaponAction;
     public InputAction lockOnAction;
+    public InputAction leftLockOnAction;
+    public InputAction rightLockOnAction;
 
     public InputAction weapon1Action;
     public InputAction weapon2Action;
@@ -45,6 +47,8 @@ public class State
         attackWeaponAction = character.playerInput.actions["Attack"];
         heavyAttackWeaponAction = character.playerInput.actions["HeavyAttack"];
         lockOnAction = character.playerInput.actions["LockOn"];
+        leftLockOnAction = character.playerInput.actions["LeftLockOn"];
+        rightLockOnAction = character.playerInput.actions["RightLockOn"];
 
         weapon1Action = character.playerInput.actions["Weapon1"];
         weapon2Action = character.playerInput.actions["Weapon2"];

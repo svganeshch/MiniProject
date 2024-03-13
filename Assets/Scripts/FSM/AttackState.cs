@@ -25,7 +25,7 @@ public class AttackState : State
 
         character.animator.SetBool("isCombat", true);
         character.animator.SetTrigger("attack");
-        character.animator.SetFloat("speed", 0f);
+        character.animator.SetFloat("speedY", 0f);
     }
 
     public override void HandleInput()
@@ -50,10 +50,7 @@ public class AttackState : State
 
         timePassed += Time.deltaTime;
 
-        //character.transform.rotation = Quaternion.Euler(0f, character.cameraTransform.eulerAngles.y, 0f);
-
-        //CheckEnemy();
-        Debug.Log(character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.name);
+        //Debug.Log(character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.name);
 
         clipLength = character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
         clipSpeed = character.animator.GetCurrentAnimatorStateInfo(1).speed * character.animator.GetCurrentAnimatorStateInfo(1).speedMultiplier;
@@ -69,26 +66,9 @@ public class AttackState : State
         }
     }
 
-    private void CheckEnemy()
-    {
-        Collider[] enemyColliders = Physics.OverlapSphere(character.transform.position, 2.5f, character.enemyLayerMask);
-
-        foreach (var enemy in enemyColliders)
-        {
-            character.transform.LookAt(enemy.transform);
-            Debug.Log(enemy.transform.position);
-        }
-    }
-
     public override void Exit()
     {
         base.Exit();
         character.animator.applyRootMotion = false;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(character.transform.position, 2.5f);
     }
 }

@@ -169,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1777673032727340788, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.71
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 1777673032727340788, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -177,7 +177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1777673032727340788, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.64
+      value: -12.27
       objectReference: {fileID: 0}
     - target: {fileID: 1777673032727340788, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1239,22 +1239,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 7886445140113422620, guid: 2b647b13953992046a9d62b3015e7845, type: 3}
-      propertyPath: rotationDampTime
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7886445140113422620, guid: 2b647b13953992046a9d62b3015e7845, type: 3}
-      propertyPath: cinemachineAnimator
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7886445140113422620, guid: 2b647b13953992046a9d62b3015e7845, type: 3}
-      propertyPath: cinemachineFollowCamera
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7886445140113422620, guid: 2b647b13953992046a9d62b3015e7845, type: 3}
-      propertyPath: cinemachineTargetLockCamera
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1280,6 +1264,10 @@ PrefabInstance:
       propertyPath: followTarget
       value: 
       objectReference: {fileID: 1798192930}
+    - target: {fileID: 4514210633645560833, guid: ff2ea1a99e12be34283763f5bf3d15a3, type: 3}
+      propertyPath: unlockedCameraHeight
+      value: 1.65
+      objectReference: {fileID: 0}
     - target: {fileID: 8116169642250123877, guid: ff2ea1a99e12be34283763f5bf3d15a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

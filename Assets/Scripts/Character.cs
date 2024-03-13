@@ -1,9 +1,4 @@
-using Cinemachine;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -68,8 +63,6 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public HeavyAttackState heavyAttackState;
 
-    public CameraTargetLock cameraTargetLock;
-
     private void Awake()
     {
         if (instance == null)
@@ -101,8 +94,6 @@ public class Character : MonoBehaviour
         attackState = new AttackState(this, characterMovementSM);
         heavyAttackState = new HeavyAttackState(this, characterMovementSM);
         characterMovementSM.Initialize(idleState);
-
-        cameraTargetLock = new CameraTargetLock(this);
 
         GRAVITY_VALUE *= gravityMultiplier;
     }

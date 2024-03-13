@@ -13,6 +13,8 @@ public class PlayerCamera : MonoBehaviour
     public Transform followTarget;
     public PlayerInput playerInput;
 
+    private Character character;
+
     [Header("Camera Settings")]
     [Range(0.0f, 10f)]
     public float cameraSmoothSpeed = 1.0f;
@@ -39,6 +41,30 @@ public class PlayerCamera : MonoBehaviour
     private float cameraVerticalInput;
     private float cameraHorizontalInput;
 
+    [Header("Lock On")]
+    [Range(0.0f, 50f)]
+    [SerializeField] float lockOnRadius = 20f;
+    [Range(0.0f, -180f)]
+    [SerializeField] float minimumViewableAngle = -50;
+    [Range(0.0f, 180f)]
+    [SerializeField] float maximumViewableAngle = 50;
+    [Range(0.0f, 50f)]
+    [SerializeField] float lockOnTargetFollowSpeed = 15f;
+    [Range(0.0f, 1f)]
+    [SerializeField] float setCameraHeightSpeed = 0.05f;
+    [Range(0, 150)]
+    [SerializeField] public float mouseLockOnSwitchTreshold = 50;
+    [Range(0.0f, 10f)]
+    [SerializeField] float unlockedCameraHeight = 1.5f;
+    [Range(0.0f, 10f)]
+    [SerializeField] float lockedCameraHeight = 2.0f;
+
+    Coroutine cameraLockHeightCoroutine;
+    List<Enemy> availableTargets = new List<Enemy>();
+    public Enemy nearestTarget;
+    [HideInInspector] public Enemy leftLockOnTarget;
+    [HideInInspector] public Enemy rightLockOnTarget;
+
     private void Awake()
     {
         if (instance == null)
@@ -49,6 +75,8 @@ public class PlayerCamera : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        character = followTarget.GetComponent<Character>();
     }
 
     private void Start()
@@ -86,21 +114,42 @@ public class PlayerCamera : MonoBehaviour
 
     private void HandleRotations()
     {
-        leftRightLookAngle += (cameraHorizontalInput * leftRightRotationSpeed) * Time.deltaTime;
-        upDownLookAngle -= (cameraVerticalInput * upDownRotationSpeed) * Time.deltaTime;
-        upDownLookAngle = Mathf.Clamp(upDownLookAngle, minimumPivot, maximumPivot);
+        if (character.combatState.isLockedOn)
+        {
+            // Right Left Pivot
+            Vector3 rotationDirection = character.combatState.currentTarget.targetLock.position - transform.position;
+            rotationDirection.Normalize();
+            rotationDirection.y = 0;
+            Quaternion targetRotation = Quaternion.LookRotation(rotationDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockOnTargetFollowSpeed);
 
-        Vector3 cameraRotation = Vector3.zero;
-        Quaternion targetRotation;
+            // Up Down Pivot
+            rotationDirection = character.combatState.currentTarget.targetLock.position - cameraPivotTransform.position;
+            rotationDirection.Normalize();
+            targetRotation = Quaternion.LookRotation(rotationDirection);
+            cameraPivotTransform.transform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed);
 
-        cameraRotation.y = leftRightLookAngle;
-        targetRotation = Quaternion.Euler(cameraRotation);
-        transform.rotation = targetRotation;
+            leftRightLookAngle = transform.eulerAngles.y;
+            upDownLookAngle = transform.eulerAngles.x;
+        }
+        else
+        {
+            leftRightLookAngle += (cameraHorizontalInput * leftRightRotationSpeed) * Time.deltaTime;
+            upDownLookAngle -= (cameraVerticalInput * upDownRotationSpeed) * Time.deltaTime;
+            upDownLookAngle = Mathf.Clamp(upDownLookAngle, minimumPivot, maximumPivot);
 
-        cameraRotation = Vector3.zero;
-        cameraRotation.x = upDownLookAngle;
-        targetRotation = Quaternion.Euler(cameraRotation);
-        cameraPivotTransform.localRotation = targetRotation;
+            Vector3 cameraRotation = Vector3.zero;
+            Quaternion targetRotation;
+
+            cameraRotation.y = leftRightLookAngle;
+            targetRotation = Quaternion.Euler(cameraRotation);
+            transform.rotation = targetRotation;
+
+            cameraRotation = Vector3.zero;
+            cameraRotation.x = upDownLookAngle;
+            targetRotation = Quaternion.Euler(cameraRotation);
+            cameraPivotTransform.localRotation = targetRotation;
+        }
     }
 
     private void HandleCollisions()
@@ -123,5 +172,146 @@ public class PlayerCamera : MonoBehaviour
 
         cameraObjPosition.z = Mathf.Lerp(cameraObj.transform.localPosition.z, targetCameraZPosition, 0.2f);
         cameraObj.transform.localPosition = cameraObjPosition;
+    }
+
+    public void FindLockOnTarget()
+    {
+        float shortestDistance = Mathf.Infinity;
+        float shortestDistanceOfRightTarget = Mathf.Infinity;
+        float shortestDistanceOfLeftTarget = -Mathf.Infinity;
+
+        Collider[] colliders = Physics.OverlapSphere(character.transform.position, lockOnRadius, character.enemyLayerMask);
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            
+            if (colliders[i].TryGetComponent<Enemy>(out var lockOnTarget))
+            {
+                Vector3 lockOnTargetDirection = lockOnTarget.transform.position - character.transform.position;
+                float viewableAngle = Vector3.Angle(lockOnTargetDirection, PlayerCamera.instance.transform.forward);
+
+                if (lockOnTarget.isDead)
+                    continue;
+
+                if (viewableAngle > minimumViewableAngle && viewableAngle < maximumViewableAngle)
+                {
+                    RaycastHit hit;
+
+                    if (Physics.Linecast(character.targetLockCast.position, lockOnTarget.targetLock.transform.position, out hit, character.obstaclesLayerMask))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        availableTargets.Add(lockOnTarget);
+                        //Debug.Log("available target : " + lockOnTarget.name);
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < availableTargets.Count; i++)
+        {
+            if (availableTargets[i] != null)
+            {
+                float distanceFromTarget = Vector3.Distance(character.transform.position, availableTargets[i].transform.position);
+
+                if (distanceFromTarget < shortestDistance)
+                {
+                    shortestDistance = distanceFromTarget;
+                    nearestTarget = availableTargets[i];
+
+                    //Debug.Log("nearest target : " + nearestTarget.name);
+                }
+
+                if (character.combatState.isLockedOn)
+                {
+                    Vector3 relativeTargetPosition = transform.InverseTransformPoint(availableTargets[i].transform.position);
+
+                    var distanceFromLeftTarget = relativeTargetPosition.x;
+                    var distanceFromRightTarget = relativeTargetPosition.x;
+
+                    if (availableTargets[i] == character.combatState.currentTarget)
+                        continue;
+
+                    if (relativeTargetPosition.x <= 0.00 && distanceFromLeftTarget > shortestDistanceOfLeftTarget)
+                    {
+                        shortestDistanceOfLeftTarget = distanceFromLeftTarget;
+                        leftLockOnTarget = availableTargets[i];
+                    }
+                    else if (relativeTargetPosition.x >= 0.00 && distanceFromRightTarget < shortestDistanceOfRightTarget)
+                    {
+                        shortestDistanceOfRightTarget = distanceFromRightTarget;
+                        rightLockOnTarget = availableTargets[i];
+                    }
+                }
+            }
+            else
+            {
+                ClearLockOnTargets();
+                character.combatState.isLockedOn = false;
+            }
+        }
+    }
+
+    public void SetLockOnCameraHeight()
+    {
+        if (cameraLockHeightCoroutine != null)
+            StopCoroutine(cameraLockHeightCoroutine);
+
+        cameraLockHeightCoroutine = StartCoroutine(SetCameraHeight());
+    }
+
+    public void ClearLockOnTargets()
+    {
+        nearestTarget = null;
+        leftLockOnTarget = null;
+        rightLockOnTarget = null;
+        availableTargets.Clear();
+    }
+
+    public IEnumerator WaitFindNewTarget()
+    {
+        ClearLockOnTargets();
+        FindLockOnTarget();
+
+        if (nearestTarget != null)
+        {
+            character.combatState.SetTarget(nearestTarget);
+            character.combatState.isLockedOn = true;
+        }
+
+        yield return null;
+    }
+
+    private IEnumerator SetCameraHeight()
+    {
+        float duration = 1;
+        float timer = 0;
+
+        Vector3 velocity = Vector3.zero;
+        Vector3 newLockedCameraHeight = new Vector3(cameraPivotTransform.transform.localPosition.x, lockedCameraHeight);
+        Vector3 newUnlockedCameraHeight = new Vector3(cameraPivotTransform.transform.localPosition.x, unlockedCameraHeight);
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+
+            if (character.combatState.currentTarget != null)
+            {
+                cameraPivotTransform.transform.localPosition = 
+                    Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed);
+
+                //cameraPivotTransform.transform.localRotation =
+                //    Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFollowSpeed);
+            }
+            else
+            {
+                cameraPivotTransform.transform.localPosition = 
+                    Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnlockedCameraHeight, ref velocity, setCameraHeightSpeed);
+            }
+
+            yield return null;
+        }
     }
 }

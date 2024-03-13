@@ -98,7 +98,7 @@ public class IdleState : State
         moveVelocity.Normalize();
         moveVelocity.y = 0;
 
-        //character.animator.SetFloat("speedX", 0, character.speedDampTime, Time.deltaTime);
+        character.animator.SetFloat("speedX", 0, character.speedDampTime, Time.deltaTime);
         character.animator.SetFloat("speedY", moveAmount, character.speedDampTime, Time.deltaTime);
 
         if (jump)
