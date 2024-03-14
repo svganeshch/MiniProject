@@ -45,8 +45,7 @@ public class IdleState : State
 
         if (dodgeAction.triggered)
         {
-            if (character.animator.GetFloat("speedY") >= 0.5f)
-                character.animator.SetTrigger("dodge");
+            stateMachine.ChangeState(character.dodgeState);
         }
 
         if (drawWeaponAction.triggered)

@@ -66,8 +66,7 @@ public class CombatState : State
 
         if (dodgeAction.triggered)
         {
-            if (character.animator.GetFloat("speedY") >= 0.5f)
-                character.animator.SetTrigger("dodge");
+            stateMachine.ChangeState(character.dodgeState);
         }
 
         if (drawWeaponAction.triggered)
@@ -111,6 +110,7 @@ public class CombatState : State
             lockOnTrigger = true;
         }
 
+        // target lock on swap
         if (isLockedOn)
         {
             if (leftLockOnAction.triggered || rightLockOnAction.triggered)

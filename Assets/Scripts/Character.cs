@@ -57,6 +57,8 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public SprintJumpState sprintJumpState;
     [HideInInspector]
+    public DodgeState dodgeState;
+    [HideInInspector]
     public CombatState combatState;
     [HideInInspector]
     public AttackState attackState;
@@ -90,6 +92,7 @@ public class Character : MonoBehaviour
         landState = new LandState(this, characterMovementSM);
         sprintState = new SprintState(this, characterMovementSM);
         sprintJumpState = new SprintJumpState(this, characterMovementSM);
+        dodgeState = new DodgeState(this, characterMovementSM);
         combatState = new CombatState(this, characterMovementSM);
         attackState = new AttackState(this, characterMovementSM);
         heavyAttackState = new HeavyAttackState(this, characterMovementSM);
