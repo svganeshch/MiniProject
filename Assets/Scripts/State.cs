@@ -9,10 +9,10 @@ public class State
     protected Character character;
     protected StateMachine stateMachine;
 
-    protected Vector2 input;
     protected float verticalInput;
     protected float horizontalInput;
     protected float moveAmount;
+    protected Vector2 input;
     protected Vector3 moveVelocity;
     protected Vector3 targetDirection;
     protected Vector3 gravityVelocity;

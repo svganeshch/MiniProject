@@ -5,6 +5,7 @@ using UnityEngine;
 public class StateMachine
 {
     public State currentState;
+    public State previousState;
 
     public void Initialize(State initialState)
     {
@@ -14,6 +15,7 @@ public class StateMachine
 
     public void ChangeState(State newState)
     {
+        previousState = currentState;
         currentState.Exit();
 
         currentState = newState;

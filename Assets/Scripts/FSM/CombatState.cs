@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
+using UnityEngine.Rendering.RendererUtils;
 using UnityEngine.TextCore.Text;
 
 public class CombatState : State
@@ -169,13 +170,11 @@ public class CombatState : State
 
         if (isLockedOn)
         {
-            character.animator.SetFloat("speedX", moveAmount, character.speedDampTime, Time.deltaTime);
-            character.animator.SetFloat("speedY", moveAmount, character.speedDampTime, Time.deltaTime);
+            SetAnimationParameters(horizontalInput, moveAmount);
         }
         else
         {
-            character.animator.SetFloat("speedX", 0, character.speedDampTime, Time.deltaTime);
-            character.animator.SetFloat("speedY", moveAmount, character.speedDampTime, Time.deltaTime);
+            SetAnimationParameters(0, moveAmount);
         }
 
         if (holsterWeapon)
@@ -366,12 +365,12 @@ public class CombatState : State
             if (currentTarget == null)
                 return;
 
-            Vector3 targetDirection;
-            targetDirection = currentTarget.transform.position - character.transform.position;
-            targetDirection.y = 0f;
-            targetDirection.Normalize();
+            Vector3 lockedTargetDirection;
+            lockedTargetDirection = currentTarget.transform.position - character.transform.position;
+            lockedTargetDirection.y = 0f;
+            lockedTargetDirection.Normalize();
 
-            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            Quaternion targetRotation = Quaternion.LookRotation(lockedTargetDirection);
             Quaternion finalRotation = Quaternion.Slerp(character.transform.rotation, targetRotation, character.rotationDampTime * Time.fixedDeltaTime);
             character.transform.rotation = finalRotation;
         }
@@ -394,15 +393,76 @@ public class CombatState : State
         }
     }
 
+    private void SetAnimationParameters(float horizontalInput, float verticalInput)
+    {
+        float snappedHorizontal = horizontalInput;
+        float snappedVertical = verticalInput;
+
+        if (horizontalInput > 0 && horizontalInput <= 0.5f)
+        {
+            snappedHorizontal = 0.5f;
+        }
+        else if (horizontalInput > 0.5f && horizontalInput <= 1)
+        {
+            snappedHorizontal = 1;
+        }
+        else if (horizontalInput < 0 && horizontalInput >= -0.5f)
+        {
+            snappedHorizontal = -0.5f;
+        }
+        else if (horizontalInput < -0.5f && horizontalInput >= -1)
+        {
+            snappedHorizontal = -1;
+        }
+        else
+        {
+            snappedHorizontal = 0;
+        }
+
+        if (verticalInput > 0 && verticalInput <= 0.5f)
+        {
+            snappedVertical = 0.5f;
+        }
+        else if (verticalInput > 0.5f && verticalInput <= 1)
+        {
+            snappedVertical = 1;
+        }
+        else if (verticalInput < 0 && verticalInput >= -0.5f)
+        {
+            snappedVertical = -0.5f;
+        }
+        else if (verticalInput < -0.5f && verticalInput >= -1)
+        {
+            snappedVertical = -1;
+        }
+        else
+        {
+            snappedVertical = 0;
+        }
+
+        character.animator.SetFloat("speedX", snappedHorizontal, character.speedDampTime, Time.deltaTime);
+        character.animator.SetFloat("speedY", snappedVertical, character.speedDampTime, Time.deltaTime);
+    }
+
     public override void Exit()
     {
         base.Exit();
 
         gravityVelocity.y = 0f;
-        //character.playerVelocity = new Vector3(input.x, 0, input.y);
-        //character.transform.rotation = Quaternion.LookRotation(targetDirection);
+        character.playerVelocity = new Vector3(input.x, 0, input.y);
 
-        character.animator.SetBool("isCombat", false);
+        if (isLockedOn)
+        {
+            if (moveVelocity == Vector3.zero)
+            {
+                moveVelocity = character.transform.forward;
+            }
+            character.transform.rotation = Quaternion.LookRotation(moveVelocity);
+        }
+        else
+        {
+            character.transform.rotation = Quaternion.LookRotation(targetDirection);
+        }
     }
 
     private IEnumerator SwapWeapon()

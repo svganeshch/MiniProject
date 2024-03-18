@@ -127,7 +127,7 @@ public class PlayerCamera : MonoBehaviour
             rotationDirection = character.combatState.currentTarget.targetLock.position - cameraPivotTransform.position;
             rotationDirection.Normalize();
             targetRotation = Quaternion.LookRotation(rotationDirection);
-            cameraPivotTransform.transform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed);
+            cameraPivotTransform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed);
 
             leftRightLookAngle = transform.eulerAngles.y;
             upDownLookAngle = transform.eulerAngles.x;
@@ -302,8 +302,8 @@ public class PlayerCamera : MonoBehaviour
                 cameraPivotTransform.transform.localPosition = 
                     Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed);
 
-                //cameraPivotTransform.transform.localRotation =
-                //    Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFollowSpeed);
+                cameraPivotTransform.transform.localRotation =
+                    Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFollowSpeed);
             }
             else
             {

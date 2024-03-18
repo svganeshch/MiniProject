@@ -31,6 +31,8 @@ public class IdleState : State
 
         gravityValue = character.GRAVITY_VALUE;
         isGrounded = character.controller.isGrounded;
+
+        character.animator.SetBool("isCombat", false);
     }
 
     public override void HandleInput()
@@ -97,8 +99,7 @@ public class IdleState : State
         moveVelocity.Normalize();
         moveVelocity.y = 0;
 
-        character.animator.SetFloat("speedX", 0, character.speedDampTime, Time.deltaTime);
-        character.animator.SetFloat("speedY", moveAmount, character.speedDampTime, Time.deltaTime);
+        SetAnimationParameters(0, moveAmount);
 
         if (jump)
             stateMachine.ChangeState(character.jumpState);
@@ -156,6 +157,57 @@ public class IdleState : State
         Quaternion newRotation = Quaternion.LookRotation(targetDirection);
         Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.fixedDeltaTime);
         character.transform.rotation = targetRotation;
+    }
+
+    private void SetAnimationParameters(float horizontalInput, float verticalInput)
+    {
+        float snappedHorizontal = horizontalInput;
+        float snappedVertical = verticalInput;
+
+        if (horizontalInput > 0 && horizontalInput <= 0.5f)
+        {
+            snappedHorizontal = 0.5f;
+        }
+        else if (horizontalInput > 0.5f && horizontalInput <= 1)
+        {
+            snappedHorizontal = 1;
+        }
+        else if (horizontalInput < 0 && horizontalInput >= -0.5f)
+        {
+            snappedHorizontal = -0.5f;
+        }
+        else if (horizontalInput < -0.5f && horizontalInput >= -1)
+        {
+            snappedHorizontal = -1;
+        }
+        else
+        {
+            snappedHorizontal = 0;
+        }
+
+        if (verticalInput > 0 && verticalInput <= 0.5f)
+        {
+            snappedVertical = 0.5f;
+        }
+        else if (verticalInput > 0.5f && verticalInput <= 1)
+        {
+            snappedVertical = 1;
+        }
+        else if (verticalInput < 0 && verticalInput >= -0.5f)
+        {
+            snappedVertical = -0.5f;
+        }
+        else if (verticalInput < -0.5f && verticalInput >= -1)
+        {
+            snappedVertical = -1;
+        }
+        else
+        {
+            snappedVertical = 0;
+        }
+
+        character.animator.SetFloat("speedX", snappedHorizontal, character.speedDampTime, Time.deltaTime);
+        character.animator.SetFloat("speedY", snappedVertical, character.speedDampTime, Time.deltaTime);
     }
 
     public override void Exit()
