@@ -121,13 +121,13 @@ public class PlayerCamera : MonoBehaviour
             rotationDirection.Normalize();
             rotationDirection.y = 0;
             Quaternion targetRotation = Quaternion.LookRotation(rotationDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockOnTargetFollowSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockOnTargetFollowSpeed * Time.deltaTime);
 
             // Up Down Pivot
             rotationDirection = character.combatState.currentTarget.targetLock.position - cameraPivotTransform.position;
             rotationDirection.Normalize();
             targetRotation = Quaternion.LookRotation(rotationDirection);
-            cameraPivotTransform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed);
+            cameraPivotTransform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed * Time.deltaTime);
 
             leftRightLookAngle = transform.eulerAngles.y;
             upDownLookAngle = transform.eulerAngles.x;
@@ -170,7 +170,7 @@ public class PlayerCamera : MonoBehaviour
             targetCameraZPosition = -cameraCollisionRadius;
         }
 
-        cameraObjPosition.z = Mathf.Lerp(cameraObj.transform.localPosition.z, targetCameraZPosition, 0.2f);
+        cameraObjPosition.z = Mathf.Lerp(cameraObj.transform.localPosition.z, targetCameraZPosition, 0.2f * Time.deltaTime);
         cameraObj.transform.localPosition = cameraObjPosition;
     }
 
@@ -300,15 +300,15 @@ public class PlayerCamera : MonoBehaviour
             if (character.combatState.currentTarget != null)
             {
                 cameraPivotTransform.transform.localPosition = 
-                    Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed);
+                    Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed * Time.deltaTime);
 
-                cameraPivotTransform.transform.localRotation =
-                    Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFollowSpeed);
+                //cameraPivotTransform.transform.localRotation =
+                //    Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFollowSpeed * Time.deltaTime);
             }
             else
             {
                 cameraPivotTransform.transform.localPosition = 
-                    Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnlockedCameraHeight, ref velocity, setCameraHeightSpeed);
+                    Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnlockedCameraHeight, ref velocity, setCameraHeightSpeed * Time.deltaTime);
             }
 
             yield return null;
