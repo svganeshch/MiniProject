@@ -13,6 +13,8 @@ public class Character : MonoBehaviour
     public float sprintSpeed = 10f;
     public float jumpHeight = 0.8f;
     public float gravityMultiplier = 2f;
+    public float attackCancelTreshold = 0.3f;
+    public float attackComboTreshold = 0.9f;
     public Transform targetLockCast;
     public Transform playerFollow;
 
