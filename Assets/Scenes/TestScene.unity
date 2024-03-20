@@ -1009,6 +1009,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7592572223178561286, guid: 2b647b13953992046a9d62b3015e7845, type: 3}
+      propertyPath: weapons.Array.data[0].attackSpeedMultiplier
+      value: 1.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
