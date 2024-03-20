@@ -121,13 +121,13 @@ public class PlayerCamera : MonoBehaviour
             rotationDirection.Normalize();
             rotationDirection.y = 0;
             Quaternion targetRotation = Quaternion.LookRotation(rotationDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockOnTargetFollowSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockOnTargetFollowSpeed);
 
             // Up Down Pivot
             rotationDirection = character.combatState.currentTarget.targetLock.position - cameraPivotTransform.position;
             rotationDirection.Normalize();
             targetRotation = Quaternion.LookRotation(rotationDirection);
-            cameraPivotTransform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed * Time.deltaTime);
+            cameraPivotTransform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed);
 
             leftRightLookAngle = transform.eulerAngles.y;
             upDownLookAngle = transform.eulerAngles.x;
@@ -300,7 +300,7 @@ public class PlayerCamera : MonoBehaviour
             if (character.combatState.currentTarget != null)
             {
                 cameraPivotTransform.transform.localPosition = 
-                    Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed * Time.deltaTime);
+                    Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed);
 
                 //cameraPivotTransform.transform.localRotation =
                 //    Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFollowSpeed * Time.deltaTime);
@@ -308,7 +308,7 @@ public class PlayerCamera : MonoBehaviour
             else
             {
                 cameraPivotTransform.transform.localPosition = 
-                    Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnlockedCameraHeight, ref velocity, setCameraHeightSpeed * Time.deltaTime);
+                    Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnlockedCameraHeight, ref velocity, setCameraHeightSpeed);
             }
 
             yield return null;
