@@ -8,7 +8,8 @@ public class IdleState : State
     bool isGrounded;
     bool drawWeapon;
 
-    int weaponSlot = 1;
+    int weaponSlot;
+    int defaultWeaponSlot = 1;
     float gravityValue;
 
     public IdleState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
@@ -109,9 +110,16 @@ public class IdleState : State
 
         if (drawWeapon)
         {
-            character.weaponEquipment.SetWeapon(weaponSlot);
-            character.animator.SetTrigger("drawWeapon");
-            stateMachine.ChangeState(character.combatState);
+            drawWeapon = false;
+            if (character.weaponEquipment.SetWeapon(weaponSlot))
+            {
+                character.animator.SetTrigger("drawWeapon");
+                stateMachine.ChangeState(character.combatState);
+            }
+            else
+            {
+                weaponSlot = defaultWeaponSlot;
+            }
         }
     }
 

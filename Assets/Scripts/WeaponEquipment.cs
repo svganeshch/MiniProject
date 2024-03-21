@@ -8,6 +8,8 @@ using UnityEngine.TextCore.Text;
 [System.Serializable]
 public class Weapon
 {
+    public bool Enabled = false;
+
     public AnimatorOverrideController animatorOverrideController;
     public GameObject weaponPrefab;
     public Transform weaponHolderPosition;
@@ -48,14 +50,20 @@ public class WeaponEquipment : MonoBehaviour
             GameObject weaponObj = Instantiate(weapon.weaponPrefab, weapon.weaponHolsterPosition);
             weapon.weaponObj = weaponObj;
 
-            //weaponObj.SetActive(false);
+            if (!weapon.Enabled)
+                weaponObj.SetActive(false);
         }
     }
 
-    public void SetWeapon(int weaponSlot)
+    public bool SetWeapon(int weaponSlot)
     {
         currentWeaponSlot = weapons.Find(weapon => weapon.weaponSlot == weaponSlot).weaponSlot;
         Weapon currentWeapon = GetCurrentWeapon();
+
+        if (!currentWeapon.Enabled)
+        {
+            return false;
+        }
 
         currentWeaponObj = currentWeapon.weaponObj;
         animator.runtimeAnimatorController = currentWeapon.animatorOverrideController;
@@ -89,6 +97,8 @@ public class WeaponEquipment : MonoBehaviour
         animator.SetFloat("attackSpeed", currentWeapon.attackSpeedMultiplier);
 
         Debug.Log("Set weapon to " + weaponSlot);
+
+        return true;
     }
 
     public void DrawWeapon()
@@ -137,5 +147,10 @@ public class WeaponEquipment : MonoBehaviour
     public Weapon GetCurrentWeapon()
     {
         return weapons.Find(weapon => weapon.weaponSlot == currentWeaponSlot);
+    }
+
+    public Weapon GetWeaponWithSlot(int weaponSlot)
+    {
+        return weapons.Find(weapon => weapon.weaponSlot == weaponSlot);
     }
 }
