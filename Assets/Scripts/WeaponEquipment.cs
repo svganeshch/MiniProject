@@ -22,15 +22,13 @@ public class Weapon
     public bool reverseDraw = false;
     public bool isDagger = false;
 
-    [HideInInspector] public float drawSpeed = 1;
-    [HideInInspector] public float holsterSpeed = 1;
-
     [HideInInspector] public GameObject weaponObj;
 }
 
 public class WeaponEquipment : MonoBehaviour
 {
     public List<Weapon> weapons = new List<Weapon>();
+    public float weaponSwapSpeed = 4f;
 
     private GameObject currentWeaponObj;
     private int currentWeaponSlot = 1;
