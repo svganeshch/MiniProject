@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
@@ -30,13 +31,11 @@ public class Weapon
 public class WeaponEquipment : MonoBehaviour
 {
     public List<Weapon> weapons = new List<Weapon>();
-    
+
     private GameObject currentWeaponObj;
     private int currentWeaponSlot = 1;
 
     private Animator animator;
-
-    public bool weaponHolsterDone = false;
 
     private void Awake()
     {
@@ -84,10 +83,6 @@ public class WeaponEquipment : MonoBehaviour
             {
                 animator.SetBool("hasHolster2", true);
             }
-            else if (overrideCl.Key.name.CompareTo("lite_attack1_rec") == 0 && overrideCl.Value != null)
-            {
-                animator.SetBool("hasRecovery", true);
-            }
 
             //Debug.Log("clip : " +  overrideCl);
         }
@@ -128,10 +123,8 @@ public class WeaponEquipment : MonoBehaviour
             dagger2.weaponObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         }
 
-        weaponHolsterDone = true;
         animator.SetBool("hasDraw2", false);
         animator.SetBool("hasHolster2", false);
-        animator.SetBool("hasRecovery", false);
     }
 
     public void StartDamage()

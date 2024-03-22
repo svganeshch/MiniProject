@@ -10,6 +10,7 @@ public class IdleState : State
 
     int weaponSlot;
     int defaultWeaponSlot = 1;
+    int previousWeaponSlot = 0;
     float gravityValue;
 
     public IdleState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
@@ -32,6 +33,15 @@ public class IdleState : State
 
         gravityValue = character.GRAVITY_VALUE;
         isGrounded = character.controller.isGrounded;
+
+        if (previousWeaponSlot != 0)
+        {
+            weaponSlot = previousWeaponSlot;
+        }
+        else
+        {
+            weaponSlot = defaultWeaponSlot;
+        }
 
         character.animator.SetBool("isCombat", false);
     }
@@ -113,6 +123,8 @@ public class IdleState : State
             drawWeapon = false;
             if (character.weaponEquipment.SetWeapon(weaponSlot))
             {
+                previousWeaponSlot = weaponSlot;
+
                 character.animator.SetTrigger("drawWeapon");
                 stateMachine.ChangeState(character.combatState);
             }

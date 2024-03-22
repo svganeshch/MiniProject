@@ -23,7 +23,6 @@ public class CombatState : State
     bool attackState;
     bool heavyAttackState;
     bool swapWeapon;
-    bool swapTrigger;
     bool lockOnTrigger;
     bool leftLockOnTrigger;
     bool rightLockOnTrigger;
@@ -44,7 +43,6 @@ public class CombatState : State
         attackState = false;
         heavyAttackState = false;
         swapWeapon = false;
-        swapTrigger = false;
         lockOnTrigger = false;
         leftLockOnTrigger = false;
         rightLockOnTrigger = false;
@@ -198,36 +196,7 @@ public class CombatState : State
         if (swapWeapon)
         {
             swapWeapon = false;
-
-            if (character.weaponEquipment.GetCurrentWeapon().weaponSlot == swapWeaponTo)
-            {
-                character.animator.SetTrigger("holsterWeapon");
-                stateMachine.ChangeState(character.idleState);
-                return;
-            }
-
-            if (character.weaponEquipment.GetWeaponWithSlot(swapWeaponTo).Enabled)
-            {
-                character.animator.SetFloat("holsterSpeed", 2);
-                character.animator.SetFloat("drawSpeed", 2);
-
-                character.animator.SetTrigger("holsterWeapon");
-
-                swapTrigger = true;
-            }
-        }
-
-        if (swapTrigger)
-        {
-            if (character.weaponEquipment.weaponHolsterDone)
-            {
-                if (character.animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("idle"))
-                {
-                    swapTrigger = false;
-                    character.weaponEquipment.weaponHolsterDone = false;
-                    character.StartCoroutine(SwapWeapon());
-                }
-            }
+            HandleWeaponSwap();
         }
 
         if (isLockedOn)
@@ -241,6 +210,26 @@ public class CombatState : State
         if (leftLockOnTrigger || rightLockOnTrigger)
         {
             HandleTargetLockOnSwitch();
+        }
+    }
+
+    private void HandleWeaponSwap()
+    {
+        if (character.weaponEquipment.GetCurrentWeapon().weaponSlot == swapWeaponTo)
+        {
+            character.animator.SetTrigger("holsterWeapon");
+            stateMachine.ChangeState(character.idleState);
+
+            return;
+        }
+
+        if (character.weaponEquipment.GetWeaponWithSlot(swapWeaponTo).Enabled)
+        {
+            character.animator.SetFloat("holsterSpeed", 2);
+            character.animator.SetFloat("drawSpeed", 2);
+
+            character.animator.SetBool("swapWeapon", true);
+            character.animator.SetTrigger("holsterWeapon");
         }
     }
 
@@ -468,10 +457,8 @@ public class CombatState : State
         }
     }
 
-    private IEnumerator SwapWeapon()
+    public void SwapWeapon()
     {
-        yield return new WaitForSeconds(2f);
-
         if (character.weaponEquipment.SetWeapon(swapWeaponTo))
             character.animator.SetTrigger("drawWeapon");
     }
