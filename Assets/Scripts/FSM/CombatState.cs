@@ -469,6 +469,9 @@ public class CombatState : State
     public void SwapWeapon()
     {
         if (character.weaponEquipment.SetWeapon(swapWeaponTo))
+        {
+            character.idleState.previousWeaponSlot = swapWeaponTo;
             character.animator.SetTrigger("drawWeapon");
+        }
     }
 }

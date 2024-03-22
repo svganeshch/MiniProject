@@ -10,7 +10,7 @@ public class IdleState : State
 
     int weaponSlot;
     int defaultWeaponSlot = 1;
-    int previousWeaponSlot = 0;
+    public int previousWeaponSlot = 0;
     float gravityValue;
 
     public IdleState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
