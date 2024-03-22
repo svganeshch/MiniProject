@@ -21,6 +21,11 @@ public class DodgeState : State
         timePassed = 0;
         dodgeTime = 0.8f;
 
+        if (character.playerVelocity == Vector3.zero)
+        {
+            character.animator.SetFloat("speedY", 0.5f);
+        }
+
         character.animator.SetTrigger("dodge");
     }
 
