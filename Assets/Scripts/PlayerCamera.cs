@@ -14,14 +14,24 @@ public class PlayerCamera : MonoBehaviour
     public PlayerInput playerInput;
 
     private Character character;
+    private InputDevice currentDevice;
+    private InputDevice sensDevice;
 
     [Header("Camera Settings")]
+    private float upDownRotationSpeed = 0;
+    private float leftRightRotationSpeed = 0;
+
     [Range(0.0f, 10f)]
     public float cameraSmoothSpeed = 1.0f;
-    [Range(0.0f, 220f)]
-    public float upDownRotationSpeed = 220;
-    [Range(0.0f, 220f)]
-    public float leftRightRotationSpeed = 220;
+    [Range(0.0f, 250f)]
+    public float MouseYSensitivity = 40;
+    [Range(0.0f, 250f)]
+    public float MouseXSensitivity = 40;
+    [Range(0.0f, 250f)]
+    public float GamepadYSensitivity = 220;
+    [Range(0.0f, 250f)]
+    public float GamepadXSensitivity = 220;
+
     public float minimumPivot = -30;
     public float maximumPivot = 60;
     public float cameraCollisionRadius = 0.2f;
@@ -61,7 +71,7 @@ public class PlayerCamera : MonoBehaviour
 
     Coroutine cameraLockHeightCoroutine;
     List<Enemy> availableTargets = new List<Enemy>();
-    public Enemy nearestTarget;
+    [HideInInspector] public Enemy nearestTarget;
     [HideInInspector] public Enemy leftLockOnTarget;
     [HideInInspector] public Enemy rightLockOnTarget;
 
@@ -96,6 +106,38 @@ public class PlayerCamera : MonoBehaviour
             cameraHorizontalInput = lookInput.x;
 
             //Debug.Log(lookInput);
+        }
+
+        SetInputDeviceSensitivity();
+    }
+
+    private void SetInputDeviceSensitivity()
+    {
+        currentDevice = playerInput.devices[0];
+
+        if (currentDevice == sensDevice)
+        {
+            return;
+        }
+
+        if (currentDevice != null )
+        {
+            if (currentDevice is Keyboard)
+            {
+                Debug.Log("setting mouse sens");
+                leftRightRotationSpeed = MouseXSensitivity;
+                upDownRotationSpeed = MouseYSensitivity;
+
+                sensDevice = currentDevice;
+            }
+            else if (currentDevice is Gamepad)
+            {
+                Debug.Log("setting gamepad sens");
+                leftRightRotationSpeed = GamepadXSensitivity;
+                upDownRotationSpeed = GamepadYSensitivity;
+
+                sensDevice = currentDevice;
+            }
         }
     }
 
