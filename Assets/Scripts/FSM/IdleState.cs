@@ -126,7 +126,8 @@ public class IdleState : State
                 previousWeaponSlot = weaponSlot;
 
                 character.animator.SetTrigger("drawWeapon");
-                stateMachine.ChangeState(character.combatState);
+                character.animator.SetBool("isWeaponDraw", true);
+                //stateMachine.ChangeState(character.combatState);
             }
             else
             {

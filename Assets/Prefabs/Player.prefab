@@ -1008,7 +1008,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
-  - animatorOverrideController: {fileID: 22100000, guid: d675378df854643429d4658ff4f7ff92, type: 2}
+  - Enabled: 1
+    animatorOverrideController: {fileID: 22100000, guid: d675378df854643429d4658ff4f7ff92, type: 2}
     weaponPrefab: {fileID: 3229632965787041822, guid: ac612740b5cb81a4fa60c642b00ce9c1, type: 3}
     weaponHolderPosition: {fileID: 538736580346194846}
     weaponHolsterPosition: {fileID: 7867259438974082854}
@@ -1020,7 +1021,8 @@ MonoBehaviour:
     drawSpeed: 1
     holsterSpeed: 1
     weaponObj: {fileID: 0}
-  - animatorOverrideController: {fileID: 22100000, guid: eb0dbc82df9adeb41a2b674f4ee56689, type: 2}
+  - Enabled: 1
+    animatorOverrideController: {fileID: 22100000, guid: eb0dbc82df9adeb41a2b674f4ee56689, type: 2}
     weaponPrefab: {fileID: 3990336454071941759, guid: 42a2151f14030c54bacea1260780c5b1, type: 3}
     weaponHolderPosition: {fileID: 3325900071238961482}
     weaponHolsterPosition: {fileID: 854773711046539094}
@@ -1032,7 +1034,8 @@ MonoBehaviour:
     drawSpeed: 1
     holsterSpeed: 1
     weaponObj: {fileID: 0}
-  - animatorOverrideController: {fileID: 22100000, guid: 2ac9285d14ea69341bd2aa4614b490ff, type: 2}
+  - Enabled: 0
+    animatorOverrideController: {fileID: 22100000, guid: 2ac9285d14ea69341bd2aa4614b490ff, type: 2}
     weaponPrefab: {fileID: 6403505395056452385, guid: 7677ba60e6038c649a21d80313d03e35, type: 3}
     weaponHolderPosition: {fileID: 2627380128159753939}
     weaponHolsterPosition: {fileID: 8200036844016761304}
@@ -1044,7 +1047,8 @@ MonoBehaviour:
     drawSpeed: 1
     holsterSpeed: 1
     weaponObj: {fileID: 0}
-  - animatorOverrideController: {fileID: 22100000, guid: d3abace068def784b8fc1fdc839033d2, type: 2}
+  - Enabled: 0
+    animatorOverrideController: {fileID: 22100000, guid: d3abace068def784b8fc1fdc839033d2, type: 2}
     weaponPrefab: {fileID: 2248695283924371341, guid: 93ad89b567c50c3449838906f891da12, type: 3}
     weaponHolderPosition: {fileID: 8214382034231030989}
     weaponHolsterPosition: {fileID: 3174786388402970954}
@@ -1056,7 +1060,8 @@ MonoBehaviour:
     drawSpeed: 1
     holsterSpeed: 1
     weaponObj: {fileID: 0}
-  - animatorOverrideController: {fileID: 0}
+  - Enabled: 0
+    animatorOverrideController: {fileID: 0}
     weaponPrefab: {fileID: 6403505395056452385, guid: 7677ba60e6038c649a21d80313d03e35, type: 3}
     weaponHolderPosition: {fileID: 3408340676089729766}
     weaponHolsterPosition: {fileID: 7298846690386179628}
@@ -1068,7 +1073,6 @@ MonoBehaviour:
     drawSpeed: 1
     holsterSpeed: 1
     weaponObj: {fileID: 0}
-  weaponHolsterDone: 0
 --- !u!114 &4071349994904901829
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -55,8 +55,6 @@ public class CombatState : State
         playerSpeed = character.combatSpeed;
         isGrounded = character.controller.isGrounded;
         gravityValue = character.GRAVITY_VALUE;
-
-        character.animator.SetBool("isCombat", true);
     }
 
     public override void HandleInput()
@@ -80,6 +78,9 @@ public class CombatState : State
 
         if (attackWeaponAction.triggered && !heavyAttackState)
         {
+            if (character.animator.GetBool("swapWeapon"))
+                return;
+
             attackState = true;
         }
 
@@ -185,12 +186,14 @@ public class CombatState : State
 
         if (heavyAttackState)
         {
+            heavyAttackState = false;
             character.animator.SetTrigger("heavyAttack");
             stateMachine.ChangeState(character.heavyAttackState);
         }
 
         if (attackState)
         {
+            attackState = false;
             character.animator.SetTrigger("attack");
             stateMachine.ChangeState(character.attackState);
         }
