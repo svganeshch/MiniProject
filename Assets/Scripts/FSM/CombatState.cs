@@ -177,6 +177,8 @@ public class CombatState : State
 
         if (holsterWeapon)
         {
+            ResetLockOn();
+
             character.animator.SetTrigger("holsterWeapon");
             stateMachine.ChangeState(character.idleState);
         }
@@ -217,6 +219,8 @@ public class CombatState : State
     {
         if (character.weaponEquipment.GetCurrentWeapon().weaponSlot == swapWeaponTo)
         {
+            ResetLockOn();
+
             character.animator.SetTrigger("holsterWeapon");
             stateMachine.ChangeState(character.idleState);
 
@@ -240,8 +244,7 @@ public class CombatState : State
 
         if (currentTarget.isDead)
         {
-            SetTarget(null);
-            isLockedOn = false;
+            ResetLockOn();
 
             if (lockOnCoroutine != null)
                 character.StopCoroutine(lockOnCoroutine);
@@ -308,6 +311,12 @@ public class CombatState : State
                 }
             }
         }
+    }
+
+    private void ResetLockOn()
+    {
+        isLockedOn = false;
+        SetTarget(null);
     }
 
     public void SetTarget(Enemy nearestTarget)
