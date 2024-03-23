@@ -9,7 +9,9 @@ public class HeavyAttackState : State
     private float timePassed;
     private float clipLength;
     private float clipSpeed;
-    private float clipPercentage;
+    private float clipTime;
+    private float attackCancelTreshold;
+    private float attackComboTreshold;
 
     public HeavyAttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
@@ -27,9 +29,12 @@ public class HeavyAttackState : State
 
         attack = false;
         dodge = false;
-
         character.animator.applyRootMotion = true;
+
         timePassed = 0f;
+
+        attackCancelTreshold = character.attackCancelTreshold;
+        attackComboTreshold = character.attackComboTreshold;
 
         character.animator.SetTrigger("heavyAttack");
         character.animator.SetFloat("speedY", 0f);
@@ -64,9 +69,9 @@ public class HeavyAttackState : State
 
         clipLength = character.animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
         clipSpeed = character.animator.GetCurrentAnimatorStateInfo(1).speed * character.animator.GetCurrentAnimatorStateInfo(1).speedMultiplier;
-        clipPercentage = (clipLength / clipSpeed) * 0.3f;
+        clipTime = clipLength / clipSpeed;
 
-        if (timePassed <= clipPercentage)
+        if (timePassed <= clipTime * attackCancelTreshold)
         {
             moveVelocity = PlayerCamera.instance.transform.forward * verticalInput;
             moveVelocity += PlayerCamera.instance.transform.right * horizontalInput;
@@ -82,11 +87,13 @@ public class HeavyAttackState : State
             }
         }
 
-        if (timePassed >= clipLength / clipSpeed && attack)
+        if (timePassed >= clipTime * attackComboTreshold)
         {
-            stateMachine.ChangeState(character.heavyAttackState);
+            if (attack)
+                stateMachine.ChangeState(character.heavyAttackState);
         }
-        if (timePassed >= clipLength / clipSpeed)
+
+        if (timePassed >= clipTime)
         {
             character.animator.SetTrigger("move");
             stateMachine.ChangeState(character.combatState);
