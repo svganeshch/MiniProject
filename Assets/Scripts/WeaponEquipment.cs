@@ -23,6 +23,7 @@ public class Weapon
     public bool isDagger = false;
 
     [HideInInspector] public GameObject weaponObj;
+    [HideInInspector] public WeaponAttack weaponAttackScript;
 }
 
 public class WeaponEquipment : MonoBehaviour
@@ -31,6 +32,7 @@ public class WeaponEquipment : MonoBehaviour
     public float weaponSwapSpeed = 4f;
 
     private GameObject currentWeaponObj;
+    private Weapon currentWeapon;
     private int currentWeaponSlot = 1;
 
     private Animator animator;
@@ -46,6 +48,7 @@ public class WeaponEquipment : MonoBehaviour
         {
             GameObject weaponObj = Instantiate(weapon.weaponPrefab, weapon.weaponHolsterPosition);
             weapon.weaponObj = weaponObj;
+            weapon.weaponAttackScript = weaponObj.GetComponentInChildren<WeaponAttack>();
 
             if (!weapon.Enabled)
                 weaponObj.SetActive(false);
@@ -55,7 +58,7 @@ public class WeaponEquipment : MonoBehaviour
     public bool SetWeapon(int weaponSlot)
     {
         currentWeaponSlot = weapons.Find(weapon => weapon.weaponSlot == weaponSlot).weaponSlot;
-        Weapon currentWeapon = GetCurrentWeapon();
+        currentWeapon = GetWeaponWithSlot(currentWeaponSlot);
 
         if (!currentWeapon.Enabled)
         {
@@ -96,10 +99,10 @@ public class WeaponEquipment : MonoBehaviour
 
     public void DrawWeapon()
     {
-        currentWeaponObj.transform.parent = GetCurrentWeapon().weaponHolderPosition.transform;
+        currentWeaponObj.transform.parent = currentWeapon.weaponHolderPosition.transform;
         currentWeaponObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
-        if (GetCurrentWeapon().isDagger)
+        if (currentWeapon.isDagger)
         {
             Weapon dagger2 = weapons.FindLast(dagger => dagger.isDagger);
 
@@ -110,10 +113,10 @@ public class WeaponEquipment : MonoBehaviour
 
     public void HolsterWeapon()
     {
-        currentWeaponObj.transform.parent = GetCurrentWeapon().weaponHolsterPosition.transform;
+        currentWeaponObj.transform.parent = currentWeapon.weaponHolsterPosition.transform;
         currentWeaponObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
-        if (GetCurrentWeapon().isDagger)
+        if (currentWeapon.isDagger)
         {
             Weapon dagger2 = weapons.FindLast(dagger => dagger.isDagger);
 
@@ -127,12 +130,12 @@ public class WeaponEquipment : MonoBehaviour
 
     public void StartDamage()
     {
-        currentWeaponObj.GetComponentInChildren<WeaponAttack>().StartDealDamage();
+        currentWeapon.weaponAttackScript.StartDealDamage();
     }
 
     public void StopDamage()
     {
-        currentWeaponObj.GetComponentInChildren<WeaponAttack>().EndDealDamage();
+        currentWeapon.weaponAttackScript.EndDealDamage();
     }
 
     public Weapon GetCurrentWeapon()
