@@ -17,6 +17,7 @@ public class Weapon
     public Transform weaponHolsterPosition;
 
     public int weaponSlot;
+    public float weaponDamage = 50f;
     public float attackSpeedMultiplier = 1f;
     public bool reverseHolster = false;
     public bool reverseDraw = false;
@@ -49,6 +50,11 @@ public class WeaponEquipment : MonoBehaviour
             GameObject weaponObj = Instantiate(weapon.weaponPrefab, weapon.weaponHolsterPosition);
             weapon.weaponObj = weaponObj;
             weapon.weaponAttackScript = weaponObj.GetComponentInChildren<WeaponAttack>();
+
+            if (weapon.weaponAttackScript != null)
+            {
+                weapon.weaponAttackScript.weaponDamage = weapon.weaponDamage;
+            }
 
             if (!weapon.Enabled)
                 weaponObj.SetActive(false);

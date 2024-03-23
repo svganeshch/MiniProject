@@ -4,14 +4,20 @@ using UnityEngine;
 
 public abstract class WeaponAttack : MonoBehaviour
 {
+    Character character;
+
     bool canDealDamage;
     List<GameObject> hasDealtDamage;
 
-    [SerializeField] protected LayerMask damageLayerMask;
     [SerializeField] protected float weaponLength;
-    [SerializeField] protected float weaponDamage;
+    [HideInInspector]public float weaponDamage;
+    protected LayerMask damageLayerMask;
+
     void Start()
     {
+        character = FindObjectOfType<Character>();
+        damageLayerMask = character.enemyLayerMask;
+
         canDealDamage = false;
         hasDealtDamage = new List<GameObject>();
     }
