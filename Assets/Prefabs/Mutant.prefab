@@ -45,15 +45,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1d22a175c1c62a648a37d5b62de48548, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.8
+      value: 671.08026
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1d22a175c1c62a648a37d5b62de48548, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 14.29298
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1d22a175c1c62a648a37d5b62de48548, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12
+      value: 453.1152
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1d22a175c1c62a648a37d5b62de48548, type: 3}
       propertyPath: m_LocalRotation.w
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b0b1f0cf6c3e44098eb8fe5528ebc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 100
   targetLock: {fileID: 6125359514643636095}
   isDead: 0
 --- !u!4 &1888630200045932912 stripped
