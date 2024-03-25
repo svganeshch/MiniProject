@@ -769,6 +769,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1082271958561512970, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -980,6 +984,9 @@ MonoBehaviour:
   attackComboTreshold: 0.9
   targetLockCast: {fileID: 2792782978014464322}
   playerFollow: {fileID: 3874505488766782055}
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   enemyLayerMask:
     serializedVersion: 2
     m_Bits: 128

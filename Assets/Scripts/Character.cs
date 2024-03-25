@@ -19,6 +19,7 @@ public class Character : MonoBehaviour
     public Transform playerFollow;
 
     [Header("Layer Masks")]
+    public LayerMask playerLayerMask;
     public LayerMask enemyLayerMask;
     public LayerMask obstaclesLayerMask;
 
