@@ -68,6 +68,8 @@ public class Character : MonoBehaviour
     public AttackState attackState;
     [HideInInspector]
     public HeavyAttackState heavyAttackState;
+    [HideInInspector]
+    public HitState hitState;
 
     private void Awake()
     {
@@ -100,6 +102,7 @@ public class Character : MonoBehaviour
         combatState = new CombatState(this, characterMovementSM);
         attackState = new AttackState(this, characterMovementSM);
         heavyAttackState = new HeavyAttackState(this, characterMovementSM);
+        hitState = new HitState(this, characterMovementSM);
         characterMovementSM.Initialize(idleState);
 
         GRAVITY_VALUE *= gravityMultiplier;
@@ -124,7 +127,6 @@ public class Character : MonoBehaviour
     public void TakeDamage(float weaponDamage)
     {
         health -= weaponDamage;
-        animator.SetTrigger("damage");
 
         if (health <= 0)
         {
@@ -132,6 +134,8 @@ public class Character : MonoBehaviour
             Debug.Log("Player dead");
         }
         Debug.Log("Player received damage");
+
+        characterMovementSM.ChangeState(hitState);
     }
 
     void OnGUI()
