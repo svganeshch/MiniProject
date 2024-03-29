@@ -38,7 +38,7 @@ public class EnemyAttackState : EnemyState
         LookAtTarget();
         canAttack = CheckAttackDistance();
 
-        Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        //Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
 
         clipLength = enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
         clipSpeed = enemy.animator.GetCurrentAnimatorStateInfo(0).speed * enemy.animator.GetCurrentAnimatorStateInfo(0).speedMultiplier;

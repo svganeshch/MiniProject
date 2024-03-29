@@ -689,10 +689,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1423266377508446129, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
-      propertyPath: m_AngularSpeed
-      value: 180
-      objectReference: {fileID: 0}
     - target: {fileID: 1432215707112799310, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_Name
       value: Mutant (5)

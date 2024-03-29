@@ -22,6 +22,9 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public EnemyPursueState pursueState;
     [HideInInspector] public EnemyAttackState attackState;
 
+    // WeaponAttack scripts
+    WeaponAttack[] weaponAttacks;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -31,8 +34,9 @@ public class Enemy : MonoBehaviour
         idleState = new EnemyIdleState(this, enemyStateMachine);
         pursueState = new EnemyPursueState(this, enemyStateMachine);
         attackState = new EnemyAttackState(this, enemyStateMachine);
-
         enemyStateMachine.Initialize(idleState);
+
+        weaponAttacks = GetComponentsInChildren<WeaponAttack>();
     }
 
     private void Update()
@@ -45,6 +49,22 @@ public class Enemy : MonoBehaviour
         enemyStateMachine.currentState.PhysicsUpdate();
     }
 
+    public void StartDamage()
+    {
+        foreach (var weapon in weaponAttacks)
+        {
+            weapon.StartDealDamage();
+        }
+    }
+
+    public void StopDamage()
+    {
+        foreach (var weapon in weaponAttacks)
+        {
+            weapon.EndDealDamage();
+        }
+    }
+
     public void TakeDamage(float weaponDamage)
     {
         health -= weaponDamage;
@@ -54,7 +74,7 @@ public class Enemy : MonoBehaviour
         {
             Die();
         }
-        Debug.Log("Enemy damage received");
+        Debug.Log("Enemy received damage");
     }
 
     private void Die()

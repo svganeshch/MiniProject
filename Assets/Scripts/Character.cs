@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
     public static Character instance;
 
     [Header("Character controls")]
+    public float health = 100;
     public float walkingSpeed = 2.5f;
     public float runningSpeed = 5f;
     public float combatSpeed = 6f;
@@ -118,6 +119,19 @@ public class Character : MonoBehaviour
     private void LateUpdate()
     {
         PlayerCamera.instance.CameraActions();
+    }
+
+    public void TakeDamage(float weaponDamage)
+    {
+        health -= weaponDamage;
+        animator.SetTrigger("damage");
+
+        if (health <= 0)
+        {
+            //Die();
+            Debug.Log("Player dead");
+        }
+        Debug.Log("Player received damage");
     }
 
     void OnGUI()
