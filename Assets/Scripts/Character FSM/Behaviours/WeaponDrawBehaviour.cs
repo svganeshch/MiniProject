@@ -12,8 +12,12 @@ public class WeaponDrawBehaviour : StateMachineBehaviour
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetBool("isCombat", true);
+        if (character == null)
+        {
+            character = animator.GetComponent<Character>();
+        }
 
+        animator.SetBool("isCombat", true);
         speedY = animator.GetFloat("speedY");
 
         if (!skippedLayer)
@@ -36,8 +40,9 @@ public class WeaponDrawBehaviour : StateMachineBehaviour
         animator.SetFloat("holsterSpeed", 1);
         animator.SetFloat("drawSpeed", 1);
 
-        character = animator.GetComponent<Character>();
         isWeaponDraw = animator.GetBool("isWeaponDraw");
+
+        Time.timeScale = 1f;
 
         if (isWeaponDraw)
         {

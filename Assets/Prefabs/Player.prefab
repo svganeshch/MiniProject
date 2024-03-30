@@ -1763,7 +1763,7 @@ MonoBehaviour:
     isDagger: 0
     weaponObj: {fileID: 0}
     weaponAttackScript: {fileID: 0}
-  - Enabled: 0
+  - Enabled: 1
     animatorOverrideController: {fileID: 22100000, guid: eb0dbc82df9adeb41a2b674f4ee56689, type: 2}
     weaponPrefab: {fileID: 3990336454071941759, guid: 42a2151f14030c54bacea1260780c5b1, type: 3}
     weaponHolderPosition: {fileID: 3325900071238961482}

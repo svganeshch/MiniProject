@@ -15,6 +15,11 @@ public class WeaponSwapBehaviour : StateMachineBehaviour
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
+        if (character == null)
+        {
+            character = animator.GetComponent<Character>();
+        }
+
         isWeaponSwap = animator.GetBool("swapWeapon");
         speedY = animator.GetFloat("speedY");
 
@@ -37,8 +42,6 @@ public class WeaponSwapBehaviour : StateMachineBehaviour
         }
 
         skippedLayer = false;
-        character = animator.GetComponent<Character>();
-
         if (isWeaponSwap)
         {
             character.combatState.SwapWeapon();

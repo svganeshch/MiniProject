@@ -232,6 +232,7 @@ public class CombatState : State
 
         if (character.weaponEquipment.GetWeaponWithSlot(swapWeaponTo).Enabled)
         {
+            Time.timeScale = 0.5f;
             character.animator.SetFloat("holsterSpeed", character.weaponEquipment.weaponSwapSpeed);
             character.animator.SetFloat("drawSpeed", character.weaponEquipment.weaponSwapSpeed);
 
