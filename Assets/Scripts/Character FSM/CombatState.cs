@@ -76,7 +76,7 @@ public class CombatState : State
             heavyAttackState = true;
         }
 
-        if (attackWeaponAction.triggered && !heavyAttackState)
+        if (liteAttackWeaponAction.triggered && !heavyAttackState)
         {
             if (character.animator.GetBool("swapWeapon"))
                 return;
@@ -187,15 +187,15 @@ public class CombatState : State
         if (heavyAttackState)
         {
             heavyAttackState = false;
-            character.animator.SetTrigger("heavyAttack");
+            //character.animator.SetTrigger("heavyAttack");
             stateMachine.ChangeState(character.heavyAttackState);
         }
 
         if (attackState)
         {
             attackState = false;
-            character.animator.SetTrigger("attack");
-            stateMachine.ChangeState(character.attackState);
+            //character.animator.SetTrigger("attack");
+            stateMachine.ChangeState(character.liteAttackState);
         }
 
         if (swapWeapon)

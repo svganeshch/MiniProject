@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackState : State
+public class AttackStateLogic : State
 {
     bool attack;
     bool dodge;
@@ -13,7 +13,7 @@ public class AttackState : State
     private float attackCancelTreshold;
     private float attackComboTreshold;
 
-    public AttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
+    public AttackStateLogic(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
         character = _character;
         stateMachine = _stateMachine;
@@ -36,7 +36,6 @@ public class AttackState : State
         attackCancelTreshold = character.attackCancelTreshold;
         attackComboTreshold = character.attackComboTreshold;
 
-        character.animator.SetTrigger("attack");
         character.animator.SetFloat("speedY", 0f);
     }
 
@@ -49,7 +48,7 @@ public class AttackState : State
             dodge = true;
         }
 
-        if (attackWeaponAction.triggered)
+        if (liteAttackWeaponAction.triggered)
         {
             attack = true;
         }
@@ -90,7 +89,7 @@ public class AttackState : State
         if (timePassed >= clipTime * attackComboTreshold)
         {
             if (attack)
-                stateMachine.ChangeState(character.attackState);
+                stateMachine.ChangeState(this);
         }
 
         if (timePassed >= clipTime)

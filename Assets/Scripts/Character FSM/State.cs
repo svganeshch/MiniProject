@@ -23,7 +23,7 @@ public class State
     public InputAction dodgeAction;
 
     public InputAction drawWeaponAction;
-    public InputAction attackWeaponAction;
+    public InputAction liteAttackWeaponAction;
     public InputAction heavyAttackWeaponAction;
     public InputAction lockOnAction;
     public InputAction leftLockOnAction;
@@ -44,7 +44,7 @@ public class State
         sprintAction = character.playerInput.actions["Sprint"];
         dodgeAction = character.playerInput.actions["Dodge"];
         drawWeaponAction = character.playerInput.actions["DrawWeapon"];
-        attackWeaponAction = character.playerInput.actions["Attack"];
+        liteAttackWeaponAction = character.playerInput.actions["LiteAttack"];
         heavyAttackWeaponAction = character.playerInput.actions["HeavyAttack"];
         lockOnAction = character.playerInput.actions["LockOn"];
         leftLockOnAction = character.playerInput.actions["LeftLockOn"];

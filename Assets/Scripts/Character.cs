@@ -65,7 +65,7 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public CombatState combatState;
     [HideInInspector]
-    public AttackState attackState;
+    public LiteAttackState liteAttackState;
     [HideInInspector]
     public HeavyAttackState heavyAttackState;
     [HideInInspector]
@@ -100,7 +100,7 @@ public class Character : MonoBehaviour
         sprintJumpState = new SprintJumpState(this, characterMovementSM);
         dodgeState = new DodgeState(this, characterMovementSM);
         combatState = new CombatState(this, characterMovementSM);
-        attackState = new AttackState(this, characterMovementSM);
+        liteAttackState = new LiteAttackState(this, characterMovementSM);
         heavyAttackState = new HeavyAttackState(this, characterMovementSM);
         hitState = new HitState(this, characterMovementSM);
         characterMovementSM.Initialize(idleState);

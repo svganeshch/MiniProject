@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeavyAttackState : AttackStateLogic
+public class LiteAttackState : AttackStateLogic
 {
-    public HeavyAttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
+    public LiteAttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
         character = _character;
         stateMachine = _stateMachine;
@@ -14,6 +14,6 @@ public class HeavyAttackState : AttackStateLogic
     {
         base.Enter();
 
-        character.animator.SetTrigger("heavyAttack");
+        character.animator.SetTrigger("liteAttack");
     }
 }
