@@ -135,10 +135,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mutant (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 1432215707112799310, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1777673032727340788, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 676.5857
@@ -195,10 +191,6 @@ PrefabInstance:
     - target: {fileID: 1432215707112799310, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_Name
       value: Mutant (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432215707112799310, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1777673032727340788, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -322,10 +314,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mutant (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 1432215707112799310, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1777673032727340788, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 670.311
@@ -382,10 +370,6 @@ PrefabInstance:
     - target: {fileID: 1432215707112799310, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_Name
       value: Mutant (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432215707112799310, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1777673032727340788, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -822,10 +806,6 @@ PrefabInstance:
     - target: {fileID: 1432215707112799310, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_Name
       value: Mutant
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432215707112799310, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1777673032727340788, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_LocalPosition.x

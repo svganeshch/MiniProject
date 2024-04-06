@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class DodgeState : State
 {
-    float timePassed;
-    float dodgeTime;
+    public bool dodgeDone;
 
     public DodgeState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
@@ -18,12 +17,11 @@ public class DodgeState : State
         base.Enter();
         character.animator.applyRootMotion = true;
 
-        timePassed = 0;
-        dodgeTime = 0.8f;
+        dodgeDone = false;
 
         if (character.playerVelocity == Vector3.zero)
         {
-            character.animator.SetFloat("speedY", 0.5f);
+            character.animator.SetFloat("speedY", 1f);
         }
 
         character.animator.SetTrigger("dodge");
@@ -33,10 +31,8 @@ public class DodgeState : State
     {
         base.LogicUpdate();
 
-        if (timePassed > dodgeTime)
+        if (dodgeDone)
         {
-            character.animator.SetTrigger("move");
-
             if (character.animator.GetBool("isCombat"))
             {
                 stateMachine.ChangeState(character.combatState);
@@ -46,7 +42,6 @@ public class DodgeState : State
                 stateMachine.ChangeState(character.idleState);
             }
         }
-        timePassed += Time.deltaTime;
     }
 
     public override void Exit()
