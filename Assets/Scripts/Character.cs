@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +8,6 @@ public class Character : MonoBehaviour
     public static Character instance;
 
     [Header("Character controls")]
-    public float health = 100;
     public float walkingSpeed = 2.5f;
     public float runningSpeed = 5f;
     public float combatSpeed = 6f;
@@ -22,6 +22,7 @@ public class Character : MonoBehaviour
     [Header("Layer Masks")]
     public LayerMask playerLayerMask;
     public LayerMask enemyLayerMask;
+    public LayerMask damagableLayerMask;
     public LayerMask obstaclesLayerMask;
 
     [Header("Animation Smoothing")]
@@ -106,6 +107,8 @@ public class Character : MonoBehaviour
         characterMovementSM.Initialize(idleState);
 
         GRAVITY_VALUE *= gravityMultiplier;
+
+        IgnoreMyOwnColliders();
     }
 
     private void Update()
@@ -124,18 +127,25 @@ public class Character : MonoBehaviour
         PlayerCamera.instance.CameraActions();
     }
 
-    public void TakeDamage(float weaponDamage)
+    private void IgnoreMyOwnColliders()
     {
-        health -= weaponDamage;
+        Collider characterControllerCollider = GetComponent<Collider>();
+        Collider[] damagableCharacterColliders = GetComponentsInChildren<Collider>();
+        List<Collider> ignoreColliders = new List<Collider>();
 
-        if (health <= 0)
+        foreach (var collider in damagableCharacterColliders)
         {
-            //Die();
-            Debug.Log("Player dead");
+            ignoreColliders.Add(collider);
         }
-        Debug.Log("Player received damage");
+        ignoreColliders.Add(characterControllerCollider);
 
-        characterMovementSM.ChangeState(hitState);
+        foreach (var collider in ignoreColliders)
+        {
+            foreach (var otherCollider in ignoreColliders)
+            {
+                Physics.IgnoreCollision(collider, otherCollider, true);
+            }
+        }
     }
 
     void OnGUI()

@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : MonoBehaviour
 {
     [Header("Enemy Controls")]
-    [SerializeField] float health = 100;
     [SerializeField] public float detectionRadius = 15;
     [SerializeField] public Transform targetLock;
     [HideInInspector] public bool isDead = false;
@@ -37,6 +37,8 @@ public class Enemy : MonoBehaviour
         enemyStateMachine.Initialize(idleState);
 
         weaponAttacks = GetComponentsInChildren<WeaponAttack>();
+
+        IgnoreMyOwnColliders();
     }
 
     private void Update()
@@ -65,23 +67,25 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float weaponDamage)
+    private void IgnoreMyOwnColliders()
     {
-        health -= weaponDamage;
-        animator.SetTrigger("damage");
+        Collider characterControllerCollider = GetComponent<Collider>();
+        Collider[] damagableCharacterColliders = GetComponentsInChildren<Collider>();
+        List<Collider> ignoreColliders = new List<Collider>();
 
-        if (health <= 0)
+        foreach (var collider in damagableCharacterColliders)
         {
-            Die();
+            ignoreColliders.Add(collider);
         }
-        Debug.Log("Enemy received damage");
-    }
+        ignoreColliders.Add(characterControllerCollider);
 
-    private void Die()
-    {
-        isDead = true;
-        animator.SetTrigger("isDead");
-        Destroy(gameObject, 5f);
+        foreach (var collider in ignoreColliders)
+        {
+            foreach (var otherCollider in ignoreColliders)
+            {
+                Physics.IgnoreCollision(collider, otherCollider, true);
+            }
+        }
     }
 
     void OnGUI()

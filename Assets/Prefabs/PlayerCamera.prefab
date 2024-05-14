@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5876413045896002731}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: CameraPivotUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8116169642250123877}
   - component: {fileID: 4514210633645560833}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: PlayerCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,8 +82,10 @@ MonoBehaviour:
   followTarget: {fileID: 0}
   playerInput: {fileID: 0}
   cameraSmoothSpeed: 0.25
-  upDownRotationSpeed: 50
-  leftRightRotationSpeed: 40
+  MouseYSensitivity: 40
+  MouseXSensitivity: 40
+  GamepadYSensitivity: 220
+  GamepadXSensitivity: 220
   minimumPivot: -30
   maximumPivot: 60
   cameraCollisionRadius: 0.2
@@ -94,7 +96,7 @@ MonoBehaviour:
   minimumViewableAngle: -50
   maximumViewableAngle: 50
   lockOnTargetFollowSpeed: 0.8
-  setCameraHeightSpeed: 0.125
+  setCameraHeightSpeed: 0.05
   mouseLockOnSwitchTreshold: 50
   unlockedCameraHeight: 1.65
   lockedCameraHeight: 2
@@ -112,7 +114,7 @@ GameObject:
   - component: {fileID: 7144099461333022512}
   - component: {fileID: 5824512183474025208}
   - component: {fileID: 7026722588428696576}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}

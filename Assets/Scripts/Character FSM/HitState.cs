@@ -6,6 +6,8 @@ public class HitState : State
 {
     public bool hitDone = false;
 
+    private bool dodge = false;
+
     public HitState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
         character = _character;
@@ -17,14 +19,33 @@ public class HitState : State
         base.Enter();
 
         hitDone = false;
+        dodge = false;
 
         //character.animator.Play("hit_f");
         character.animator.SetTrigger("damage");
     }
 
+    public override void HandleInput()
+    {
+        base.HandleInput();
+
+        if (dodgeAction.triggered)
+        {
+            dodge = true;
+        }
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        CharacterMovement();
+
+        if (dodge)
+        {
+            dodge = false;
+            stateMachine.ChangeState(character.dodgeState);
+        }
 
         if (hitDone)
         {
@@ -32,40 +53,11 @@ public class HitState : State
         }
     }
 
-    public override void Exit()
+    private void CharacterMovement()
     {
-        base.Exit();
-
         input = moveAction.ReadValue<Vector2>();
         verticalInput = input.y;
         horizontalInput = input.x;
-
-        moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
-
-        if (moveAmount <= 0.5 && moveAmount > 0)
-        {
-            moveAmount = 0.5f;
-        }
-        else if (moveAmount > 0.5f && moveAmount <= 1)
-        {
-            moveAmount = 1;
-        }
-
-        moveVelocity = PlayerCamera.instance.transform.forward * verticalInput;
-        moveVelocity += PlayerCamera.instance.transform.right * horizontalInput;
-        moveVelocity.Normalize();
-        moveVelocity.y = 0;
-
-        if (moveAmount > 0.5f)
-        {
-            // running speed
-            character.controller.Move(character.runningSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
-        }
-        else if (moveAmount <= 0.5f)
-        {
-            // walking speed
-            character.controller.Move(character.walkingSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
-        }
 
         HandleRotation();
     }

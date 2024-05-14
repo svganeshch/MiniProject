@@ -4,11 +4,10 @@ using UnityEngine;
 
 public abstract class WeaponAttack : MonoBehaviour
 {
-    Character targetPlayer;
-    Enemy targetEnemy;
+    HealthManager healthManager;
+    GameObject characterCausingDamage;
+    GameObject characterTakingDamage;
 
-    bool isPlayer;
-    bool isEnemy;
     bool canDealDamage;
     List<GameObject> hasDealtDamage;
 
@@ -20,15 +19,9 @@ public abstract class WeaponAttack : MonoBehaviour
     {
         canDealDamage = false;
         hasDealtDamage = new List<GameObject>();
+        damageLayerMask = Character.instance.damagableLayerMask;
 
-        if (damageLayerMask == Character.instance.playerLayerMask)
-        {
-            isEnemy = true;
-        }
-        else if (damageLayerMask == Character.instance.enemyLayerMask)
-        {
-            isPlayer = true;
-        }
+        characterCausingDamage = HelperFunctions.GetComponentFromTopParent<HealthManager>(transform).gameObject;
     }
 
     void Update()
@@ -39,22 +32,24 @@ public abstract class WeaponAttack : MonoBehaviour
 
             if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength, damageLayerMask))
             {
-                if (isPlayer)
+                if (hit.transform != null)
                 {
-                    if (hit.transform.TryGetComponent(out targetEnemy) && !hasDealtDamage.Contains(hit.transform.gameObject))
+                    characterTakingDamage = HelperFunctions.GetComponentFromTopParent<HealthManager>(hit.transform, out healthManager).gameObject;
+
+                    if (characterTakingDamage != null)
                     {
-                        targetEnemy.TakeDamage(weaponDamage);
-                        hasDealtDamage.Add(hit.transform.gameObject);
+                        if (characterTakingDamage == characterCausingDamage)
+                            return;
+
+                        if (hit.transform.gameObject == gameObject) return;
+
+                        if (!hasDealtDamage.Contains(hit.transform.gameObject))
+                        {
+                            healthManager.TakeDamage(weaponDamage);
+                            hasDealtDamage.Add(hit.transform.gameObject);
+                        }
                     }
                 }
-                else if (isEnemy)
-                {
-                    if (hit.transform.TryGetComponent(out targetPlayer) && !hasDealtDamage.Contains(hit.transform.gameObject))
-                    {
-                        targetPlayer.TakeDamage(weaponDamage);
-                        hasDealtDamage.Add(hit.transform.gameObject);
-                    }
-                } 
             }
         }
     }
