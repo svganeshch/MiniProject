@@ -8,12 +8,13 @@ public abstract class WeaponAttack : MonoBehaviour
     GameObject characterCausingDamage;
     GameObject characterTakingDamage;
 
+    public float weaponLength;
+    [HideInInspector] public float weaponDamage;
+    LayerMask damageLayerMask;
+
+    RaycastHit hit;
     bool canDealDamage;
     List<GameObject> hasDealtDamage;
-
-    public float weaponLength;
-    public float weaponDamage;
-    public LayerMask damageLayerMask;
 
     void Start()
     {
@@ -28,8 +29,6 @@ public abstract class WeaponAttack : MonoBehaviour
     {
         if (canDealDamage)
         {
-            RaycastHit hit;
-
             if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength, damageLayerMask))
             {
                 if (hit.transform != null)
@@ -41,12 +40,10 @@ public abstract class WeaponAttack : MonoBehaviour
                         if (characterTakingDamage == characterCausingDamage)
                             return;
 
-                        if (hit.transform.gameObject == gameObject) return;
-
-                        if (!hasDealtDamage.Contains(hit.transform.gameObject))
+                        if (!hasDealtDamage.Contains(characterTakingDamage))
                         {
                             healthManager.TakeDamage(weaponDamage);
-                            hasDealtDamage.Add(hit.transform.gameObject);
+                            hasDealtDamage.Add(characterTakingDamage);
                         }
                     }
                 }
@@ -56,7 +53,10 @@ public abstract class WeaponAttack : MonoBehaviour
     public void StartDealDamage()
     {
         canDealDamage = true;
+
         hasDealtDamage.Clear();
+        characterTakingDamage = null;
+        healthManager = null;
     }
     public void EndDealDamage()
     {

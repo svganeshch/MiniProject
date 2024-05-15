@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public EnemyAttackState attackState;
 
     // WeaponAttack scripts
-    WeaponAttack[] weaponAttacks;
+    public WeaponAttack[] weaponAttacks;
 
     private void Start()
     {

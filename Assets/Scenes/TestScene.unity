@@ -131,6 +131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1340996912592162612, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1432215707112799310, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_Name
       value: Mutant 1 (1)
@@ -174,6 +178,10 @@ PrefabInstance:
     - target: {fileID: 1777673032727340788, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744133924172810806, guid: 0599b6f2697929c4dacad3cbef52da8b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
