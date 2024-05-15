@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6448572706265345163}
   - component: {fileID: 8708759948117217501}
   - component: {fileID: 6219075243277329241}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: pCube2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,6 +58,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -143,7 +146,7 @@ GameObject:
   - component: {fileID: 3201210474627611586}
   - component: {fileID: 549784740512991511}
   - component: {fileID: 3165869834608105915}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: pCube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,6 +193,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -224,7 +230,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2853635914231487140}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: katana_v1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6494419461131761284}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: group2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +299,7 @@ GameObject:
   - component: {fileID: 2065294486338422177}
   - component: {fileID: 2958156363476008578}
   - component: {fileID: 4135048036822965018}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: pCylinder1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,6 +346,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

@@ -48,12 +48,12 @@ public class EnemyAttackState : EnemyState
         {
             if (canAttack)
             {
-                Debug.Log("switching state to next attack");
+                //Debug.Log("switching state to next attack");
                 enemyStateMachine.ChangeState(enemy.attackState);
             }
             else
             {
-                Debug.Log("out of radius");
+                //Debug.Log("out of radius");
                 enemy.animator.SetTrigger("move");
                 enemyStateMachine.ChangeState(enemy.pursueState);
             }
