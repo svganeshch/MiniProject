@@ -624,7 +624,8 @@ MonoBehaviour:
   isDead: 0
   animator: {fileID: 0}
   navMesh: {fileID: 0}
-  weaponAttacks: []
+  leftWeaponAttack: {fileID: 7660914701098589394}
+  rightWeaponAttack: {fileID: 6787777853186287907}
 --- !u!114 &7057218324966385208
 MonoBehaviour:
   m_ObjectHideFlags: 0

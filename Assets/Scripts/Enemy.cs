@@ -23,7 +23,8 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public EnemyAttackState attackState;
 
     // WeaponAttack scripts
-    public WeaponAttack[] weaponAttacks;
+    public WeaponAttack leftWeaponAttack;
+    public WeaponAttack rightWeaponAttack;
 
     private void Start()
     {
@@ -35,8 +36,6 @@ public class Enemy : MonoBehaviour
         pursueState = new EnemyPursueState(this, enemyStateMachine);
         attackState = new EnemyAttackState(this, enemyStateMachine);
         enemyStateMachine.Initialize(idleState);
-
-        weaponAttacks = GetComponentsInChildren<WeaponAttack>();
 
         IgnoreMyOwnColliders();
     }
@@ -51,19 +50,37 @@ public class Enemy : MonoBehaviour
         enemyStateMachine.currentState.PhysicsUpdate();
     }
 
-    public void StartDamage()
+    public void StartDamage(string attackHand)
     {
-        foreach (var weapon in weaponAttacks)
+        if (attackHand != null)
         {
-            weapon.StartDealDamage();
+            switch (attackHand)
+            {
+                case "left":
+                    leftWeaponAttack.StartDealDamage();
+                    break;
+                case "right":
+                    rightWeaponAttack.StartDealDamage();
+                    break;
+            }
         }
+
+        Debug.Log("attackHand " +  attackHand);
     }
 
-    public void StopDamage()
+    public void StopDamage(string attackHand)
     {
-        foreach (var weapon in weaponAttacks)
+        if (attackHand != null)
         {
-            weapon.EndDealDamage();
+            switch (attackHand)
+            {
+                case "left":
+                    leftWeaponAttack.StopDealDamage();
+                    break;
+                case "right":
+                    rightWeaponAttack.StopDealDamage();
+                    break;
+            }
         }
     }
 
