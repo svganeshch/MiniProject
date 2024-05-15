@@ -9,7 +9,7 @@ public abstract class WeaponAttack : MonoBehaviour
     GameObject characterTakingDamage;
 
     public float weaponLength;
-    [HideInInspector] public float weaponDamage;
+    public float weaponDamage;
     LayerMask damageLayerMask;
 
     RaycastHit hit;
@@ -58,7 +58,7 @@ public abstract class WeaponAttack : MonoBehaviour
         characterTakingDamage = null;
         healthManager = null;
     }
-    public void EndDealDamage()
+    public void StopDealDamage()
     {
         canDealDamage = false;
     }

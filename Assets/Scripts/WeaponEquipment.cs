@@ -136,7 +136,7 @@ public class WeaponEquipment : MonoBehaviour
 
     public void StopDamage()
     {
-        currentWeapon.weaponAttackScript.EndDealDamage();
+        currentWeapon.weaponAttackScript.StopDealDamage();
     }
 
     public Weapon GetCurrentWeapon()
