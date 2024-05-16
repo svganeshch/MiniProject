@@ -16,6 +16,7 @@ public class Character : MonoBehaviour
     public float gravityMultiplier = 2f;
     public float attackCancelTreshold = 0.3f;
     public float attackComboTreshold = 0.9f;
+    public float weaponSwapSlowTime = 0.5f;
     public Transform targetLockCast;
     public Transform playerFollow;
 

@@ -1539,6 +1539,7 @@ MonoBehaviour:
   gravityMultiplier: 2
   attackCancelTreshold: 0.3
   attackComboTreshold: 0.9
+  weaponSwapSlowTime: 0.4
   targetLockCast: {fileID: 2792782978014464322}
   playerFollow: {fileID: 3874505488766782055}
   playerLayerMask:

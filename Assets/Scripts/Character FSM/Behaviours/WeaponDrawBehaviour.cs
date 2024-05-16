@@ -42,12 +42,15 @@ public class WeaponDrawBehaviour : StateMachineBehaviour
 
         isWeaponDraw = animator.GetBool("isWeaponDraw");
 
-        Time.timeScale = 1f;
-
         if (isWeaponDraw)
         {
             animator.SetBool("isWeaponDraw", false);
             character.characterMovementSM.ChangeState(character.combatState);
         }
+
+
+        // Reset timescale
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = Time.deltaTime;
     }
 }
