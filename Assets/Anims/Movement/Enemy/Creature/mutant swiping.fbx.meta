@@ -16,6 +16,8 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -57,14 +59,14 @@ ModelImporter:
       events:
       - time: 0.44402987
         functionName: StartDamage
-        data: right
+        data: left
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.5671642
         functionName: StopDamage
-        data: right
+        data: left
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
