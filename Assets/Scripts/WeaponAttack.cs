@@ -9,7 +9,7 @@ public abstract class WeaponAttack : MonoBehaviour
     GameObject characterTakingDamage;
 
     public float weaponLength;
-    public float weaponDamage;
+    [HideInInspector] public float weaponDamage;
     LayerMask damageLayerMask;
 
     RaycastHit hit;
