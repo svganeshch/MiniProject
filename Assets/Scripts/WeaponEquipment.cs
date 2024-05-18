@@ -6,11 +6,17 @@ public class Weapon
 {
     public bool Enabled = false;
 
+    [Header("Weapon Components")]
     public AnimatorOverrideController animatorOverrideController;
     public GameObject weaponPrefab;
     public Transform weaponHolderPosition;
     public Transform weaponHolsterPosition;
 
+    [Header("Weapon SFX")]
+    public AudioFXClip slashSound;
+    public AudioFXClip hitSound;
+
+    [Header("Weapon Settings")]
     public int weaponSlot;
     public float weaponDamage = 50f;
     public float attackSpeedMultiplier = 1f;
@@ -24,6 +30,8 @@ public class Weapon
 
 public class WeaponEquipment : MonoBehaviour
 {
+    public static WeaponEquipment Instance;
+
     public List<Weapon> weapons = new List<Weapon>();
     public float weaponSwapSpeed = 4f;
 
@@ -35,6 +43,15 @@ public class WeaponEquipment : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         animator = GetComponent<Animator>();
     }
 
