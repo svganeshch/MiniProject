@@ -622,7 +622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.543
+      value: 0.97
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -630,7 +630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -22.48
+      value: 1.27
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1591,7 +1591,7 @@ MonoBehaviour:
     isDagger: 0
     weaponObj: {fileID: 0}
     weaponAttackScript: {fileID: 0}
-  - Enabled: 1
+  - Enabled: 0
     animatorOverrideController: {fileID: 22100000, guid: eb0dbc82df9adeb41a2b674f4ee56689, type: 2}
     weaponPrefab: {fileID: 4022379509725501266, guid: 68da5811baee0654e9ef9bb9d7a5794b, type: 3}
     weaponHolderPosition: {fileID: 3325900071238961482}
@@ -1606,7 +1606,7 @@ MonoBehaviour:
     isDagger: 0
     weaponObj: {fileID: 0}
     weaponAttackScript: {fileID: 0}
-  - Enabled: 1
+  - Enabled: 0
     animatorOverrideController: {fileID: 22100000, guid: 2ac9285d14ea69341bd2aa4614b490ff, type: 2}
     weaponPrefab: {fileID: 3902927586234646952, guid: 7b6e835ab5a0c0e4183fe5db42289790, type: 3}
     weaponHolderPosition: {fileID: 2627380128159753939}
@@ -1621,7 +1621,7 @@ MonoBehaviour:
     isDagger: 1
     weaponObj: {fileID: 0}
     weaponAttackScript: {fileID: 0}
-  - Enabled: 1
+  - Enabled: 0
     animatorOverrideController: {fileID: 22100000, guid: d3abace068def784b8fc1fdc839033d2, type: 2}
     weaponPrefab: {fileID: 2248695283924371341, guid: 93ad89b567c50c3449838906f891da12, type: 3}
     weaponHolderPosition: {fileID: 8214382034231030989}
@@ -1636,7 +1636,7 @@ MonoBehaviour:
     isDagger: 0
     weaponObj: {fileID: 0}
     weaponAttackScript: {fileID: 0}
-  - Enabled: 1
+  - Enabled: 0
     animatorOverrideController: {fileID: 0}
     weaponPrefab: {fileID: 3902927586234646952, guid: 7b6e835ab5a0c0e4183fe5db42289790, type: 3}
     weaponHolderPosition: {fileID: 3408340676089729766}

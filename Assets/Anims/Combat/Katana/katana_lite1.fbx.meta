@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 673659374932735726
-    second: straight_sword_main_light_attack_01
+    second: katana_lite1
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,7 +36,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: straight_sword_main_light_attack_01
+      name: katana_lite1
       takeName: straight_sword_main_light_attack_01
       internalID: 0
       firstFrame: 10
