@@ -1581,6 +1581,8 @@ MonoBehaviour:
     weaponPrefab: {fileID: 3229632965787041822, guid: ac612740b5cb81a4fa60c642b00ce9c1, type: 3}
     weaponHolderPosition: {fileID: 538736580346194846}
     weaponHolsterPosition: {fileID: 7867259438974082854}
+    slashSound: {fileID: 11400000, guid: acc24b736b2d0994d879ba7def66f794, type: 2}
+    hitSound: {fileID: 11400000, guid: aff2ec064560d2543a5c9e84e89ff316, type: 2}
     weaponSlot: 1
     weaponDamage: 50
     attackSpeedMultiplier: 1.2
@@ -1594,6 +1596,8 @@ MonoBehaviour:
     weaponPrefab: {fileID: 4022379509725501266, guid: 68da5811baee0654e9ef9bb9d7a5794b, type: 3}
     weaponHolderPosition: {fileID: 3325900071238961482}
     weaponHolsterPosition: {fileID: 854773711046539094}
+    slashSound: {fileID: 0}
+    hitSound: {fileID: 0}
     weaponSlot: 2
     weaponDamage: 50
     attackSpeedMultiplier: 1
@@ -1607,6 +1611,8 @@ MonoBehaviour:
     weaponPrefab: {fileID: 3902927586234646952, guid: 7b6e835ab5a0c0e4183fe5db42289790, type: 3}
     weaponHolderPosition: {fileID: 2627380128159753939}
     weaponHolsterPosition: {fileID: 8200036844016761304}
+    slashSound: {fileID: 0}
+    hitSound: {fileID: 0}
     weaponSlot: 3
     weaponDamage: 50
     attackSpeedMultiplier: 1
@@ -1620,6 +1626,8 @@ MonoBehaviour:
     weaponPrefab: {fileID: 2248695283924371341, guid: 93ad89b567c50c3449838906f891da12, type: 3}
     weaponHolderPosition: {fileID: 8214382034231030989}
     weaponHolsterPosition: {fileID: 3174786388402970954}
+    slashSound: {fileID: 0}
+    hitSound: {fileID: 0}
     weaponSlot: 4
     weaponDamage: 50
     attackSpeedMultiplier: 1.5
@@ -1633,6 +1641,8 @@ MonoBehaviour:
     weaponPrefab: {fileID: 3902927586234646952, guid: 7b6e835ab5a0c0e4183fe5db42289790, type: 3}
     weaponHolderPosition: {fileID: 3408340676089729766}
     weaponHolsterPosition: {fileID: 7298846690386179628}
+    slashSound: {fileID: 0}
+    hitSound: {fileID: 0}
     weaponSlot: 0
     weaponDamage: 50
     attackSpeedMultiplier: 1

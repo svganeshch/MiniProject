@@ -27,6 +27,8 @@ public class CombatState : State
     bool leftLockOnTrigger;
     bool rightLockOnTrigger;
 
+    Vector3 lockedTargetDirection;
+
     Coroutine lockOnCoroutine;
 
     public CombatState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
@@ -49,6 +51,7 @@ public class CombatState : State
 
         input = Vector2.zero;
         targetDirection = Vector3.zero;
+        lockedTargetDirection = Vector3.zero;
         gravityVelocity.y = 0;
 
         moveVelocity = character.playerVelocity;
@@ -169,7 +172,7 @@ public class CombatState : State
 
         if (isLockedOn)
         {
-            SetAnimationParameters(horizontalInput, moveAmount);
+            SetAnimationParameters(horizontalInput, verticalInput);
         }
         else
         {
@@ -371,7 +374,6 @@ public class CombatState : State
             if (currentTarget == null)
                 return;
 
-            Vector3 lockedTargetDirection;
             lockedTargetDirection = currentTarget.transform.position - character.transform.position;
             lockedTargetDirection.y = 0f;
             lockedTargetDirection.Normalize();
@@ -450,27 +452,6 @@ public class CombatState : State
         character.animator.SetFloat("speedY", snappedVertical, character.speedDampTime, Time.deltaTime);
     }
 
-    public override void Exit()
-    {
-        base.Exit();
-
-        gravityVelocity.y = 0f;
-        character.playerVelocity = new Vector3(input.x, 0, input.y);
-
-        if (isLockedOn)
-        {
-            if (moveVelocity == Vector3.zero)
-            {
-                moveVelocity = character.transform.forward;
-            }
-            character.transform.rotation = Quaternion.LookRotation(moveVelocity);
-        }
-        else
-        {
-            character.transform.rotation = Quaternion.LookRotation(targetDirection);
-        }
-    }
-
     public void SwapWeapon()
     {
         if (character.weaponEquipment.SetWeapon(swapWeaponTo))
@@ -486,5 +467,22 @@ public class CombatState : State
 
         Time.timeScale = slowTime;
         Time.fixedDeltaTime = slowTime * Time.deltaTime;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        gravityVelocity.y = 0f;
+        character.playerVelocity = new Vector3(input.x, 0, input.y);
+
+        if (isLockedOn)
+        {
+            character.transform.rotation = Quaternion.LookRotation(lockedTargetDirection);
+        }
+        else
+        {
+            character.transform.rotation = Quaternion.LookRotation(targetDirection);
+        }
     }
 }

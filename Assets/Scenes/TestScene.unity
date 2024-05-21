@@ -1131,18 +1131,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3495262877921707322, guid: 2b647b13953992046a9d62b3015e7845, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7592572223178561286, guid: 2b647b13953992046a9d62b3015e7845, type: 3}
-      propertyPath: weapons.Array.data[0].hitSound
-      value: 
-      objectReference: {fileID: 11400000, guid: aff2ec064560d2543a5c9e84e89ff316, type: 2}
-    - target: {fileID: 7592572223178561286, guid: 2b647b13953992046a9d62b3015e7845, type: 3}
-      propertyPath: weapons.Array.data[0].slashSound
-      value: 
-      objectReference: {fileID: 11400000, guid: acc24b736b2d0994d879ba7def66f794, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
