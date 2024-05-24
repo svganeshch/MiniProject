@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class EnemyIdleState : EnemyState
 {
-    public Character currentTarget;
-
     public Vector3 targetDirection;
     public float viewableAngle;
     public float minimumFOV = -35;

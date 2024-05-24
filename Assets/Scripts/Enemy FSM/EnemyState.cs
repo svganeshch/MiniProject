@@ -8,6 +8,8 @@ public class EnemyState
     protected Enemy enemy;
     protected EnemyStateMachine enemyStateMachine;
 
+    public static Character currentTarget;
+
     public EnemyState(Enemy _enemy, EnemyStateMachine _enemyStateMachine)
     {
         enemy = _enemy;

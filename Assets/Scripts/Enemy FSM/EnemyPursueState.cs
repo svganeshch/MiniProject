@@ -23,7 +23,7 @@ public class EnemyPursueState : EnemyState
     {
         base.LogicUpdate();
 
-        if (enemy.idleState.currentTarget == null)
+        if (currentTarget == null)
         {
             enemyStateMachine.ChangeState(enemy.idleState);
         }
@@ -43,7 +43,7 @@ public class EnemyPursueState : EnemyState
 
         //enemy.navMesh.SetDestination(enemy.idleState.currentTarget.transform.position);
         NavMeshPath navMeshPath = new NavMeshPath();
-        enemy.navMesh.CalculatePath(enemy.idleState.currentTarget.transform.position, navMeshPath);
+        enemy.navMesh.CalculatePath(currentTarget.transform.position, navMeshPath);
         enemy.navMesh.SetPath(navMeshPath);
 
         enemy.navMesh.transform.localPosition = Vector3.zero;
@@ -62,7 +62,7 @@ public class EnemyPursueState : EnemyState
         {
             enemy.navMesh.enabled = false;
             enemy.animator.SetFloat("speed", 0);
-            enemy.idleState.currentTarget = null;
+            currentTarget = null;
             enemyStateMachine.ChangeState(enemy.idleState);
         }
     }

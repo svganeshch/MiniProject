@@ -62,7 +62,7 @@ public class EnemyAttackState : EnemyState
 
     private void LookAtTarget()
     {
-        Vector3 targetDirection = enemy.idleState.currentTarget.transform.position - enemy.transform.position;
+        Vector3 targetDirection = currentTarget.transform.position - enemy.transform.position;
         targetDirection.y = 0;
         targetDirection.Normalize();
 
@@ -77,7 +77,7 @@ public class EnemyAttackState : EnemyState
 
     private bool CheckAttackDistance()
     {
-        float remainingDistance = Vector3.Distance(enemy.transform.position, enemy.idleState.currentTarget.transform.position);
+        float remainingDistance = Vector3.Distance(enemy.transform.position, currentTarget.transform.position);
         return (remainingDistance < enemy.navMesh.stoppingDistance + chaseDistanceTreshold);
     }
 
