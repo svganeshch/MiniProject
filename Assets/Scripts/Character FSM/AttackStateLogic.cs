@@ -13,8 +13,6 @@ public class AttackStateLogic : State
     private float attackCancelTreshold;
     private float attackComboTreshold;
 
-    private Weapon currentWeapon;
-
     public AttackStateLogic(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
         character = _character;
@@ -38,8 +36,7 @@ public class AttackStateLogic : State
         attackCancelTreshold = character.attackCancelTreshold;
         attackComboTreshold = character.attackComboTreshold;
 
-        currentWeapon = WeaponEquipment.Instance.GetCurrentWeapon();
-        SFXManager.instance.PlayWeaponSound(currentWeapon.slashSound);
+        SFXManager.instance.PlayWeaponSound(WeaponEquipment.Instance.GetCurrentWeapon().slashSound);
 
         character.animator.SetFloat("speedY", 0f);
     }

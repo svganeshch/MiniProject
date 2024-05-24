@@ -13,8 +13,8 @@ public class Weapon
     public Transform weaponHolsterPosition;
 
     [Header("Weapon SFX")]
-    public AudioFXClip slashSound;
-    public AudioFXClip hitSound;
+    public AudioClip slashSound;
+    public AudioClip hitSound;
 
     [Header("Weapon Settings")]
     public int weaponSlot;

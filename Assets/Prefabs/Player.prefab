@@ -1581,8 +1581,8 @@ MonoBehaviour:
     weaponPrefab: {fileID: 3229632965787041822, guid: ac612740b5cb81a4fa60c642b00ce9c1, type: 3}
     weaponHolderPosition: {fileID: 538736580346194846}
     weaponHolsterPosition: {fileID: 7867259438974082854}
-    slashSound: {fileID: 11400000, guid: acc24b736b2d0994d879ba7def66f794, type: 2}
-    hitSound: {fileID: 11400000, guid: aff2ec064560d2543a5c9e84e89ff316, type: 2}
+    slashSound: {fileID: 8300000, guid: b3aecb26c81473e44a0fff9ff05e29d8, type: 3}
+    hitSound: {fileID: 8300000, guid: ce9c91d89424ead4ba9c91b4c82557a0, type: 3}
     weaponSlot: 1
     weaponDamage: 50
     attackSpeedMultiplier: 1.2

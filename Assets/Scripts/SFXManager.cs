@@ -2,12 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/AudioFXClip", order = 1)]
-public class AudioFXClip : ScriptableObject
-{
-    public AudioClip clip;
-}
-
 public class SFXManager : MonoBehaviour
 {
     public static SFXManager instance;
@@ -26,8 +20,8 @@ public class SFXManager : MonoBehaviour
         }
     }
 
-    public void PlayWeaponSound(AudioFXClip audioFXClip)
+    public void PlayWeaponSound(AudioClip audioClip)
     {
-        audioSource.PlayOneShot(audioFXClip.clip);
+        audioSource.PlayOneShot(audioClip);
     }
 }
