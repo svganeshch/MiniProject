@@ -6,4 +6,11 @@ public class PlayerHealthManager : HealthManager
 
         character.characterMovementSM.ChangeState(character.hitState);
     }
+
+    public override void Die()
+    {
+        // Trigger dead state
+
+        base.Die();
+    }
 }

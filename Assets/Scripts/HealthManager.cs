@@ -14,8 +14,8 @@ public class HealthManager : MonoBehaviour
         currentHealth = Health;
 
         animator = GetComponent<Animator>();
-        character = FindObjectOfType<Character>();
-        enemy = FindObjectOfType<Enemy>();
+        character = GetComponent<Character>();
+        enemy = GetComponent<Enemy>();
     }
 
     public virtual void TakeDamage(float weaponDamage)
@@ -26,15 +26,10 @@ public class HealthManager : MonoBehaviour
         {
             Die();
         }
-        Debug.Log("Enemy received damage");
     }
 
-    private void Die()
+    public virtual void Die()
     {
-        if (enemy != null)
-            enemy.isDead = true;
-
-        animator.SetTrigger("isDead");
         Destroy(gameObject, 5f);
     }
 }

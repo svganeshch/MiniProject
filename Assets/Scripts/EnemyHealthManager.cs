@@ -6,4 +6,12 @@ public class EnemyHealthManager : HealthManager
 
         enemy.animator.SetTrigger("damage");
     }
+
+    public override void Die()
+    {
+        enemy.isDead = true;
+        animator.SetTrigger("isDead");
+
+        base.Die();
+    }
 }
