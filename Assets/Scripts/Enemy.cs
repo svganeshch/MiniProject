@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : MonoBehaviour
 {
@@ -65,7 +62,7 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        Debug.Log("attackHand " +  attackHand);
+        //Debug.Log("attackHand " +  attackHand);
     }
 
     public void StopDamage(string attackHand)

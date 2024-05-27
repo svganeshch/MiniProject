@@ -622,7 +622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.97
+      value: 48.37
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -993,7 +993,7 @@ PrefabInstance:
       addedObject: {fileID: 7592572223178561286}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       insertIndex: 3
-      addedObject: {fileID: 4312146059508817173}
+      addedObject: {fileID: 3799613187885143210}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4071349994904901829}
@@ -1652,7 +1652,7 @@ MonoBehaviour:
     weaponObj: {fileID: 0}
     weaponAttackScript: {fileID: 0}
   weaponSwapSpeed: 4
---- !u!114 &4312146059508817173
+--- !u!114 &3799613187885143210
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1661,11 +1661,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3228883306286264613}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9914b4523c2152347b008457b4eefa20, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b9a44d70f951144798fab211e50e681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 10000
+  Health: 1000
   currentHealth: 0
+  animator: {fileID: 0}
+  character: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!114 &4071349994904901829
 MonoBehaviour:
   m_ObjectHideFlags: 0

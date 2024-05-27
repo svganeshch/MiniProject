@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HitState : State
@@ -49,7 +47,7 @@ public class HitState : State
 
         if (hitDone)
         {
-            stateMachine.ChangeState(stateMachine.previousState);
+            stateMachine.ChangeState(character.combatState);
         }
     }
 

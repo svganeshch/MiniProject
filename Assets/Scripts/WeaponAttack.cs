@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,7 +34,7 @@ public abstract class WeaponAttack : MonoBehaviour
                 {
                     characterTakingDamage = HelperFunctions.GetComponentFromTopParent<HealthManager>(hit.transform, out healthManager).gameObject;
 
-                    if (characterTakingDamage != null)
+                    if (characterTakingDamage != null && healthManager != null)
                     {
                         if (characterTakingDamage == characterCausingDamage)
                             return;
