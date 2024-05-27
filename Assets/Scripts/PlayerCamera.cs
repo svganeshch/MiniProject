@@ -86,7 +86,7 @@ public class PlayerCamera : MonoBehaviour
             Destroy(gameObject);
         }
 
-        character = followTarget.GetComponent<Character>();
+        character = Character.instance;
     }
 
     private void Start()
