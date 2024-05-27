@@ -64,11 +64,11 @@ public class HitState : State
     {
         if (character.combatState.isLockedOn)
         {
-            if (character.combatState.currentTarget == null)
+            if (character.currentLockedOnTarget == null)
                 return;
 
             Vector3 lockedTargetDirection;
-            lockedTargetDirection = character.combatState.currentTarget.transform.position - character.transform.position;
+            lockedTargetDirection = character.currentLockedOnTarget.transform.position - character.transform.position;
             lockedTargetDirection.y = 0f;
             lockedTargetDirection.Normalize();
 

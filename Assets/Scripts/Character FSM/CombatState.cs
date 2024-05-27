@@ -1,16 +1,8 @@
-using Cinemachine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
-using UnityEngine.Rendering.RendererUtils;
-using UnityEngine.TextCore.Text;
 
 public class CombatState : State
 {
-    public Enemy currentTarget;
     public bool isLockedOn = false;
 
     float gravityValue;
@@ -247,10 +239,10 @@ public class CombatState : State
 
     private void CheckLockOn()
     {
-        if (currentTarget == null)
+        if (character.currentLockedOnTarget == null)
             return;
 
-        if (currentTarget.isDead)
+        if (character.currentLockedOnTarget.isDead)
         {
             ResetLockOn();
 
@@ -331,11 +323,11 @@ public class CombatState : State
     {
         if (nearestTarget != null)
         {
-            currentTarget = nearestTarget;
+            character.currentLockedOnTarget = nearestTarget;
         }
         else
         {
-            currentTarget = null;
+            character.currentLockedOnTarget = null;
         }
 
         PlayerCamera.instance.SetLockOnCameraHeight();
@@ -371,10 +363,10 @@ public class CombatState : State
     {
         if (isLockedOn)
         {
-            if (currentTarget == null)
+            if (character.currentLockedOnTarget == null)
                 return;
 
-            lockedTargetDirection = currentTarget.transform.position - character.transform.position;
+            lockedTargetDirection = character.currentLockedOnTarget.transform.position - character.transform.position;
             lockedTargetDirection.y = 0f;
             lockedTargetDirection.Normalize();
 

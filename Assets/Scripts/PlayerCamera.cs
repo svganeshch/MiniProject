@@ -120,7 +120,7 @@ public class PlayerCamera : MonoBehaviour
             return;
         }
 
-        if (currentDevice != null )
+        if (currentDevice != null)
         {
             if (currentDevice is Keyboard)
             {
@@ -159,14 +159,14 @@ public class PlayerCamera : MonoBehaviour
         if (character.combatState.isLockedOn)
         {
             // Right Left Pivot
-            Vector3 rotationDirection = character.combatState.currentTarget.targetLock.position - transform.position;
+            Vector3 rotationDirection = character.currentLockedOnTarget.targetLock.position - transform.position;
             rotationDirection.Normalize();
             rotationDirection.y = 0;
             Quaternion targetRotation = Quaternion.LookRotation(rotationDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockOnTargetFollowSpeed);
 
             // Up Down Pivot
-            rotationDirection = character.combatState.currentTarget.targetLock.position - cameraPivotTransform.position;
+            rotationDirection = character.currentLockedOnTarget.targetLock.position - cameraPivotTransform.position;
             rotationDirection.Normalize();
             targetRotation = Quaternion.LookRotation(rotationDirection);
             cameraPivotTransform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed);
@@ -226,7 +226,7 @@ public class PlayerCamera : MonoBehaviour
 
         for (int i = 0; i < colliders.Length; i++)
         {
-            
+
             if (colliders[i].TryGetComponent<Enemy>(out var lockOnTarget))
             {
                 Vector3 lockOnTargetDirection = lockOnTarget.transform.position - character.transform.position;
@@ -273,7 +273,7 @@ public class PlayerCamera : MonoBehaviour
                     var distanceFromLeftTarget = relativeTargetPosition.x;
                     var distanceFromRightTarget = relativeTargetPosition.x;
 
-                    if (availableTargets[i] == character.combatState.currentTarget)
+                    if (availableTargets[i] == character.currentLockedOnTarget)
                         continue;
 
                     if (relativeTargetPosition.x <= 0.00 && distanceFromLeftTarget > shortestDistanceOfLeftTarget)
@@ -339,9 +339,9 @@ public class PlayerCamera : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if (character.combatState.currentTarget != null)
+            if (character.currentLockedOnTarget != null)
             {
-                cameraPivotTransform.transform.localPosition = 
+                cameraPivotTransform.transform.localPosition =
                     Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed);
 
                 //cameraPivotTransform.transform.localRotation =
@@ -349,7 +349,7 @@ public class PlayerCamera : MonoBehaviour
             }
             else
             {
-                cameraPivotTransform.transform.localPosition = 
+                cameraPivotTransform.transform.localPosition =
                     Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnlockedCameraHeight, ref velocity, setCameraHeightSpeed);
             }
 

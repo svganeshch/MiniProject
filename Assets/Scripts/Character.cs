@@ -38,6 +38,8 @@ public class Character : MonoBehaviour
     public float GRAVITY_VALUE = -9.81f;
     [HideInInspector]
     public Vector3 playerVelocity;
+    [HideInInspector]
+    public Enemy currentLockedOnTarget;
 
     //Unity Components
     [HideInInspector]
@@ -93,7 +95,7 @@ public class Character : MonoBehaviour
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         weaponEquipment = GetComponent<WeaponEquipment>();
-        
+
         characterMovementSM = new StateMachine();
         idleState = new IdleState(this, characterMovementSM);
         jumpState = new JumpState(this, characterMovementSM);

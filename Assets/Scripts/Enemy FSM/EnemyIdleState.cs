@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyIdleState : EnemyState
@@ -20,7 +17,7 @@ public class EnemyIdleState : EnemyState
     {
         base.LogicUpdate();
 
-        if (currentTarget == null)
+        if (enemy.currentTarget == null)
         {
             FindTarget();
         }
@@ -57,7 +54,7 @@ public class EnemyIdleState : EnemyState
                 {
                     //targetDirection = targetCharacter.transform.position - enemy.transform.position;
                     //viewableAngle = enemy.pursueState.GetAngleOfTarget(enemy.transform, enemy.idleState.targetDirection);
-                    currentTarget = targetCharacter;
+                    enemy.currentTarget = targetCharacter;
                     //PivotTowardsTarget();
                     Debug.Log("target found");
                 }
@@ -67,7 +64,7 @@ public class EnemyIdleState : EnemyState
 
     public void PivotTowardsTarget()
     {
-        if (viewableAngle >= 20 &&  viewableAngle <=60)
+        if (viewableAngle >= 20 && viewableAngle <= 60)
         {
             enemy.animator.SetTrigger("R45");
         }

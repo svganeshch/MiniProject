@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,7 +20,7 @@ public class EnemyPursueState : EnemyState
     {
         base.LogicUpdate();
 
-        if (currentTarget == null)
+        if (enemy.currentTarget == null)
         {
             enemyStateMachine.ChangeState(enemy.idleState);
         }
@@ -43,7 +40,7 @@ public class EnemyPursueState : EnemyState
 
         //enemy.navMesh.SetDestination(enemy.idleState.currentTarget.transform.position);
         NavMeshPath navMeshPath = new NavMeshPath();
-        enemy.navMesh.CalculatePath(currentTarget.transform.position, navMeshPath);
+        enemy.navMesh.CalculatePath(enemy.currentTarget.transform.position, navMeshPath);
         enemy.navMesh.SetPath(navMeshPath);
 
         enemy.navMesh.transform.localPosition = Vector3.zero;
@@ -62,7 +59,7 @@ public class EnemyPursueState : EnemyState
         {
             enemy.navMesh.enabled = false;
             enemy.animator.SetFloat("speed", 0);
-            currentTarget = null;
+            enemy.currentTarget = null;
             enemyStateMachine.ChangeState(enemy.idleState);
         }
     }

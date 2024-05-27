@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] public float detectionRadius = 15;
     [SerializeField] public Transform targetLock;
     [HideInInspector] public bool isDead = false;
+    [HideInInspector] public Character currentTarget;
 
     // Unity components
     [HideInInspector] public Animator animator;

@@ -1,14 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.TextCore.Text;
-
 public class EnemyState
 {
     protected Enemy enemy;
     protected EnemyStateMachine enemyStateMachine;
-
-    public static Character currentTarget;
 
     public EnemyState(Enemy _enemy, EnemyStateMachine _enemyStateMachine)
     {
