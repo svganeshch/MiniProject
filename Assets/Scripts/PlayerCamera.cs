@@ -35,7 +35,6 @@ public class PlayerCamera : MonoBehaviour
     public float minimumPivot = -30;
     public float maximumPivot = 60;
     public float cameraCollisionRadius = 0.2f;
-    public LayerMask obstacleLayers;
 
     [Header("Camera values")]
     Vector3 cameraVelocity;
@@ -85,12 +84,12 @@ public class PlayerCamera : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        character = Character.instance;
     }
 
     private void Start()
     {
+        character = Character.instance;
+
         DontDestroyOnLoad(gameObject);
         cameraZPosition = cameraObj.transform.localPosition.z;
 
@@ -201,7 +200,7 @@ public class PlayerCamera : MonoBehaviour
         Vector3 direction = cameraObj.transform.position - cameraPivotTransform.position;
         direction.Normalize();
 
-        if (Physics.SphereCast(cameraPivotTransform.position, cameraCollisionRadius, direction, out hit, Mathf.Abs(targetCameraZPosition), obstacleLayers))
+        if (Physics.SphereCast(cameraPivotTransform.position, cameraCollisionRadius, direction, out hit, Mathf.Abs(targetCameraZPosition), character.obstaclesLayerMask))
         {
             float distanceFromObject = Vector3.Distance(cameraPivotTransform.position, hit.point);
             targetCameraZPosition = -(distanceFromObject - cameraCollisionRadius);

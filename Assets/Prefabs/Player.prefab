@@ -1553,12 +1553,13 @@ MonoBehaviour:
     m_Bits: 256
   obstaclesLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
   speedDampTime: 0.25
   rotationDampTime: 15
   airControl: 0.5
   GRAVITY_VALUE: -9.81
   playerVelocity: {x: 0, y: 0, z: 0}
+  currentLockedOnTarget: {fileID: 0}
   animator: {fileID: 0}
   controller: {fileID: 0}
   playerInput: {fileID: 0}
