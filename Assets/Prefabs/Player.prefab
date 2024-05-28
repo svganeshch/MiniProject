@@ -1554,8 +1554,8 @@ MonoBehaviour:
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 9
-  speedDampTime: 0.25
-  rotationDampTime: 15
+  speedDampTime: 0.1
+  rotationDampTime: 10
   airControl: 0.5
   GRAVITY_VALUE: -9.81
   playerVelocity: {x: 0, y: 0, z: 0}
