@@ -155,7 +155,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void HandleRotations()
     {
-        if (character.combatState.isLockedOn)
+        if (character.isLockedOn)
         {
             // Right Left Pivot
             Vector3 rotationDirection = character.currentLockedOnTarget.targetLock.position - transform.position;
@@ -265,7 +265,7 @@ public class PlayerCamera : MonoBehaviour
                     //Debug.Log("nearest target : " + nearestTarget.name);
                 }
 
-                if (character.combatState.isLockedOn)
+                if (character.isLockedOn)
                 {
                     Vector3 relativeTargetPosition = transform.InverseTransformPoint(availableTargets[i].transform.position);
 
@@ -290,7 +290,7 @@ public class PlayerCamera : MonoBehaviour
             else
             {
                 ClearLockOnTargets();
-                character.combatState.isLockedOn = false;
+                character.isLockedOn = false;
             }
         }
     }
@@ -319,7 +319,7 @@ public class PlayerCamera : MonoBehaviour
         if (nearestTarget != null)
         {
             character.combatState.SetTarget(nearestTarget);
-            character.combatState.isLockedOn = true;
+            character.isLockedOn = true;
         }
 
         yield return null;

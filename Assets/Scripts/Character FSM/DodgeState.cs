@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DodgeState : State
 {
     public bool dodgeDone;
+
+    bool block;
 
     public DodgeState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
@@ -17,6 +17,7 @@ public class DodgeState : State
         base.Enter();
         character.animator.applyRootMotion = true;
 
+        block = false;
         dodgeDone = false;
 
         if (character.playerVelocity == Vector3.zero)
@@ -27,12 +28,30 @@ public class DodgeState : State
         character.animator.SetTrigger("dodge");
     }
 
+    public override void HandleInput()
+    {
+        base.HandleInput();
+
+        if (blockAction.triggered)
+        {
+            block = true;
+        }
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
         if (dodgeDone)
         {
+            if (block)
+            {
+                stateMachine.ChangeState(character.blockState);
+                return;
+            }
+
+            Debug.Log("welp still here");
+
             if (character.animator.GetBool("isCombat"))
             {
                 stateMachine.ChangeState(character.combatState);

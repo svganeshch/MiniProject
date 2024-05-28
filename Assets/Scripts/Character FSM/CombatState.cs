@@ -3,8 +3,6 @@ using UnityEngine.InputSystem;
 
 public class CombatState : State
 {
-    public bool isLockedOn = false;
-
     float gravityValue;
     float playerSpeed;
 
@@ -12,14 +10,13 @@ public class CombatState : State
 
     bool isGrounded;
     bool holsterWeapon;
+    bool blocking;
     bool attackState;
     bool heavyAttackState;
     bool swapWeapon;
     bool lockOnTrigger;
     bool leftLockOnTrigger;
     bool rightLockOnTrigger;
-
-    Vector3 lockedTargetDirection;
 
     Coroutine lockOnCoroutine;
 
@@ -34,6 +31,7 @@ public class CombatState : State
         base.Enter();
 
         holsterWeapon = false;
+        blocking = false;
         attackState = false;
         heavyAttackState = false;
         swapWeapon = false;
@@ -64,6 +62,11 @@ public class CombatState : State
         if (drawWeaponAction.triggered)
         {
             holsterWeapon = true;
+        }
+
+        if (blockAction.triggered)
+        {
+            blocking = true;
         }
 
         if (heavyAttackWeaponAction.triggered)
@@ -106,7 +109,7 @@ public class CombatState : State
         }
 
         // target lock on swap
-        if (isLockedOn)
+        if (character.isLockedOn)
         {
             if (leftLockOnAction.triggered || rightLockOnAction.triggered)
             {
@@ -162,7 +165,7 @@ public class CombatState : State
         moveVelocity.Normalize();
         moveVelocity.y = 0;
 
-        if (isLockedOn)
+        if (character.isLockedOn)
         {
             SetAnimationParameters(horizontalInput, verticalInput);
         }
@@ -177,6 +180,12 @@ public class CombatState : State
 
             character.animator.SetTrigger("holsterWeapon");
             stateMachine.ChangeState(character.idleState);
+        }
+
+        if (blocking)
+        {
+            blocking = false;
+            stateMachine.ChangeState(character.blockState);
         }
 
         if (heavyAttackState)
@@ -199,7 +208,7 @@ public class CombatState : State
             HandleWeaponSwap();
         }
 
-        if (isLockedOn)
+        if (character.isLockedOn)
         {
             CheckLockOn();
         }
@@ -255,18 +264,18 @@ public class CombatState : State
 
     private void HandleTargetLockOn()
     {
-        if (lockOnTrigger && isLockedOn)
+        if (lockOnTrigger && character.isLockedOn)
         {
             lockOnTrigger = false;
 
             PlayerCamera.instance.ClearLockOnTargets();
             SetTarget(null);
-            isLockedOn = false;
+            character.isLockedOn = false;
 
             return;
         }
 
-        if (lockOnTrigger && !isLockedOn)
+        if (lockOnTrigger && !character.isLockedOn)
         {
             lockOnTrigger = false;
 
@@ -275,7 +284,7 @@ public class CombatState : State
             if (PlayerCamera.instance.nearestTarget != null)
             {
                 SetTarget(PlayerCamera.instance.nearestTarget);
-                isLockedOn = true;
+                character.isLockedOn = true;
             }
         }
     }
@@ -286,7 +295,7 @@ public class CombatState : State
         {
             leftLockOnTrigger = false;
 
-            if (isLockedOn)
+            if (character.isLockedOn)
             {
                 PlayerCamera.instance.FindLockOnTarget();
 
@@ -301,7 +310,7 @@ public class CombatState : State
         {
             rightLockOnTrigger = false;
 
-            if (isLockedOn)
+            if (character.isLockedOn)
             {
                 PlayerCamera.instance.FindLockOnTarget();
 
@@ -315,7 +324,7 @@ public class CombatState : State
 
     private void ResetLockOn()
     {
-        isLockedOn = false;
+        character.isLockedOn = false;
         SetTarget(null);
     }
 
@@ -359,91 +368,6 @@ public class CombatState : State
         HandleRotation();
     }
 
-    private void HandleRotation()
-    {
-        if (isLockedOn)
-        {
-            if (character.currentLockedOnTarget == null)
-                return;
-
-            lockedTargetDirection = character.currentLockedOnTarget.transform.position - character.transform.position;
-            lockedTargetDirection.y = 0f;
-            lockedTargetDirection.Normalize();
-
-            Quaternion targetRotation = Quaternion.LookRotation(lockedTargetDirection);
-            Quaternion finalRotation = Quaternion.Slerp(character.transform.rotation, targetRotation, character.rotationDampTime * Time.fixedDeltaTime);
-            character.transform.rotation = finalRotation;
-        }
-        else
-        {
-            targetDirection = Vector3.zero;
-            targetDirection = PlayerCamera.instance.cameraObj.transform.forward * verticalInput;
-            targetDirection += PlayerCamera.instance.cameraObj.transform.right * horizontalInput;
-            targetDirection.Normalize();
-            targetDirection.y = 0f;
-
-            if (targetDirection == Vector3.zero)
-            {
-                targetDirection = character.transform.forward;
-            }
-
-            Quaternion newRotation = Quaternion.LookRotation(targetDirection);
-            Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.fixedDeltaTime);
-            character.transform.rotation = targetRotation;
-        }
-    }
-
-    private void SetAnimationParameters(float horizontalInput, float verticalInput)
-    {
-        float snappedHorizontal = horizontalInput;
-        float snappedVertical = verticalInput;
-
-        if (horizontalInput > 0 && horizontalInput <= 0.5f)
-        {
-            snappedHorizontal = 0.5f;
-        }
-        else if (horizontalInput > 0.5f && horizontalInput <= 1)
-        {
-            snappedHorizontal = 1;
-        }
-        else if (horizontalInput < 0 && horizontalInput >= -0.5f)
-        {
-            snappedHorizontal = -0.5f;
-        }
-        else if (horizontalInput < -0.5f && horizontalInput >= -1)
-        {
-            snappedHorizontal = -1;
-        }
-        else
-        {
-            snappedHorizontal = 0;
-        }
-
-        if (verticalInput > 0 && verticalInput <= 0.5f)
-        {
-            snappedVertical = 0.5f;
-        }
-        else if (verticalInput > 0.5f && verticalInput <= 1)
-        {
-            snappedVertical = 1;
-        }
-        else if (verticalInput < 0 && verticalInput >= -0.5f)
-        {
-            snappedVertical = -0.5f;
-        }
-        else if (verticalInput < -0.5f && verticalInput >= -1)
-        {
-            snappedVertical = -1;
-        }
-        else
-        {
-            snappedVertical = 0;
-        }
-
-        character.animator.SetFloat("speedX", snappedHorizontal, character.speedDampTime, Time.deltaTime);
-        character.animator.SetFloat("speedY", snappedVertical, character.speedDampTime, Time.deltaTime);
-    }
-
     public void SwapWeapon()
     {
         if (character.weaponEquipment.SetWeapon(swapWeaponTo))
@@ -468,7 +392,7 @@ public class CombatState : State
         gravityVelocity.y = 0f;
         character.playerVelocity = new Vector3(input.x, 0, input.y);
 
-        if (isLockedOn)
+        if (character.isLockedOn)
         {
             character.transform.rotation = Quaternion.LookRotation(lockedTargetDirection);
         }

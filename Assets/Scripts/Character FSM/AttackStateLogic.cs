@@ -4,6 +4,7 @@ public class AttackStateLogic : State
 {
     bool attack;
     bool dodge;
+    bool block;
     private float timePassed;
     private float clipLength;
     private float clipSpeed;
@@ -27,7 +28,7 @@ public class AttackStateLogic : State
 
         attack = false;
         dodge = false;
-        character.animator.applyRootMotion = true;
+        block = false;
 
         timePassed = 0f;
 
@@ -36,6 +37,7 @@ public class AttackStateLogic : State
 
         SFXManager.instance.PlayWeaponSound(WeaponEquipment.Instance.GetCurrentWeapon().slashSound);
 
+        character.animator.applyRootMotion = true;
         character.animator.SetFloat("speedY", 0f);
     }
 
@@ -46,6 +48,11 @@ public class AttackStateLogic : State
         if (dodgeAction.triggered)
         {
             dodge = true;
+        }
+
+        if (blockAction.triggered)
+        {
+            block = true;
         }
 
         if (liteAttackWeaponAction.triggered)
@@ -84,6 +91,12 @@ public class AttackStateLogic : State
                 dodge = false;
                 stateMachine.ChangeState(character.dodgeState);
             }
+
+            if (block)
+            {
+                block = false;
+                stateMachine.ChangeState(character.blockState);
+            }
         }
 
         if (timePassed >= clipTime * attackComboTreshold)
@@ -99,45 +112,12 @@ public class AttackStateLogic : State
         }
     }
 
-    private void HandleRotation()
-    {
-        if (character.combatState.isLockedOn)
-        {
-            if (character.currentLockedOnTarget == null)
-                return;
-
-            Vector3 lockedTargetDirection;
-            lockedTargetDirection = character.currentLockedOnTarget.transform.position - character.transform.position;
-            lockedTargetDirection.y = 0f;
-            lockedTargetDirection.Normalize();
-
-            Quaternion targetRotation = Quaternion.LookRotation(lockedTargetDirection);
-            character.transform.rotation = targetRotation;
-        }
-        else
-        {
-            targetDirection = Vector3.zero;
-            targetDirection = PlayerCamera.instance.cameraObj.transform.forward * verticalInput;
-            targetDirection += PlayerCamera.instance.cameraObj.transform.right * horizontalInput;
-            targetDirection.Normalize();
-            targetDirection.y = 0f;
-
-            if (targetDirection == Vector3.zero)
-            {
-                targetDirection = character.transform.forward;
-            }
-
-            Quaternion newRotation = Quaternion.LookRotation(targetDirection);
-            character.transform.rotation = newRotation;
-        }
-    }
-
     public override void Exit()
     {
         base.Exit();
         character.animator.applyRootMotion = false;
 
-        if (character.combatState.isLockedOn)
+        if (character.isLockedOn)
         {
             if (moveVelocity == Vector3.zero)
             {

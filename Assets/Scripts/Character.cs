@@ -39,6 +39,8 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public Vector3 playerVelocity;
     [HideInInspector]
+    public bool isLockedOn = false;
+    [HideInInspector]
     public Enemy currentLockedOnTarget;
 
     //Unity Components
@@ -68,6 +70,8 @@ public class Character : MonoBehaviour
     public DodgeState dodgeState;
     [HideInInspector]
     public CombatState combatState;
+    [HideInInspector]
+    public BlockState blockState;
     [HideInInspector]
     public LiteAttackState liteAttackState;
     [HideInInspector]
@@ -104,6 +108,7 @@ public class Character : MonoBehaviour
         sprintJumpState = new SprintJumpState(this, characterMovementSM);
         dodgeState = new DodgeState(this, characterMovementSM);
         combatState = new CombatState(this, characterMovementSM);
+        blockState = new BlockState(this, characterMovementSM);
         liteAttackState = new LiteAttackState(this, characterMovementSM);
         heavyAttackState = new HeavyAttackState(this, characterMovementSM);
         hitState = new HitState(this, characterMovementSM);
