@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ResetBools : StateMachineBehaviour
@@ -9,5 +7,7 @@ public class ResetBools : StateMachineBehaviour
         Character.instance.hitState.hitDone = true;
 
         Character.instance.dodgeState.dodgeDone = true;
+
+        Character.instance.blockBrokenState.blockBrokenDone = true;
     }
 }

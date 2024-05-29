@@ -73,6 +73,8 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public BlockState blockState;
     [HideInInspector]
+    public BlockBrokenState blockBrokenState;
+    [HideInInspector]
     public LiteAttackState liteAttackState;
     [HideInInspector]
     public HeavyAttackState heavyAttackState;
@@ -109,6 +111,7 @@ public class Character : MonoBehaviour
         dodgeState = new DodgeState(this, characterMovementSM);
         combatState = new CombatState(this, characterMovementSM);
         blockState = new BlockState(this, characterMovementSM);
+        blockBrokenState = new BlockBrokenState(this, characterMovementSM);
         liteAttackState = new LiteAttackState(this, characterMovementSM);
         heavyAttackState = new HeavyAttackState(this, characterMovementSM);
         hitState = new HitState(this, characterMovementSM);

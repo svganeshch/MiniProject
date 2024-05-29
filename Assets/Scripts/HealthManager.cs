@@ -1,31 +1,42 @@
 using UnityEngine;
 
-public class HealthManager : MonoBehaviour
+public abstract class HealthManager : MonoBehaviour
 {
+    public abstract void HandleDamage(float damage);
+
     public float Health = 100;
     public float currentHealth;
 
-    [HideInInspector] public Animator animator;
     [HideInInspector] public Character character;
     [HideInInspector] public Enemy enemy;
+
+    Vector3 attackDirection;
+    [HideInInspector] public bool isFacingAttacker;
 
     private void Start()
     {
         currentHealth = Health;
+        attackDirection = Vector3.zero;
 
-        animator = GetComponent<Animator>();
         character = GetComponent<Character>();
         enemy = GetComponent<Enemy>();
     }
 
-    public virtual void TakeDamage(float weaponDamage)
+    public virtual void TakeDamage(float weaponDamage, GameObject attacker, GameObject receiver)
     {
-        currentHealth -= weaponDamage;
-
         if (currentHealth <= 0)
         {
             Die();
         }
+
+        attackDirection = (attacker.transform.position - receiver.transform.position).normalized;
+        if (Vector3.Dot(receiver.transform.forward, attackDirection) >= 0.8f)
+        {
+            isFacingAttacker = true;
+            //Debug.Log("facing towards attacker : " + isFacingAttacker);
+        }
+
+        HandleDamage(weaponDamage);
     }
 
     public virtual void Die()

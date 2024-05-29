@@ -1,16 +1,15 @@
 public class EnemyHealthManager : HealthManager
 {
-    public override void TakeDamage(float weaponDamage)
+    public override void HandleDamage(float damage)
     {
-        base.TakeDamage(weaponDamage);
-
+        currentHealth -= damage;
         enemy.animator.SetTrigger("damage");
     }
 
     public override void Die()
     {
         enemy.isDead = true;
-        animator.SetTrigger("isDead");
+        enemy.animator.SetTrigger("isDead");
 
         base.Die();
     }

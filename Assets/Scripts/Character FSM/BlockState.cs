@@ -15,7 +15,7 @@ public class BlockState : State
         input = Vector2.zero;
 
         character.animator.applyRootMotion = true;
-        character.animator.SetTrigger("isBlocking");
+        character.animator.SetTrigger("Block");
     }
 
     public override void HandleInput()
@@ -24,7 +24,7 @@ public class BlockState : State
 
         if (!blockAction.IsPressed())
         {
-            character.animator.SetTrigger("move");
+            character.animator.SetTrigger("releaseBlock");
             stateMachine.ChangeState(character.combatState);
         }
 

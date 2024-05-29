@@ -1,10 +1,18 @@
 public class PlayerHealthManager : HealthManager
 {
-    public override void TakeDamage(float weaponDamage)
+    public override void HandleDamage(float damage)
     {
-        base.TakeDamage(weaponDamage);
+        if (isFacingAttacker && character.characterMovementSM.currentState == character.blockState)
+        {
+            currentHealth -= damage / 2;
 
-        character.characterMovementSM.ChangeState(character.hitState);
+            character.characterMovementSM.ChangeState(character.blockBrokenState);
+        }
+        else
+        {
+            currentHealth -= damage;
+            character.characterMovementSM.ChangeState(character.hitState);
+        }
     }
 
     public override void Die()
