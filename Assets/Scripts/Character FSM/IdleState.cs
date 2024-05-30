@@ -8,14 +8,10 @@ public class IdleState : State
     bool drawWeapon;
 
     int weaponSlot;
-    int defaultWeaponSlot = 1;
-    public int previousWeaponSlot = 0;
     float gravityValue;
 
     public IdleState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
-        character = _character;
-        stateMachine = _stateMachine;
     }
 
     public override void Enter()
@@ -49,42 +45,42 @@ public class IdleState : State
     {
         base.HandleInput();
 
-        if (jumpAction.triggered)
+        if (player.jumpAction.triggered)
             jump = true;
 
-        if (sprintAction.triggered)
+        if (player.sprintAction.triggered)
             sprint = true;
 
-        if (dodgeAction.triggered)
+        if (player.dodgeAction.triggered)
         {
-            stateMachine.ChangeState(character.dodgeState);
+            stateMachine.ChangeState(player.dodgeState);
         }
 
-        if (drawWeaponAction.triggered)
+        if (player.drawWeaponAction.triggered)
             drawWeapon = true;
 
-        if (weapon1Action.triggered)
+        if (player.weapon1Action.triggered)
         {
             weaponSlot = 1;
             drawWeapon = true;
         }
-        if (weapon2Action.triggered)
+        if (player.weapon2Action.triggered)
         {
             weaponSlot = 2;
             drawWeapon = true;
         }
-        if (weapon3Action.triggered)
+        if (player.weapon3Action.triggered)
         {
             weaponSlot = 3;
             drawWeapon = true;
         }
-        if (weapon4Action.triggered)
+        if (player.weapon4Action.triggered)
         {
             weaponSlot = 4;
             drawWeapon = true;
         }
 
-        input = moveAction.ReadValue<Vector2>();
+        input = player.moveAction.ReadValue<Vector2>();
         verticalInput = input.y;
         horizontalInput = input.x;
     }
@@ -104,18 +100,18 @@ public class IdleState : State
             moveAmount = 1;
         }
 
-        moveVelocity = PlayerCamera.instance.transform.forward * verticalInput;
-        moveVelocity += PlayerCamera.instance.transform.right * horizontalInput;
+        moveVelocity = PlayerCamera.Instance.transform.forward * verticalInput;
+        moveVelocity += PlayerCamera.Instance.transform.right * horizontalInput;
         moveVelocity.Normalize();
         moveVelocity.y = 0;
 
         SetAnimationParameters(0, moveAmount);
 
         if (jump)
-            stateMachine.ChangeState(character.jumpState);
+            stateMachine.ChangeState(player.jumpState);
 
         if (sprint)
-            stateMachine.ChangeState(character.sprintState);
+            stateMachine.ChangeState(player.sprintState);
 
         if (drawWeapon)
         {
@@ -126,7 +122,7 @@ public class IdleState : State
 
                 character.animator.SetTrigger("drawWeapon");
                 character.animator.SetBool("isWeaponDraw", true);
-                //stateMachine.ChangeState(character.combatState);
+                stateMachine.ChangeState(player.combatState);
             }
             else
             {
@@ -150,12 +146,12 @@ public class IdleState : State
         if (moveAmount > 0.5f)
         {
             // running speed
-            character.controller.Move(character.runningSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
+            character.controller.Move(player.runningSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
         }
         else if (moveAmount <= 0.5f)
         {
             // walking speed
-            character.controller.Move(character.walkingSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
+            character.controller.Move(player.walkingSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
         }
 
         HandleRotation();
@@ -166,7 +162,7 @@ public class IdleState : State
         base.Exit();
 
         gravityVelocity.y = 0f;
-        character.playerVelocity = new Vector3(input.x, 0, input.y);
-        character.transform.rotation = Quaternion.LookRotation(targetDirection);
+        player.playerVelocity = new Vector3(input.x, 0, input.y);
+        player.transform.rotation = Quaternion.LookRotation(targetDirection);
     }
 }

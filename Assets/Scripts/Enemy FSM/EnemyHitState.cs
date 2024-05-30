@@ -1,6 +1,6 @@
-public class BlockBrokenState : State
+public class EnemyHitState : State
 {
-    public BlockBrokenState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
+    public EnemyHitState(Enemy _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
     }
 
@@ -8,19 +8,17 @@ public class BlockBrokenState : State
     {
         base.Enter();
 
-        blockBrokenDone = false;
-
         character.animator.applyRootMotion = true;
-        character.animator.SetTrigger("block_broken");
+        character.animator.SetTrigger("damage");
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if (blockBrokenDone)
+        if (hitDone)
         {
-            stateMachine.ChangeState(player.combatState);
+            stateMachine.ChangeState(character.combatState);
         }
     }
 

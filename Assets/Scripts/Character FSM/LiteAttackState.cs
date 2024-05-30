@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class LiteAttackState : AttackStateLogic
 {
-    public LiteAttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
+    public LiteAttackState(Player _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
-        character = _character;
-        stateMachine = _stateMachine;
+        player = _character;
     }
 
     public override void Enter()

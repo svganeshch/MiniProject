@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
 
 public class WeaponSwapBehaviour : StateMachineBehaviour
 {
     public static bool skippedLayer = false;
 
-    private Character character;
     private bool isWeaponSwap = false;
     private float speedY;
+
+    Character character;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -42,6 +40,7 @@ public class WeaponSwapBehaviour : StateMachineBehaviour
         }
 
         skippedLayer = false;
+
         if (isWeaponSwap)
         {
             character.combatState.SwapWeapon();

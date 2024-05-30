@@ -6,14 +6,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerCamera : MonoBehaviour
 {
-    public static PlayerCamera instance;
+    public static PlayerCamera Instance;
 
     public GameObject cameraObj;
     public Transform cameraPivotTransform;
     public Transform followTarget;
+    public Player player;
     public PlayerInput playerInput;
 
-    private Character character;
     private InputDevice currentDevice;
     private InputDevice sensDevice;
 
@@ -76,23 +76,23 @@ public class PlayerCamera : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {
             Destroy(gameObject);
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
-        character = Character.instance;
+        playerInput = player.GetComponent<PlayerInput>();
 
-        DontDestroyOnLoad(gameObject);
         cameraZPosition = cameraObj.transform.localPosition.z;
-
         lookAction = playerInput.actions["Look"];
     }
 
@@ -155,17 +155,17 @@ public class PlayerCamera : MonoBehaviour
 
     private void HandleRotations()
     {
-        if (character.isLockedOn)
+        if (player.isLockedOn)
         {
             // Right Left Pivot
-            Vector3 rotationDirection = character.currentLockedOnTarget.targetLock.position - transform.position;
+            Vector3 rotationDirection = player.currentLockedOnTarget.targetLock.position - transform.position;
             rotationDirection.Normalize();
             rotationDirection.y = 0;
             Quaternion targetRotation = Quaternion.LookRotation(rotationDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockOnTargetFollowSpeed);
 
             // Up Down Pivot
-            rotationDirection = character.currentLockedOnTarget.targetLock.position - cameraPivotTransform.position;
+            rotationDirection = player.currentLockedOnTarget.targetLock.position - cameraPivotTransform.position;
             rotationDirection.Normalize();
             targetRotation = Quaternion.LookRotation(rotationDirection);
             cameraPivotTransform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed);
@@ -200,7 +200,7 @@ public class PlayerCamera : MonoBehaviour
         Vector3 direction = cameraObj.transform.position - cameraPivotTransform.position;
         direction.Normalize();
 
-        if (Physics.SphereCast(cameraPivotTransform.position, cameraCollisionRadius, direction, out hit, Mathf.Abs(targetCameraZPosition), character.obstaclesLayerMask))
+        if (Physics.SphereCast(cameraPivotTransform.position, cameraCollisionRadius, direction, out hit, Mathf.Abs(targetCameraZPosition), LayerMaskManager.Instance.obstaclesLayerMask))
         {
             float distanceFromObject = Vector3.Distance(cameraPivotTransform.position, hit.point);
             targetCameraZPosition = -(distanceFromObject - cameraCollisionRadius);
@@ -221,15 +221,15 @@ public class PlayerCamera : MonoBehaviour
         float shortestDistanceOfRightTarget = Mathf.Infinity;
         float shortestDistanceOfLeftTarget = -Mathf.Infinity;
 
-        Collider[] colliders = Physics.OverlapSphere(character.transform.position, lockOnRadius, character.enemyLayerMask);
+        Collider[] colliders = Physics.OverlapSphere(player.transform.position, lockOnRadius, LayerMaskManager.Instance.enemyLayerMask);
 
         for (int i = 0; i < colliders.Length; i++)
         {
 
             if (colliders[i].TryGetComponent<Enemy>(out var lockOnTarget))
             {
-                Vector3 lockOnTargetDirection = lockOnTarget.transform.position - character.transform.position;
-                float viewableAngle = Vector3.Angle(lockOnTargetDirection, PlayerCamera.instance.transform.forward);
+                Vector3 lockOnTargetDirection = lockOnTarget.transform.position - player.transform.position;
+                float viewableAngle = Vector3.Angle(lockOnTargetDirection, PlayerCamera.Instance.transform.forward);
 
                 if (lockOnTarget.isDead)
                     continue;
@@ -238,7 +238,7 @@ public class PlayerCamera : MonoBehaviour
                 {
                     RaycastHit hit;
 
-                    if (Physics.Linecast(character.targetLockCast.position, lockOnTarget.targetLock.transform.position, out hit, character.obstaclesLayerMask))
+                    if (Physics.Linecast(player.targetLockCast.position, lockOnTarget.targetLock.transform.position, out hit, LayerMaskManager.Instance.obstaclesLayerMask))
                     {
                         continue;
                     }
@@ -255,7 +255,7 @@ public class PlayerCamera : MonoBehaviour
         {
             if (availableTargets[i] != null)
             {
-                float distanceFromTarget = Vector3.Distance(character.transform.position, availableTargets[i].transform.position);
+                float distanceFromTarget = Vector3.Distance(player.transform.position, availableTargets[i].transform.position);
 
                 if (distanceFromTarget < shortestDistance)
                 {
@@ -265,14 +265,14 @@ public class PlayerCamera : MonoBehaviour
                     //Debug.Log("nearest target : " + nearestTarget.name);
                 }
 
-                if (character.isLockedOn)
+                if (player.isLockedOn)
                 {
                     Vector3 relativeTargetPosition = transform.InverseTransformPoint(availableTargets[i].transform.position);
 
                     var distanceFromLeftTarget = relativeTargetPosition.x;
                     var distanceFromRightTarget = relativeTargetPosition.x;
 
-                    if (availableTargets[i] == character.currentLockedOnTarget)
+                    if (availableTargets[i] == player.currentLockedOnTarget)
                         continue;
 
                     if (relativeTargetPosition.x <= 0.00 && distanceFromLeftTarget > shortestDistanceOfLeftTarget)
@@ -290,7 +290,7 @@ public class PlayerCamera : MonoBehaviour
             else
             {
                 ClearLockOnTargets();
-                character.isLockedOn = false;
+                player.isLockedOn = false;
             }
         }
     }
@@ -318,8 +318,8 @@ public class PlayerCamera : MonoBehaviour
 
         if (nearestTarget != null)
         {
-            character.combatState.SetTarget(nearestTarget);
-            character.isLockedOn = true;
+            player.combatState.SetTarget(nearestTarget);
+            player.isLockedOn = true;
         }
 
         yield return null;
@@ -338,7 +338,7 @@ public class PlayerCamera : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if (character.currentLockedOnTarget != null)
+            if (player.currentLockedOnTarget != null)
             {
                 cameraPivotTransform.transform.localPosition =
                     Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed);

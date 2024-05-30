@@ -1,51 +1,42 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Character
 {
     [Header("Enemy Controls")]
     [SerializeField] public float detectionRadius = 15;
     [SerializeField] public Transform targetLock;
-    [HideInInspector] public bool isDead = false;
-    [HideInInspector] public Character currentTarget;
+    public Character currentTarget;
 
     // Unity components
-    [HideInInspector] public Animator animator;
     [HideInInspector] public NavMeshAgent navMesh;
 
-    // Enemy FSM
-    [HideInInspector] public EnemyStateMachine enemyStateMachine;
-    [HideInInspector] public EnemyIdleState idleState;
-    [HideInInspector] public EnemyPursueState pursueState;
+    // Enemy Specefic States
     [HideInInspector] public EnemyAttackState attackState;
 
     // WeaponAttack scripts
     public WeaponAttack leftWeaponAttack;
     public WeaponAttack rightWeaponAttack;
 
-    private void Start()
+    protected override void Start()
     {
-        animator = GetComponent<Animator>();
+        base.Start();
+
         navMesh = GetComponentInChildren<NavMeshAgent>();
 
-        enemyStateMachine = new EnemyStateMachine();
-        idleState = new EnemyIdleState(this, enemyStateMachine);
-        pursueState = new EnemyPursueState(this, enemyStateMachine);
-        attackState = new EnemyAttackState(this, enemyStateMachine);
-        enemyStateMachine.Initialize(idleState);
-
-        IgnoreMyOwnColliders();
+        idleState = new EnemyIdleState(this, characterStateMachine);
+        combatState = new EnemyCombatState(this, characterStateMachine);
+        attackState = new EnemyAttackState(this, characterStateMachine);
+        liteAttackState = new EnemyLiteAttackState(this, characterStateMachine);
+        blockState = new BlockState(this, characterStateMachine);
+        blockBrokenState = new BlockBrokenState(this, characterStateMachine);
+        hitState = new EnemyHitState(this, characterStateMachine);
+        characterStateMachine.Initialize(idleState);
     }
 
-    private void Update()
+    protected override void Update()
     {
-        enemyStateMachine.currentState.LogicUpdate();
-    }
-
-    private void FixedUpdate()
-    {
-        enemyStateMachine.currentState.PhysicsUpdate();
+        characterStateMachine.currentState.LogicUpdate();
     }
 
     public void StartDamage(string attackHand)
@@ -82,30 +73,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void IgnoreMyOwnColliders()
+    public override void OnGUI()
     {
-        Collider characterControllerCollider = GetComponent<Collider>();
-        Collider[] damagableCharacterColliders = GetComponentsInChildren<Collider>();
-        List<Collider> ignoreColliders = new List<Collider>();
+        base.OnGUI();
 
-        foreach (var collider in damagableCharacterColliders)
-        {
-            ignoreColliders.Add(collider);
-        }
-        ignoreColliders.Add(characterControllerCollider);
-
-        foreach (var collider in ignoreColliders)
-        {
-            foreach (var otherCollider in ignoreColliders)
-            {
-                Physics.IgnoreCollision(collider, otherCollider, true);
-            }
-        }
-    }
-
-    void OnGUI()
-    {
         GUI.color = Color.black;
-        GUI.Label(new Rect(0, 20, 200, 20), enemyStateMachine.currentState.ToString());
+        GUI.Label(new Rect(0, 20, 200, 20), this.GetType().Name + " : " + characterStateMachine.currentState.ToString());
     }
 }

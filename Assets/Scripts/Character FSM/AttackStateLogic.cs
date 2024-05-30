@@ -14,8 +14,6 @@ public class AttackStateLogic : State
 
     public AttackStateLogic(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
-        character = _character;
-        stateMachine = _stateMachine;
     }
 
     public override void Enter()
@@ -24,7 +22,7 @@ public class AttackStateLogic : State
 
         input = Vector2.zero;
         targetDirection = Vector3.zero;
-        moveVelocity = character.playerVelocity;
+        moveVelocity = player.playerVelocity;
 
         attack = false;
         dodge = false;
@@ -32,10 +30,10 @@ public class AttackStateLogic : State
 
         timePassed = 0f;
 
-        attackCancelTreshold = character.attackCancelTreshold;
-        attackComboTreshold = character.attackComboTreshold;
+        attackCancelTreshold = player.attackCancelTreshold;
+        attackComboTreshold = player.attackComboTreshold;
 
-        SFXManager.instance.PlayWeaponSound(WeaponEquipment.Instance.GetCurrentWeapon().slashSound);
+        //SFXManager.instance.PlayWeaponSound(WeaponEquipment.Instance.GetCurrentWeapon().slashSound);
 
         character.animator.applyRootMotion = true;
         character.animator.SetFloat("speedY", 0f);
@@ -45,22 +43,22 @@ public class AttackStateLogic : State
     {
         base.HandleInput();
 
-        if (dodgeAction.triggered)
+        if (player.dodgeAction.triggered)
         {
             dodge = true;
         }
 
-        if (blockAction.triggered)
+        if (player.blockAction.triggered)
         {
             block = true;
         }
 
-        if (liteAttackWeaponAction.triggered)
+        if (player.liteAttackWeaponAction.triggered)
         {
             attack = true;
         }
 
-        input = moveAction.ReadValue<Vector2>();
+        input = player.moveAction.ReadValue<Vector2>();
         verticalInput = input.y;
         horizontalInput = input.x;
     }
@@ -79,8 +77,8 @@ public class AttackStateLogic : State
 
         if (timePassed <= clipTime * attackCancelTreshold)
         {
-            moveVelocity = PlayerCamera.instance.transform.forward * verticalInput;
-            moveVelocity += PlayerCamera.instance.transform.right * horizontalInput;
+            moveVelocity = PlayerCamera.Instance.transform.forward * verticalInput;
+            moveVelocity += PlayerCamera.Instance.transform.right * horizontalInput;
             moveVelocity.Normalize();
             moveVelocity.y = 0;
 
@@ -89,13 +87,13 @@ public class AttackStateLogic : State
             if (dodge)
             {
                 dodge = false;
-                stateMachine.ChangeState(character.dodgeState);
+                stateMachine.ChangeState(player.dodgeState);
             }
 
             if (block)
             {
                 block = false;
-                stateMachine.ChangeState(character.blockState);
+                stateMachine.ChangeState(player.blockState);
             }
         }
 
@@ -108,7 +106,7 @@ public class AttackStateLogic : State
         if (timePassed >= clipTime)
         {
             character.animator.SetTrigger("move");
-            stateMachine.ChangeState(character.combatState);
+            stateMachine.ChangeState(player.combatState);
         }
     }
 

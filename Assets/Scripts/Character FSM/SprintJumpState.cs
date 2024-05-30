@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SprintJumpState : State
@@ -7,10 +5,9 @@ public class SprintJumpState : State
     float timePassed;
     float jumpTime;
 
-    public SprintJumpState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
+    public SprintJumpState(Player _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
-        character = _character;
-        stateMachine = _stateMachine;
+        player = _character;
     }
 
     public override void Enter()
@@ -30,7 +27,7 @@ public class SprintJumpState : State
         if (timePassed > jumpTime)
         {
             character.animator.SetTrigger("move");
-            stateMachine.ChangeState(character.sprintState);
+            stateMachine.ChangeState(player.sprintState);
         }
         timePassed += Time.deltaTime;
     }

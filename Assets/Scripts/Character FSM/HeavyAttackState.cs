@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class HeavyAttackState : AttackStateLogic
 {
-    public HeavyAttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
+    public HeavyAttackState(Player _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
-        character = _character;
-        stateMachine = _stateMachine;
+        player = _character;
     }
 
     public override void Enter()

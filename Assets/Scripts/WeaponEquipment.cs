@@ -30,8 +30,6 @@ public class Weapon
 
 public class WeaponEquipment : MonoBehaviour
 {
-    public static WeaponEquipment Instance;
-
     public List<Weapon> weapons = new List<Weapon>();
     public float weaponSwapSpeed = 4f;
 
@@ -43,15 +41,6 @@ public class WeaponEquipment : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
         animator = GetComponent<Animator>();
     }
 

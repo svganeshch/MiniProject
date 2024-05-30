@@ -5,10 +5,9 @@ public class LandState : State
     float timePassed;
     float landingTime;
 
-    public LandState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
+    public LandState(Player _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
-        character = _character;
-        stateMachine = _stateMachine;
+        player = _character;
     }
 
     public override void Enter()
@@ -26,7 +25,7 @@ public class LandState : State
         if (timePassed > landingTime)
         {
             character.animator.SetTrigger("move");
-            stateMachine.ChangeState(character.idleState);
+            stateMachine.ChangeState(player.idleState);
         }
         timePassed += Time.deltaTime;
     }

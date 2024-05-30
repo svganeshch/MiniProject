@@ -490,18 +490,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &-6867554083689472422
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f474bf8f2bd777b408b0b7bd6e57c528, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1102 &-6867271279430722684
 AnimatorState:
   serializedVersion: 6
@@ -1095,6 +1083,18 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-3163787805243988625
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f474bf8f2bd777b408b0b7bd6e57c528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!206 &-2928088217199903231
 BlendTree:
   m_ObjectHideFlags: 1
@@ -2371,7 +2371,7 @@ AnimatorState:
   - {fileID: -7719207650275352773}
   m_StateMachineBehaviours:
   - {fileID: 5979418029748087292}
-  - {fileID: -6867554083689472422}
+  - {fileID: -3163787805243988625}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

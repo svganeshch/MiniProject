@@ -1,29 +1,40 @@
 using UnityEngine;
 
-public class EnemyIdleState : EnemyState
+public class EnemyIdleState : State
 {
-    public Vector3 targetDirection;
     public float viewableAngle;
     public float minimumFOV = -35;
     public float maximumFOV = 35;
 
-    public EnemyIdleState(Enemy _enemy, EnemyStateMachine _enemyStateMachine) : base(_enemy, _enemyStateMachine)
+    bool drawWeapon = false;
+
+    public EnemyIdleState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
-        enemy = _enemy;
-        enemyStateMachine = _enemyStateMachine;
     }
 
     public override void LogicUpdate()
     {
-        base.LogicUpdate();
+        if (drawWeapon)
+        {
+            drawWeapon = false;
 
+            if (character.weaponEquipment.SetWeapon(defaultWeaponSlot))
+            {
+                character.animator.SetTrigger("drawWeapon");
+                stateMachine.ChangeState(character.combatState);
+            }
+        }
+    }
+
+    public override void PhysicsUpdate()
+    {
         if (enemy.currentTarget == null)
         {
             FindTarget();
         }
         else
         {
-            enemyStateMachine.ChangeState(enemy.pursueState);
+            drawWeapon = true;
         }
     }
 
@@ -32,13 +43,13 @@ public class EnemyIdleState : EnemyState
         if (enemy.isDead)
             return;
 
-        Collider[] colliders = Physics.OverlapSphere(enemy.transform.position, enemy.detectionRadius, Character.instance.playerLayerMask);
+        Collider[] colliders = Physics.OverlapSphere(enemy.transform.position,
+                                                     enemy.detectionRadius,
+                                                     LayerMaskManager.Instance.playerLayerMask);
 
         for (int i = 0; i < colliders.Length; i++)
         {
-            Character targetCharacter = colliders[i].transform.GetComponent<Character>();
-
-            if (targetCharacter == null)
+            if (!colliders[i].transform.TryGetComponent<Player>(out var targetCharacter))
                 continue;
 
             Vector3 targetDirection = targetCharacter.transform.position - enemy.transform.position;
@@ -46,7 +57,7 @@ public class EnemyIdleState : EnemyState
 
             if (angleOfTarget > minimumFOV && angleOfTarget < maximumFOV)
             {
-                if (Physics.Linecast(enemy.targetLock.position, targetCharacter.targetLockCast.position, Character.instance.obstaclesLayerMask))
+                if (Physics.Linecast(enemy.targetLock.position, targetCharacter.targetLockCast.position, LayerMaskManager.Instance.obstaclesLayerMask))
                 {
                     continue;
                 }

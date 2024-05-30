@@ -2,14 +2,10 @@ using UnityEngine;
 
 public class HitState : State
 {
-    public bool hitDone = false;
-
     private bool dodge = false;
 
     public HitState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
-        character = _character;
-        stateMachine = _stateMachine;
     }
 
     public override void Enter()
@@ -20,6 +16,7 @@ public class HitState : State
         dodge = false;
 
         //character.animator.Play("hit_f");
+        character.animator.applyRootMotion = true;
         character.animator.SetTrigger("damage");
     }
 
@@ -27,7 +24,7 @@ public class HitState : State
     {
         base.HandleInput();
 
-        if (dodgeAction.triggered)
+        if (player.dodgeAction.triggered)
         {
             dodge = true;
         }
@@ -42,7 +39,7 @@ public class HitState : State
         if (dodge)
         {
             dodge = false;
-            stateMachine.ChangeState(character.dodgeState);
+            stateMachine.ChangeState(player.dodgeState);
         }
 
         if (hitDone)
@@ -53,10 +50,17 @@ public class HitState : State
 
     private void CharacterMovement()
     {
-        input = moveAction.ReadValue<Vector2>();
+        input = player.moveAction.ReadValue<Vector2>();
         verticalInput = input.y;
         horizontalInput = input.x;
 
         HandleRotation();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        character.animator.applyRootMotion = false;
     }
 }

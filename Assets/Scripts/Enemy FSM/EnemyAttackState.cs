@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyAttackState : EnemyState
+public class EnemyAttackState : State
 {
     private bool canAttack = false;
     private float chaseDistanceTreshold = 0.75f;
@@ -9,10 +9,8 @@ public class EnemyAttackState : EnemyState
     private float clipSpeed;
     private float clipTime;
 
-    public EnemyAttackState(Enemy _enemy, EnemyStateMachine _enemyStateMachine) : base(_enemy, _enemyStateMachine)
+    public EnemyAttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
-        enemy = _enemy;
-        enemyStateMachine = _enemyStateMachine;
     }
 
     public override void Enter()
@@ -22,9 +20,9 @@ public class EnemyAttackState : EnemyState
         canAttack = false;
         timePassed = 0;
 
-        enemy.animator.applyRootMotion = true;
-        enemy.animator.SetFloat("speed", 0);
-        enemy.animator.SetTrigger("attack");
+        SetAnimationParameters(0, 0);
+        character.animator.applyRootMotion = true;
+        character.animator.SetTrigger("liteAttack");
     }
 
     public override void LogicUpdate()
@@ -35,10 +33,10 @@ public class EnemyAttackState : EnemyState
         LookAtTarget();
         canAttack = CheckAttackDistance();
 
-        //Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        Debug.Log(character.animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
 
-        clipLength = enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        clipSpeed = enemy.animator.GetCurrentAnimatorStateInfo(0).speed * enemy.animator.GetCurrentAnimatorStateInfo(0).speedMultiplier;
+        clipLength = character.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+        clipSpeed = character.animator.GetCurrentAnimatorStateInfo(0).speed * character.animator.GetCurrentAnimatorStateInfo(0).speedMultiplier;
         clipTime = clipLength / clipSpeed;
 
         if (timePassed >= clipTime)
@@ -46,13 +44,13 @@ public class EnemyAttackState : EnemyState
             if (canAttack)
             {
                 //Debug.Log("switching state to next attack");
-                enemyStateMachine.ChangeState(enemy.attackState);
+                stateMachine.ChangeState(enemy.attackState);
             }
             else
             {
-                //Debug.Log("out of radius");
-                enemy.animator.SetTrigger("move");
-                enemyStateMachine.ChangeState(enemy.pursueState);
+                Debug.Log("out of radius");
+                character.animator.SetTrigger("move");
+                stateMachine.ChangeState(character.combatState);
             }
         }
     }
@@ -82,6 +80,6 @@ public class EnemyAttackState : EnemyState
     {
         base.Exit();
 
-        enemy.animator.applyRootMotion = false;
+        character.animator.applyRootMotion = false;
     }
 }

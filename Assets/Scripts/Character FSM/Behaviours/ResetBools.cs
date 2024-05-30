@@ -2,12 +2,18 @@ using UnityEngine;
 
 public class ResetBools : StateMachineBehaviour
 {
+    Character character;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Character.instance.hitState.hitDone = true;
+        if (character == null)
+        {
+            character = animator.GetComponent<Character>();
+        }
 
-        Character.instance.dodgeState.dodgeDone = true;
+        character.hitState.hitDone = true;
+        character.blockBrokenState.blockBrokenDone = true;
 
-        Character.instance.blockBrokenState.blockBrokenDone = true;
+        Player.Instance.dodgeState.dodgeDone = true;
     }
 }

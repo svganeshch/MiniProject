@@ -8,10 +8,9 @@ public class SprintState : State
     float playerSpeed;
     float gravityValue;
 
-    public SprintState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
+    public SprintState(Player _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
-        character = _character;
-        stateMachine = _stateMachine;
+        player = _character;
     }
 
     public override void Enter()
@@ -26,7 +25,7 @@ public class SprintState : State
         targetDirection = Vector3.zero;
         gravityVelocity.y = 0;
 
-        playerSpeed = character.sprintSpeed;
+        playerSpeed = player.sprintSpeed;
         gravityValue = character.GRAVITY_VALUE;
         isGrounded = character.controller.isGrounded;
     }
@@ -35,11 +34,11 @@ public class SprintState : State
     {
         base.HandleInput();
 
-        input = moveAction.ReadValue<Vector2>();
+        input = player.moveAction.ReadValue<Vector2>();
         verticalInput = input.y;
         horizontalInput = input.x;
 
-        if (sprintAction.triggered || input.sqrMagnitude == 0f)
+        if (player.sprintAction.triggered || input.sqrMagnitude == 0f)
         {
             sprint = false;
         }
@@ -48,7 +47,7 @@ public class SprintState : State
             sprint = true;
         }
 
-        if (jumpAction.triggered)
+        if (player.jumpAction.triggered)
         {
             sprintJump = true;
         }
@@ -58,22 +57,22 @@ public class SprintState : State
     {
         base.LogicUpdate();
 
-        moveVelocity = PlayerCamera.instance.transform.forward * verticalInput;
-        moveVelocity += PlayerCamera.instance.transform.right * horizontalInput;
+        moveVelocity = PlayerCamera.Instance.transform.forward * verticalInput;
+        moveVelocity += PlayerCamera.Instance.transform.right * horizontalInput;
         moveVelocity.Normalize();
         moveVelocity.y = 0;
 
         if (sprint)
         {
-            character.animator.SetFloat("speedY", input.magnitude + 1f, character.speedDampTime, Time.deltaTime);
+            character.animator.SetFloat("speedY", input.magnitude + 1f, player.speedDampTime, Time.deltaTime);
         }
         else
         {
-            stateMachine.ChangeState(character.idleState);
+            stateMachine.ChangeState(player.idleState);
         }
         if (sprintJump)
         {
-            stateMachine.ChangeState(character.sprintJumpState);
+            stateMachine.ChangeState(player.sprintJumpState);
         }
     }
 

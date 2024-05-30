@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponDrawBehaviour : StateMachineBehaviour
@@ -27,7 +25,7 @@ public class WeaponDrawBehaviour : StateMachineBehaviour
                 skippedLayer = true;
                 return;
             }
-            
+
             if (speedY < 0.01f && layerIndex == 2)
             {
                 skippedLayer = true;
@@ -45,7 +43,7 @@ public class WeaponDrawBehaviour : StateMachineBehaviour
         if (isWeaponDraw)
         {
             animator.SetBool("isWeaponDraw", false);
-            character.characterMovementSM.ChangeState(character.combatState);
+            character.characterStateMachine.ChangeState(character.combatState);
         }
 
 

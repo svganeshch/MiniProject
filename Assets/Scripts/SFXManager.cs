@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SFXManager : MonoBehaviour
@@ -18,6 +16,8 @@ public class SFXManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public void PlayWeaponSound(AudioClip audioClip)

@@ -987,13 +987,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       insertIndex: 1
-      addedObject: {fileID: 7886445140113422620}
+      addedObject: {fileID: 8187796442439227400}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       insertIndex: 2
-      addedObject: {fileID: 7592572223178561286}
+      addedObject: {fileID: 4201607575256328078}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       insertIndex: 3
-      addedObject: {fileID: 3799613187885143210}
+      addedObject: {fileID: 7592572223178561286}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4071349994904901829}
@@ -1519,7 +1519,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c136cae0229934c4eaa8307e8190530b, type: 3}
   m_PrefabInstance: {fileID: 2309824974735314036}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7886445140113422620
+--- !u!114 &8187796442439227400
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1528,42 +1528,183 @@ MonoBehaviour:
   m_GameObject: {fileID: 3228883306286264613}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c876a3e33bb7a04faeebb2da8590bb7, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b19086b7a97dec49b21075e46fe9503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
+  GRAVITY_VALUE: -9.81
+  isLockedOn: 0
+  currentLockedOnTarget: {fileID: 0}
+  speedDampTime: 0.1
+  rotationDampTime: 15
+  airControl: 0.5
+  animator: {fileID: 0}
+  controller: {fileID: 0}
+  weaponEquipment: {fileID: 0}
   walkingSpeed: 2.5
   runningSpeed: 5
-  combatSpeed: 4
-  sprintSpeed: 6
-  jumpHeight: 0.75
+  combatSpeed: 6
+  sprintSpeed: 10
+  jumpHeight: 0.8
   gravityMultiplier: 2
   attackCancelTreshold: 0.3
   attackComboTreshold: 0.9
-  weaponSwapSlowTime: 0.4
+  weaponSwapSlowTime: 0.5
   targetLockCast: {fileID: 2792782978014464322}
   playerFollow: {fileID: 3874505488766782055}
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  enemyLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  damagableLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  obstaclesLayerMask:
-    serializedVersion: 2
-    m_Bits: 9
-  speedDampTime: 0.1
-  rotationDampTime: 10
-  airControl: 0.5
-  GRAVITY_VALUE: -9.81
   playerVelocity: {x: 0, y: 0, z: 0}
-  currentLockedOnTarget: {fileID: 0}
-  animator: {fileID: 0}
-  controller: {fileID: 0}
   playerInput: {fileID: 0}
-  weaponEquipment: {fileID: 0}
+  moveAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f0206db9-ae7a-435c-8e15-1085396dcc49
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  jumpAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fad2c7f3-30d6-475e-bfb2-b7450ccdd812
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  sprintAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: af42691c-5123-4a2a-97b4-a6a9d90106eb
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  dodgeAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 2b616ccc-ebdc-4340-a18b-94f7b158b695
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  drawWeaponAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 7b62a6fb-3c96-433a-897d-a28fdb9d30c8
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  blockAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 77170162-225f-40d3-bcb5-846bcd934ff5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  liteAttackWeaponAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 5d7b3f20-0afc-4f05-a84f-1622fdddd7e3
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  heavyAttackWeaponAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e890e08e-270e-4a17-929b-e749b59610ff
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  lockOnAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 425a1927-4a73-4efc-be4e-2385bebf322d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  leftLockOnAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 75f8674a-27b7-4b5e-92e4-b4d022335912
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  rightLockOnAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 3af406ec-445a-40b8-ac7f-b7ca65ed0c7b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  weapon1Action:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 9858469a-7984-4f44-9bb5-744ee271af7e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  weapon2Action:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 81dc19cf-bb42-4662-ba94-7e6753526398
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  weapon3Action:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 50212cc2-736a-4543-b3c7-5e778fbd76a4
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  weapon4Action:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 56c3ebe0-29ec-479d-9b75-11df32c17cbd
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+--- !u!114 &4201607575256328078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3228883306286264613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9914b4523c2152347b008457b4eefa20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 100
+  currentHealth: 0
+  character: {fileID: 0}
+  isFacingAttacker: 0
 --- !u!114 &7592572223178561286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1653,23 +1794,6 @@ MonoBehaviour:
     weaponObj: {fileID: 0}
     weaponAttackScript: {fileID: 0}
   weaponSwapSpeed: 4
---- !u!114 &3799613187885143210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3228883306286264613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b9a44d70f951144798fab211e50e681, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Health: 200
-  currentHealth: 0
-  animator: {fileID: 0}
-  character: {fileID: 0}
-  enemy: {fileID: 0}
 --- !u!114 &4071349994904901829
 MonoBehaviour:
   m_ObjectHideFlags: 0

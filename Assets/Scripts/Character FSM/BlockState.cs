@@ -4,8 +4,6 @@ public class BlockState : State
 {
     public BlockState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
-        character = _character;
-        stateMachine = _stateMachine;
     }
 
     public override void Enter()
@@ -22,13 +20,13 @@ public class BlockState : State
     {
         base.HandleInput();
 
-        if (!blockAction.IsPressed())
+        if (!player.blockAction.IsPressed())
         {
             character.animator.SetTrigger("releaseBlock");
-            stateMachine.ChangeState(character.combatState);
+            stateMachine.ChangeState(player.combatState);
         }
 
-        input = moveAction.ReadValue<Vector2>();
+        input = player.moveAction.ReadValue<Vector2>();
         verticalInput = input.y;
         horizontalInput = input.x;
     }
@@ -48,8 +46,8 @@ public class BlockState : State
             moveAmount = 1;
         }
 
-        moveVelocity = PlayerCamera.instance.transform.forward * verticalInput;
-        moveVelocity += PlayerCamera.instance.transform.right * horizontalInput;
+        moveVelocity = PlayerCamera.Instance.transform.forward * verticalInput;
+        moveVelocity += PlayerCamera.Instance.transform.right * horizontalInput;
         moveVelocity.Normalize();
         moveVelocity.y = 0;
 
@@ -67,7 +65,7 @@ public class BlockState : State
     {
         base.PhysicsUpdate();
 
-        character.controller.Move(character.walkingSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
+        character.controller.Move(player.walkingSpeed * Time.fixedDeltaTime * moveVelocity + gravityVelocity * Time.fixedDeltaTime);
         HandleRotation();
     }
 

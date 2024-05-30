@@ -2,14 +2,11 @@ using UnityEngine;
 
 public class DodgeState : State
 {
-    public bool dodgeDone;
-
     bool block;
 
-    public DodgeState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
+    public DodgeState(Player _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
-        character = _character;
-        stateMachine = _stateMachine;
+        player = _character;
     }
 
     public override void Enter()
@@ -20,7 +17,7 @@ public class DodgeState : State
         block = false;
         dodgeDone = false;
 
-        if (character.playerVelocity == Vector3.zero)
+        if (player.playerVelocity == Vector3.zero)
         {
             character.animator.SetFloat("speedY", 1f);
         }
@@ -32,7 +29,7 @@ public class DodgeState : State
     {
         base.HandleInput();
 
-        if (blockAction.triggered)
+        if (player.blockAction.triggered)
         {
             block = true;
         }
@@ -46,19 +43,17 @@ public class DodgeState : State
         {
             if (block)
             {
-                stateMachine.ChangeState(character.blockState);
+                stateMachine.ChangeState(player.blockState);
                 return;
             }
 
-            Debug.Log("welp still here");
-
             if (character.animator.GetBool("isCombat"))
             {
-                stateMachine.ChangeState(character.combatState);
+                stateMachine.ChangeState(player.combatState);
             }
             else
             {
-                stateMachine.ChangeState(character.idleState);
+                stateMachine.ChangeState(player.idleState);
             }
         }
     }

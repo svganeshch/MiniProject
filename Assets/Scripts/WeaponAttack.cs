@@ -4,8 +4,8 @@ using UnityEngine;
 public abstract class WeaponAttack : MonoBehaviour
 {
     HealthManager healthManager;
-    GameObject characterCausingDamage;
-    GameObject characterTakingDamage;
+    public Character characterCausingDamage;
+    public Character characterTakingDamage;
 
     public float weaponLength;
     [HideInInspector] public float weaponDamage;
@@ -19,9 +19,10 @@ public abstract class WeaponAttack : MonoBehaviour
     {
         canDealDamage = false;
         hasDealtDamage = new List<GameObject>();
-        damageLayerMask = Character.instance.damagableLayerMask;
+        damageLayerMask = LayerMaskManager.Instance.damagableLayerMask;
 
-        characterCausingDamage = HelperFunctions.GetComponentFromTopParent<HealthManager>(transform).gameObject;
+        //characterCausingDamage = HelperFunctions.GetComponentFromTopParent<HealthManager>(transform).gameObject;
+        characterCausingDamage = GetComponentInParent<Character>();
     }
 
     void Update()
@@ -32,19 +33,23 @@ public abstract class WeaponAttack : MonoBehaviour
             {
                 if (hit.transform != null)
                 {
-                    characterTakingDamage = HelperFunctions.GetComponentFromTopParent<HealthManager>(hit.transform, out healthManager).gameObject;
-
-                    if (characterTakingDamage != null && healthManager != null)
+                    if (characterTakingDamage == null)
+                    {
+                        //characterTakingDamage = HelperFunctions.GetComponentFromTopParent<HealthManager>(hit.transform, out healthManager).gameObject;
+                        characterTakingDamage = hit.transform.GetComponentInParent<Character>();
+                        healthManager = characterTakingDamage.healthManager;
+                    }
+                    else
                     {
                         if (characterTakingDamage == characterCausingDamage)
                             return;
 
-                        if (!hasDealtDamage.Contains(characterTakingDamage))
+                        if (!hasDealtDamage.Contains(characterTakingDamage.gameObject))
                         {
                             healthManager.TakeDamage(weaponDamage, characterCausingDamage, characterTakingDamage);
-                            hasDealtDamage.Add(characterTakingDamage);
+                            hasDealtDamage.Add(characterTakingDamage.gameObject);
 
-                            SFXManager.instance.PlayWeaponSound(WeaponEquipment.Instance.GetCurrentWeapon().hitSound);
+                            //SFXManager.instance.PlayWeaponSound(characterCausingDamage WeaponEquipment.Instance.GetCurrentWeapon().hitSound);
                         }
                     }
                 }

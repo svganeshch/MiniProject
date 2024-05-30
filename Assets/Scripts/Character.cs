@@ -1,30 +1,16 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
-    public static Character instance;
-
-    [Header("Character controls")]
-    public float walkingSpeed = 2.5f;
-    public float runningSpeed = 5f;
-    public float combatSpeed = 6f;
-    public float sprintSpeed = 10f;
-    public float jumpHeight = 0.8f;
-    public float gravityMultiplier = 2f;
-    public float attackCancelTreshold = 0.3f;
-    public float attackComboTreshold = 0.9f;
-    public float weaponSwapSlowTime = 0.5f;
-    public Transform targetLockCast;
-    public Transform playerFollow;
-
-    [Header("Layer Masks")]
-    public LayerMask playerLayerMask;
-    public LayerMask enemyLayerMask;
-    public LayerMask damagableLayerMask;
-    public LayerMask obstaclesLayerMask;
+    [HideInInspector]
+    public bool isDead = false;
+    [HideInInspector]
+    public float GRAVITY_VALUE = -9.81f;
+    [HideInInspector]
+    public bool isLockedOn = false;
+    [HideInInspector]
+    public Enemy currentLockedOnTarget;
 
     [Header("Animation Smoothing")]
     [Range(0, 1)]
@@ -34,109 +20,65 @@ public class Character : MonoBehaviour
     [Range(0, 1)]
     public float airControl = 0.5f;
 
-    [HideInInspector]
-    public float GRAVITY_VALUE = -9.81f;
-    [HideInInspector]
-    public Vector3 playerVelocity;
-    [HideInInspector]
-    public bool isLockedOn = false;
-    [HideInInspector]
-    public Enemy currentLockedOnTarget;
-
     //Unity Components
     [HideInInspector]
     public Animator animator;
     [HideInInspector]
     public CharacterController controller;
     [HideInInspector]
-    public PlayerInput playerInput;
+    public HealthManager healthManager;
     [HideInInspector]
     public WeaponEquipment weaponEquipment;
 
-    //FSM
+    //Character States
     [HideInInspector]
-    public StateMachine characterMovementSM;
+    public StateMachine characterStateMachine;
     [HideInInspector]
-    public IdleState idleState;
+    public State idleState;
     [HideInInspector]
-    public JumpState jumpState;
+    public State combatState;
     [HideInInspector]
-    public LandState landState;
+    public State liteAttackState;
     [HideInInspector]
-    public SprintState sprintState;
+    public State heavyAttackState;
     [HideInInspector]
-    public SprintJumpState sprintJumpState;
+    public State blockState;
     [HideInInspector]
-    public DodgeState dodgeState;
+    public State blockBrokenState;
     [HideInInspector]
-    public CombatState combatState;
-    [HideInInspector]
-    public BlockState blockState;
-    [HideInInspector]
-    public BlockBrokenState blockBrokenState;
-    [HideInInspector]
-    public LiteAttackState liteAttackState;
-    [HideInInspector]
-    public HeavyAttackState heavyAttackState;
-    [HideInInspector]
-    public HitState hitState;
+    public State hitState;
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Debug.Log($"{gameObject.name} instance created");
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
-        playerInput = GetComponent<PlayerInput>();
+        healthManager = GetComponent<HealthManager>();
         weaponEquipment = GetComponent<WeaponEquipment>();
 
-        characterMovementSM = new StateMachine();
-        idleState = new IdleState(this, characterMovementSM);
-        jumpState = new JumpState(this, characterMovementSM);
-        landState = new LandState(this, characterMovementSM);
-        sprintState = new SprintState(this, characterMovementSM);
-        sprintJumpState = new SprintJumpState(this, characterMovementSM);
-        dodgeState = new DodgeState(this, characterMovementSM);
-        combatState = new CombatState(this, characterMovementSM);
-        blockState = new BlockState(this, characterMovementSM);
-        blockBrokenState = new BlockBrokenState(this, characterMovementSM);
-        liteAttackState = new LiteAttackState(this, characterMovementSM);
-        heavyAttackState = new HeavyAttackState(this, characterMovementSM);
-        hitState = new HitState(this, characterMovementSM);
-        characterMovementSM.Initialize(idleState);
-
-        GRAVITY_VALUE *= gravityMultiplier;
+        characterStateMachine = new StateMachine();
 
         IgnoreMyOwnColliders();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        characterMovementSM.currentState.HandleInput();
-        characterMovementSM.currentState.LogicUpdate();
+        characterStateMachine.currentState.HandleInput();
+        characterStateMachine.currentState.LogicUpdate();
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
-        characterMovementSM.currentState.PhysicsUpdate();
+        characterStateMachine.currentState.PhysicsUpdate();
     }
 
-    private void LateUpdate()
-    {
-        PlayerCamera.instance.CameraActions();
-    }
+    protected virtual void LateUpdate() { }
 
     private void IgnoreMyOwnColliders()
     {
@@ -159,9 +101,5 @@ public class Character : MonoBehaviour
         }
     }
 
-    void OnGUI()
-    {
-        GUI.color = Color.red;
-        GUI.Label(new Rect(0, 0, 200, 20), characterMovementSM.currentState.ToString());
-    }
+    public virtual void OnGUI() { }
 }
