@@ -7,24 +7,15 @@ public class State
     protected Enemy enemy;
     protected StateMachine stateMachine;
 
-    protected float verticalInput;
-    protected float horizontalInput;
-    protected float moveAmount;
-    protected Vector2 input;
-    protected Vector3 moveVelocity;
-    protected Vector3 lockedTargetDirection;
-    protected Vector3 targetDirection;
-    protected Vector3 gravityVelocity;
+    private Vector3 characterDirection;
+    private Vector3 lockedTargetDirection;
+    private Vector3 targetRotationDirection;
+    private Quaternion targetRotation;
 
     // Swap weapon vars
     public int defaultWeaponSlot = 1;
     public int previousWeaponSlot = 0;
     public virtual void SwapWeapon() { }
-
-    // State Reset bools
-    public bool hitDone = false;
-    public bool dodgeDone = false;
-    public bool blockBrokenDone = false;
 
     // Player lockon
     public virtual void SetTarget(Enemy target) { }
@@ -70,88 +61,45 @@ public class State
         //Debug.Log("Exited state " + this.ToString());
     }
 
+    public Vector3 GetCharacterDirection()
+    {
+        characterDirection = PlayerCamera.Instance.transform.forward * player.verticalInput;
+        characterDirection += PlayerCamera.Instance.transform.right * player.horizontalInput;
+        characterDirection.y = 0;
+
+        return characterDirection;
+    }
+
     public void HandleRotation()
     {
-        if (character.isLockedOn)
+        if (player.isLockedOn)
         {
-            if (character.currentLockedOnTarget == null)
+            if (!player.currentLockedOnTarget)
                 return;
 
-            lockedTargetDirection = character.currentLockedOnTarget.transform.position - character.transform.position;
+            lockedTargetDirection = Vector3.zero;
+            lockedTargetDirection = player.currentLockedOnTarget.transform.position - player.transform.position;
             lockedTargetDirection.y = 0f;
             lockedTargetDirection.Normalize();
 
-            Quaternion targetRotation = Quaternion.LookRotation(lockedTargetDirection);
-            Quaternion finalRotation = Quaternion.Slerp(character.transform.rotation, targetRotation, character.rotationDampTime * Time.fixedDeltaTime);
-            character.transform.rotation = finalRotation;
+            targetRotation = Quaternion.LookRotation(lockedTargetDirection);
+            player.transform.rotation = targetRotation;
         }
         else
         {
-            targetDirection = Vector3.zero;
-            targetDirection = PlayerCamera.Instance.cameraObj.transform.forward * verticalInput;
-            targetDirection += PlayerCamera.Instance.cameraObj.transform.right * horizontalInput;
-            targetDirection.Normalize();
-            targetDirection.y = 0f;
+            targetRotationDirection = Vector3.zero;
+            targetRotationDirection = PlayerCamera.Instance.cameraObj.transform.forward * player.verticalInput;
+            targetRotationDirection += PlayerCamera.Instance.cameraObj.transform.right * player.horizontalInput;
+            targetRotationDirection.y = 0f;
+            targetRotationDirection.Normalize();
 
-            if (targetDirection == Vector3.zero)
+            if (targetRotationDirection == Vector3.zero)
             {
-                targetDirection = character.transform.forward;
+                targetRotationDirection = player.transform.forward;
             }
 
-            Quaternion newRotation = Quaternion.LookRotation(targetDirection);
-            Quaternion targetRotation = Quaternion.Slerp(character.transform.rotation, newRotation, character.rotationDampTime * Time.fixedDeltaTime);
-            character.transform.rotation = targetRotation;
+            targetRotation = Quaternion.LookRotation(targetRotationDirection);
+            player.transform.rotation = targetRotation;
         }
-    }
-
-    public void SetAnimationParameters(float horizontalInput, float verticalInput)
-    {
-        float snappedHorizontal = horizontalInput;
-        float snappedVertical = verticalInput;
-
-        if (horizontalInput > 0 && horizontalInput <= 0.5f)
-        {
-            snappedHorizontal = 0.5f;
-        }
-        else if (horizontalInput > 0.5f && horizontalInput <= 1)
-        {
-            snappedHorizontal = 1;
-        }
-        else if (horizontalInput < 0 && horizontalInput >= -0.5f)
-        {
-            snappedHorizontal = -0.5f;
-        }
-        else if (horizontalInput < -0.5f && horizontalInput >= -1)
-        {
-            snappedHorizontal = -1;
-        }
-        else
-        {
-            snappedHorizontal = 0;
-        }
-
-        if (verticalInput > 0 && verticalInput <= 0.5f)
-        {
-            snappedVertical = 0.5f;
-        }
-        else if (verticalInput > 0.5f && verticalInput <= 1)
-        {
-            snappedVertical = 1;
-        }
-        else if (verticalInput < 0 && verticalInput >= -0.5f)
-        {
-            snappedVertical = -0.5f;
-        }
-        else if (verticalInput < -0.5f && verticalInput >= -1)
-        {
-            snappedVertical = -1;
-        }
-        else
-        {
-            snappedVertical = 0;
-        }
-
-        character.animator.SetFloat("speedX", snappedHorizontal, character.speedDampTime, Time.deltaTime);
-        character.animator.SetFloat("speedY", snappedVertical, character.speedDampTime, Time.deltaTime);
     }
 }

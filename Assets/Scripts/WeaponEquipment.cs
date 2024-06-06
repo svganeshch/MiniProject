@@ -37,11 +37,11 @@ public class WeaponEquipment : MonoBehaviour
     private Weapon currentWeapon;
     private int currentWeaponSlot = 1;
 
-    private Animator animator;
+    private Character character;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        character = GetComponent<Character>();
     }
 
     private void Start()
@@ -73,7 +73,7 @@ public class WeaponEquipment : MonoBehaviour
         }
 
         currentWeaponObj = currentWeapon.weaponObj;
-        animator.runtimeAnimatorController = currentWeapon.animatorOverrideController;
+        character.animator.runtimeAnimatorController = currentWeapon.animatorOverrideController;
 
         AnimatorOverrideController animatorOverrideController = currentWeapon.animatorOverrideController;
         List<KeyValuePair<AnimationClip, AnimationClip>> overrideClips;
@@ -85,19 +85,19 @@ public class WeaponEquipment : MonoBehaviour
         {
             if (overrideCl.Key.name.CompareTo("draw_2") == 0 && overrideCl.Value != null)
             {
-                animator.SetBool("hasDraw2", true);
+                character.animator.SetBool("hasDraw2", true);
             }
             else if (overrideCl.Key.name.CompareTo("holster_2") == 0 && overrideCl.Value != null)
             {
-                animator.SetBool("hasHolster2", true);
+                character.animator.SetBool("hasHolster2", true);
             }
 
             //Debug.Log("clip : " +  overrideCl);
         }
 
-        animator.SetBool("reverseDraw", currentWeapon.reverseDraw);
-        animator.SetBool("reverseHolster", currentWeapon.reverseHolster);
-        animator.SetFloat("attackSpeed", currentWeapon.attackSpeedMultiplier);
+        character.animator.SetBool("reverseDraw", currentWeapon.reverseDraw);
+        character.animator.SetBool("reverseHolster", currentWeapon.reverseHolster);
+        character.animator.SetFloat("attackSpeed", currentWeapon.attackSpeedMultiplier);
 
         Debug.Log("Set weapon to " + weaponSlot);
 
@@ -106,6 +106,9 @@ public class WeaponEquipment : MonoBehaviour
 
     public void DrawWeapon()
     {
+        character.characterAnimatorManager.CombatBool = true;
+        character.animator.SetLayerWeight(1, 1);
+        
         currentWeaponObj.transform.parent = currentWeapon.weaponHolderPosition.transform;
         currentWeaponObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
@@ -120,6 +123,9 @@ public class WeaponEquipment : MonoBehaviour
 
     public void HolsterWeapon()
     {
+        character.characterAnimatorManager.CombatBool = false;
+        character.animator.SetLayerWeight(1, 0);
+        
         currentWeaponObj.transform.parent = currentWeapon.weaponHolsterPosition.transform;
         currentWeaponObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
@@ -131,8 +137,8 @@ public class WeaponEquipment : MonoBehaviour
             dagger2.weaponObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         }
 
-        animator.SetBool("hasDraw2", false);
-        animator.SetBool("hasHolster2", false);
+        character.animator.SetBool("hasDraw2", false);
+        character.animator.SetBool("hasHolster2", false);
     }
 
     public void StartDamage()

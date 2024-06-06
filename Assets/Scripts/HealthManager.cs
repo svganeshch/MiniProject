@@ -18,13 +18,16 @@ public class HealthManager : MonoBehaviour
         character = GetComponent<Character>();
     }
 
-    public virtual void TakeDamage(float weaponDamage, Character attacker, Character receiver)
+    private void Update()
     {
         if (currentHealth <= 0)
         {
             Die();
         }
+    }
 
+    public virtual void TakeDamage(float weaponDamage, Character attacker, Character receiver)
+    {
         attackDirection = (attacker.transform.position - receiver.transform.position).normalized;
         if (Vector3.Dot(receiver.transform.forward, attackDirection) >= 0.8f)
         {
@@ -43,10 +46,13 @@ public class HealthManager : MonoBehaviour
             currentHealth -= weaponDamage;
             character.characterStateMachine.ChangeState(character.hitState);
         }
+
+        Debug.Log("damage received");
     }
 
     public virtual void Die()
     {
+        character.isDead = true;
         Destroy(gameObject, 5f);
     }
 }

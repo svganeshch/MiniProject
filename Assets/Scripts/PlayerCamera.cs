@@ -93,7 +93,7 @@ public class PlayerCamera : MonoBehaviour
         playerInput = player.GetComponent<PlayerInput>();
 
         cameraZPosition = cameraObj.transform.localPosition.z;
-        lookAction = playerInput.actions["Look"];
+        lookAction = playerInput.actions["CameraLook"];
     }
 
     private void Update()

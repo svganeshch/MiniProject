@@ -48,8 +48,6 @@ public abstract class WeaponAttack : MonoBehaviour
                         {
                             healthManager.TakeDamage(weaponDamage, characterCausingDamage, characterTakingDamage);
                             hasDealtDamage.Add(characterTakingDamage.gameObject);
-
-                            //SFXManager.instance.PlayWeaponSound(characterCausingDamage WeaponEquipment.Instance.GetCurrentWeapon().hitSound);
                         }
                     }
                 }

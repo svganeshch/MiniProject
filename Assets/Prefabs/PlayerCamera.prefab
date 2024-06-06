@@ -80,6 +80,7 @@ MonoBehaviour:
   cameraObj: {fileID: 7861794934421314678}
   cameraPivotTransform: {fileID: 5876413045896002731}
   followTarget: {fileID: 0}
+  player: {fileID: 0}
   playerInput: {fileID: 0}
   cameraSmoothSpeed: 0.2
   MouseYSensitivity: 40
@@ -89,9 +90,6 @@ MonoBehaviour:
   minimumPivot: -30
   maximumPivot: 60
   cameraCollisionRadius: 0.2
-  obstacleLayers:
-    serializedVersion: 2
-    m_Bits: 9
   lockOnRadius: 20
   minimumViewableAngle: -50
   maximumViewableAngle: 50
