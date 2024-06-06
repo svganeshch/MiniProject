@@ -5015,6 +5015,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7470752518924928237}
   - component: {fileID: 255253245359740252}
+  - component: {fileID: 849151695997729690}
   - component: {fileID: 5150036091294903745}
   - component: {fileID: 2924194924076823474}
   - component: {fileID: 8820008427835066620}
@@ -5064,6 +5065,7 @@ MonoBehaviour:
   isDead: 0
   isLockedOn: 0
   currentLockedOnTarget: {fileID: 0}
+  moveAmount: 0
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
@@ -5071,24 +5073,45 @@ MonoBehaviour:
   rotationDampTime: 15
   animationFadeTime: 0.2
   airControl: 0.5
-  walkingSpeed: 2.5
+  walkingSpeed: 1.75
   runningSpeed: 5
-  combatSpeed: 6
-  sprintSpeed: 10
+  combatSpeed: 4.75
+  sprintSpeed: 5
   animator: {fileID: 0}
   controller: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
+  characterMovementManager: {fileID: 0}
   characterSfxManager: {fileID: 0}
   healthManager: {fileID: 0}
   weaponEquipment: {fileID: 0}
   detectionRadius: 15
+  recallDistance: 5
+  sprintDistance: 10
   targetLock: {fileID: 7415203626571703856}
   currentTarget: {fileID: 0}
+  patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   navMeshAgent: {fileID: 0}
   enemyAnimatorManager: {fileID: 0}
+  enemyMovementManager: {fileID: 0}
   enemySfxManager: {fileID: 0}
-  leftWeaponAttack: {fileID: 0}
-  rightWeaponAttack: {fileID: 0}
+--- !u!114 &849151695997729690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847136942168759895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c755fd301e03b4b91faab66995c3cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yVelocity: {x: 0, y: 0, z: 0}
+  gravityForce: -40
 --- !u!114 &5150036091294903745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5302,8 +5325,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.5
-  m_Speed: 2
-  m_Acceleration: 3
+  m_Speed: 1
+  m_Acceleration: 1
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 1.25

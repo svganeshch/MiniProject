@@ -2,10 +2,7 @@ using UnityEngine;
 
 public class EnemyCombatState : State
 {
-    Vector3 desiredVelocity;
-    Vector3 lookDirection;
-
-    Quaternion lookRotation;
+    float recallTimer = 0f;
 
     public EnemyCombatState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
@@ -15,9 +12,9 @@ public class EnemyCombatState : State
     {
         base.Enter();
 
+        recallTimer = 0f;
+
         enemy.navMeshAgent.destination = enemy.currentTarget.transform.position;
-        enemy.navMeshAgent.updatePosition = false;
-        enemy.navMeshAgent.updateRotation = false;
     }
 
     public override void LogicUpdate()
@@ -26,6 +23,7 @@ public class EnemyCombatState : State
 
         SetNavAgent();
         CheckAttackDistance();
+        CheckRecallDistance();
     }
 
     public override void PhysicsUpdate()
@@ -46,16 +44,6 @@ public class EnemyCombatState : State
 
         // new nav logic to control with character controller
         enemy.navMeshAgent.destination = enemy.currentTarget.transform.position;
-        desiredVelocity = enemy.navMeshAgent.desiredVelocity;
-
-        lookDirection = enemy.currentTarget.transform.position - enemy.transform.position;
-        lookDirection.y = 0;
-
-        lookRotation = Quaternion.LookRotation(lookDirection);
-        enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, lookRotation, Time.deltaTime * enemy.rotationDampTime);
-
-        enemy.controller.Move(enemy.runningSpeed * Time.deltaTime * desiredVelocity.normalized);
-        enemy.navMeshAgent.velocity = enemy.controller.velocity;
 
         //if (enemy.idleState.currentTarget != null )
         //{
@@ -71,11 +59,27 @@ public class EnemyCombatState : State
 
     private void CheckAttackDistance()
     {
-        float remainingDistance = Vector3.Distance(enemy.transform.position, enemy.navMeshAgent.destination);
-
-        if (remainingDistance <= enemy.navMeshAgent.stoppingDistance)
+        if (enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance)
         {
             stateMachine.ChangeState(enemy.attackState);
+        }
+        else if (enemy.navMeshAgent.remainingDistance >= enemy.sprintDistance)
+        {
+            stateMachine.ChangeState(enemy.sprintState);
+        }
+    }
+
+    private void CheckRecallDistance()
+    {
+        recallTimer += Time.deltaTime;
+
+        if (recallTimer >= 5)
+        {
+            if (enemy.navMeshAgent.remainingDistance >= enemy.recallDistance)
+            {
+                enemy.currentTarget = null;
+                stateMachine.ChangeState(enemy.idleState);
+            }
         }
     }
 
@@ -94,5 +98,7 @@ public class EnemyCombatState : State
     public override void Exit()
     {
         base.Exit();
+
+        enemy.enemyAnimatorManager.PlayWeaponHolsterAction();
     }
 }

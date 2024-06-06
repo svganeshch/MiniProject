@@ -44,7 +44,7 @@ public class EnemyAttackState : State
             if (canAttack)
             {
                 //Debug.Log("switching state to next attack");
-                stateMachine.ChangeState(enemy.attackState);
+                stateMachine.ChangeState(enemy.attackState, true);
                 canCombo = true;
             }
             else

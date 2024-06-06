@@ -5,7 +5,6 @@ public class Player : Character
 {
     public static Player Instance { get; private set; }
 
-    [Header("Character controls")]
     public float jumpHeight = 0.8f;
     public float jumpForwardVelocity = 5f;
     public float freeFallControlVelocity = 2f;
@@ -18,7 +17,6 @@ public class Player : Character
     [HideInInspector] public Vector2 inputValues;
     [HideInInspector] public float horizontalInput;
     [HideInInspector] public float verticalInput;
-    [HideInInspector] public float moveAmount;
 
     // Unity components
     [HideInInspector]
@@ -27,14 +25,6 @@ public class Player : Character
     public PlayerMovementManager playerMovementManager;
     [HideInInspector]
     public PlayerAnimatorManager playerAnimatorManager;
-
-    // Player States
-    [HideInInspector]
-    public State jumpState;
-    [HideInInspector]
-    public State sprintState;
-    [HideInInspector]
-    public State dodgeState;
 
     // Input Actions
     [HideInInspector]
@@ -75,11 +65,9 @@ public class Player : Character
         if (Instance == null)
         {
             Instance = this;
-            Debug.Log($"{gameObject.name} instance created");
         }
         else
         {
-            Debug.LogWarning($"{gameObject.name} instance already exists, destroying new instance");
             Destroy(gameObject);
         }
     }

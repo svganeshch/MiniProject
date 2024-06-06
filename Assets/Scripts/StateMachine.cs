@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class StateMachine
 {
     public State currentState;
@@ -13,8 +9,13 @@ public class StateMachine
         currentState.Enter();
     }
 
-    public void ChangeState(State newState)
+    public void ChangeState(State newState, bool repeat = false)
     {
+        if (!repeat)
+        {
+            if (newState == currentState) return;
+        }
+
         previousState = currentState;
         currentState.Exit();
 

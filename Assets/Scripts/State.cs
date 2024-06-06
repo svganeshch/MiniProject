@@ -38,7 +38,7 @@ public class State
 
     public virtual void Enter()
     {
-        //Debug.Log("Entered state " + this.ToString());
+        //Debug.Log("Entered state " + character.name + " : " + this.ToString());
     }
 
     public virtual void HandleInput()
@@ -58,7 +58,8 @@ public class State
 
     public virtual void Exit()
     {
-        //Debug.Log("Exited state " + this.ToString());
+        //Debug.Log("Previous state " + character.name + " : " + stateMachine.previousState);
+        //Debug.Log("Exited state " + character.name + " : " + this.ToString());
     }
 
     public Vector3 GetCharacterDirection()

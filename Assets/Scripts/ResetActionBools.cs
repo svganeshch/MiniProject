@@ -23,7 +23,5 @@ public class ResetActionBools : StateMachineBehaviour
         {
             character.characterStateMachine.ChangeState(character.idleState);
         }
-
-        Debug.Log("baaaaaaaaaaaa");
     }
 }

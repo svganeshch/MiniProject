@@ -1,14 +1,26 @@
-using System;
 using UnityEngine;
 
 public class EnemyIdleState : State
 {
+    int destinationPoint = 0;
+
     public float viewableAngle;
     public float minimumFOV = -35;
     public float maximumFOV = 35;
 
     public EnemyIdleState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        destinationPoint = 0;
+        enemy.moveAmount = 0.5f;
+
+        enemy.navMeshAgent.autoBraking = false;
+        SetPatrolPoint();
     }
 
     public override void LogicUpdate()
@@ -20,6 +32,8 @@ public class EnemyIdleState : State
 
         if (enemy.currentTarget)
         {
+            enemy.moveAmount = 1.0f;
+
             if (enemy.weaponEquipment.SetWeapon(defaultWeaponSlot))
             {
                 enemy.enemyAnimatorManager.PlayWeaponDrawAction();
@@ -29,14 +43,23 @@ public class EnemyIdleState : State
         }
     }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
-
     private void Patrol()
     {
-        throw new NotImplementedException();
+        if (!enemy.navMeshAgent.pathPending && enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance)
+        {
+            SetPatrolPoint();
+        }
+    }
+
+    private void SetPatrolPoint()
+    {
+        if (enemy.patrolPoints.Length == 0)
+        {
+            return;
+        }
+
+        enemy.navMeshAgent.destination = enemy.patrolPoints[destinationPoint].position;
+        destinationPoint = (destinationPoint + 1) % enemy.patrolPoints.Length;
     }
 
     private void FindTarget()
@@ -84,5 +107,12 @@ public class EnemyIdleState : State
         {
             enemy.animator.SetTrigger("L45");
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        enemy.navMeshAgent.autoBraking = true;
     }
 }

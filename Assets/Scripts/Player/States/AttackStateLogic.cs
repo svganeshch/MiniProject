@@ -86,7 +86,7 @@ public class AttackStateLogic : State
             {
                 attack = false;
                 canComboAttack = true;
-                stateMachine.ChangeState(this);
+                stateMachine.ChangeState(this, true);
             }
         }
     }

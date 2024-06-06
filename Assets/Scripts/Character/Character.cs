@@ -9,6 +9,8 @@ public class Character : MonoBehaviour
     public bool isLockedOn = false;
     [HideInInspector]
     public Enemy currentLockedOnTarget;
+    [HideInInspector]
+    public float moveAmount;
 
     [Header("Animation Control Flags")]
     public bool applyRootMotion = false;
@@ -39,6 +41,8 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public CharacterAnimatorManager characterAnimatorManager;
     [HideInInspector]
+    public CharacterMovementManager characterMovementManager;
+    [HideInInspector]
     public CharacterSfxManager characterSfxManager;
     [HideInInspector]
     public HealthManager healthManager;
@@ -62,6 +66,12 @@ public class Character : MonoBehaviour
     public State blockBrokenState;
     [HideInInspector]
     public State hitState;
+    [HideInInspector]
+    public State jumpState;
+    [HideInInspector]
+    public State sprintState;
+    [HideInInspector]
+    public State dodgeState;
 
     protected virtual void Awake()
     {
@@ -75,6 +85,7 @@ public class Character : MonoBehaviour
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
+        characterMovementManager = GetComponent<CharacterMovementManager>();
         characterSfxManager = GetComponent<CharacterSfxManager>();
         healthManager = GetComponent<HealthManager>();
         weaponEquipment = GetComponent<WeaponEquipment>();
