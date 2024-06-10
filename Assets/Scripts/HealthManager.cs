@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HealthManager : MonoBehaviour
 {
     public float Health = 100;
     public float currentHealth;
+
+    [HideInInspector] public UnityEvent onHealthManagerInitializedEvent = new();
 
     [HideInInspector] public Character character;
 
@@ -16,6 +19,8 @@ public class HealthManager : MonoBehaviour
         attackDirection = Vector3.zero;
 
         character = GetComponent<Character>();
+
+        onHealthManagerInitializedEvent.Invoke();
     }
 
     private void Update()
@@ -46,6 +51,8 @@ public class HealthManager : MonoBehaviour
             currentHealth -= weaponDamage;
             character.characterStateMachine.ChangeState(character.hitState);
         }
+
+        character.hudManager.SetHealth();
 
         Debug.Log("damage received");
     }

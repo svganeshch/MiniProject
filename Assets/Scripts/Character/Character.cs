@@ -47,6 +47,8 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public HealthManager healthManager;
     [HideInInspector]
+    public HudManager hudManager;
+    [HideInInspector]
     public WeaponEquipment weaponEquipment;
 
     //Character States
@@ -88,6 +90,7 @@ public class Character : MonoBehaviour
         characterMovementManager = GetComponent<CharacterMovementManager>();
         characterSfxManager = GetComponent<CharacterSfxManager>();
         healthManager = GetComponent<HealthManager>();
+        hudManager = GetComponentInChildren<HudManager>();
         weaponEquipment = GetComponent<WeaponEquipment>();
 
         characterStateMachine = new StateMachine();

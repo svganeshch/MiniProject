@@ -10,6 +10,10 @@ public class EnemyAttackState : State
     private float clipSpeed;
     private float clipTime;
 
+    float cooldownTime = 5f;
+
+    int animatorActionsLayerindex;
+
     public EnemyAttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
     }
@@ -21,6 +25,8 @@ public class EnemyAttackState : State
         canAttack = false;
         timePassed = 0;
 
+        animatorActionsLayerindex = enemy.animator.GetLayerIndex("Action Override");
+
         enemy.enemyAnimatorManager.PlayLiteAttackAction(canCombo);
         canCombo = false;
     }
@@ -28,30 +34,25 @@ public class EnemyAttackState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        timePassed += Time.deltaTime;
 
         LookAtTarget();
         canAttack = CheckAttackDistance();
 
-        Debug.Log(character.animator.GetCurrentAnimatorClipInfo(3)[0].clip.name);
+        if (enemy.animator.GetCurrentAnimatorClipInfo(animatorActionsLayerindex).Length == 0) return;
+        clipTime = enemy.animator.GetCurrentAnimatorStateInfo(animatorActionsLayerindex).normalizedTime;
+        Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(animatorActionsLayerindex)[0].clip.name);
 
-        clipLength = character.animator.GetCurrentAnimatorClipInfo(3)[0].clip.length;
-        clipSpeed = character.animator.GetCurrentAnimatorStateInfo(3).speed * character.animator.GetCurrentAnimatorStateInfo(0).speedMultiplier;
-        clipTime = clipLength / clipSpeed;
+        timePassed += Time.deltaTime;
 
-        if (timePassed >= clipTime)
+        //clipLength = character.animator.GetCurrentAnimatorClipInfo(animatorActionsLayerindex)[0].clip.length;
+        //clipSpeed = character.animator.GetCurrentAnimatorStateInfo(animatorActionsLayerindex).speed * character.animator.GetCurrentAnimatorStateInfo(0).speedMultiplier;
+        //clipTime = clipLength / clipSpeed;
+
+        if (canAttack && timePassed >= clipTime + cooldownTime)
         {
-            if (canAttack)
-            {
-                //Debug.Log("switching state to next attack");
-                stateMachine.ChangeState(enemy.attackState, true);
-                canCombo = true;
-            }
-            else
-            {
-                Debug.Log("out of radius");
-                stateMachine.ChangeState(enemy.combatState);
-            }
+            //Debug.Log("switching state to next attack");
+            stateMachine.ChangeState(enemy.attackState, true);
+            canCombo = true;
         }
     }
 

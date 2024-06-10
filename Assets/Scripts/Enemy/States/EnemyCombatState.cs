@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class EnemyCombatState : State
 {
-    float recallTimer = 0f;
-
     public EnemyCombatState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
     }
@@ -12,7 +10,7 @@ public class EnemyCombatState : State
     {
         base.Enter();
 
-        recallTimer = 0f;
+        enemy.recallTimer = 0f;
 
         enemy.navMeshAgent.destination = enemy.currentTarget.transform.position;
     }
@@ -23,7 +21,7 @@ public class EnemyCombatState : State
 
         SetNavAgent();
         CheckAttackDistance();
-        CheckRecallDistance();
+        enemy.CheckRecallDistance();
     }
 
     public override void PhysicsUpdate()
@@ -69,20 +67,6 @@ public class EnemyCombatState : State
         }
     }
 
-    private void CheckRecallDistance()
-    {
-        recallTimer += Time.deltaTime;
-
-        if (recallTimer >= 5)
-        {
-            if (enemy.navMeshAgent.remainingDistance >= enemy.recallDistance)
-            {
-                enemy.currentTarget = null;
-                stateMachine.ChangeState(enemy.idleState);
-            }
-        }
-    }
-
     public float GetAngleOfTarget(Transform transform, Vector3 targetDirection)
     {
         targetDirection.y = 0;
@@ -98,7 +82,5 @@ public class EnemyCombatState : State
     public override void Exit()
     {
         base.Exit();
-
-        enemy.enemyAnimatorManager.PlayWeaponHolsterAction();
     }
 }

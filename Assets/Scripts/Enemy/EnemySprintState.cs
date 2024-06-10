@@ -1,9 +1,5 @@
-﻿using UnityEngine;
-
-public class EnemySprintState : State
+﻿public class EnemySprintState : State
 {
-    float recallTimer = 0f;
-
     public EnemySprintState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
     }
@@ -12,7 +8,7 @@ public class EnemySprintState : State
     {
         base.Enter();
 
-        recallTimer = 0f;
+        enemy.recallTimer = 0f;
     }
 
     public override void LogicUpdate()
@@ -26,20 +22,6 @@ public class EnemySprintState : State
             stateMachine.ChangeState(enemy.combatState);
         }
 
-        CheckRecallDistance();
-    }
-
-    private void CheckRecallDistance()
-    {
-        recallTimer += Time.deltaTime;
-
-        if (recallTimer >= 5)
-        {
-            if (enemy.navMeshAgent.remainingDistance >= enemy.recallDistance)
-            {
-                enemy.currentTarget = null;
-                stateMachine.ChangeState(enemy.idleState);
-            }
-        }
+        enemy.CheckRecallDistance();
     }
 }

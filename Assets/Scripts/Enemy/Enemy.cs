@@ -3,6 +3,8 @@ using UnityEngine.AI;
 
 public class Enemy : Character
 {
+    [HideInInspector] public float recallTimer = 0;
+
     [Header("Enemy Controls")]
     public float detectionRadius = 15;
     public float recallDistance = 10;
@@ -50,6 +52,22 @@ public class Enemy : Character
     protected override void Update()
     {
         characterStateMachine.currentState.LogicUpdate();
+    }
+
+    public void CheckRecallDistance()
+    {
+        recallTimer += Time.deltaTime;
+
+        if (recallTimer >= 5)
+        {
+            if (navMeshAgent.remainingDistance >= recallDistance)
+            {
+                enemyAnimatorManager.PlayWeaponHolsterAction();
+
+                currentTarget = null;
+                characterStateMachine.ChangeState(idleState);
+            }
+        }
     }
 
     public override void OnGUI()
