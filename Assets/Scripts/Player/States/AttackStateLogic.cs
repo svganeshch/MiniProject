@@ -29,7 +29,7 @@ public class AttackStateLogic : State
         attackCancelTreshold = player.attackCancelTreshold;
         attackComboTreshold = player.attackComboTreshold;
 
-        //player.characterSfxManager.PlayWeaponSlashSound();
+        player.characterSfxManager.PlayWeaponSlashSound();
 
         animatorActionsLayerindex = player.animator.GetLayerIndex("Action Override");
     }
