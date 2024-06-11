@@ -6,6 +6,7 @@ public class Enemy : Character
     [HideInInspector] public float recallTimer = 0;
 
     [Header("Enemy Controls")]
+    public float strafeSpeed = 0.75f;
     public float detectionRadius = 15;
     public float recallDistance = 10;
     public float sprintDistance = 15;
@@ -22,6 +23,7 @@ public class Enemy : Character
 
     // Enemy Specefic States
     [HideInInspector] public EnemyAttackState attackState;
+    [HideInInspector] public StrafeState strafeState;
 
     protected override void Awake()
     {
@@ -46,6 +48,7 @@ public class Enemy : Character
         blockBrokenState = new BlockBrokenState(this, characterStateMachine);
         hitState = new EnemyHitState(this, characterStateMachine);
         sprintState = new EnemySprintState(this, characterStateMachine);
+        strafeState = new StrafeState(this, characterStateMachine);
         characterStateMachine.Initialize(idleState);
     }
 

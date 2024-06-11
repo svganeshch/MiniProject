@@ -1521,7 +1521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1812806711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2124,6 +2124,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 255253245359740252, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
+      propertyPath: strafeSpeed
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 255253245359740252, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
       propertyPath: patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 1974939531}
@@ -2142,6 +2146,14 @@ PrefabInstance:
     - target: {fileID: 1748591557334182930, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5381379645130712477, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
+      propertyPath: m_Height
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5381379645130712477, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7470752518924928237, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
       propertyPath: m_LocalPosition.x

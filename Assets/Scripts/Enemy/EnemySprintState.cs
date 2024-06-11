@@ -17,7 +17,7 @@
 
         enemy.navMeshAgent.destination = enemy.currentTarget.transform.position;
 
-        if (enemy.navMeshAgent.remainingDistance <= enemy.sprintDistance / 3)
+        if (enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance * 2)
         {
             stateMachine.ChangeState(enemy.combatState);
         }

@@ -58,22 +58,19 @@ public class EnemyMovementManager : CharacterMovementManager
         GetMovementInput();
     }
 
-    protected override void HandleRotation()
-    {
-        if (!enemy.canRotate)
-            return;
-
-        lookDirection = enemy.navMeshAgent.destination - enemy.transform.position;
-        lookDirection.y = 0;
-
-        lookRotation = Quaternion.LookRotation(lookDirection);
-        enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, lookRotation, Time.deltaTime * enemy.rotationDampTime);
-    }
-
     public override void GetMovementInput()
     {
-        horizontalInput = enemy.controller.velocity.x;
-        verticalInput = enemy.controller.velocity.z;
+        desiredVelocity = enemy.navMeshAgent.desiredVelocity;
+        Vector3 localVelocity = enemy.transform.InverseTransformDirection(enemy.controller.velocity);
+        horizontalInput = localVelocity.x;
+        verticalInput = localVelocity.z;
+
+        enemy.moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
+
+        if (enemy.characterStateMachine.currentState == enemy.idleState)
+        {
+            enemy.moveAmount = 0.5f;
+        }
 
         if (!enemy.isLockedOn)
         {
@@ -86,9 +83,17 @@ public class EnemyMovementManager : CharacterMovementManager
                 enemy.enemyAnimatorManager.SetAnimatorParameters(0, enemy.moveAmount);
             }
         }
-        else
-        {
-            enemy.enemyAnimatorManager.SetAnimatorParameters(horizontalInput, verticalInput);
-        }
+    }
+
+    protected override void HandleRotation()
+    {
+        if (!enemy.canRotate)
+            return;
+
+        lookDirection = enemy.navMeshAgent.destination - enemy.transform.position;
+        lookDirection.y = 0;
+
+        lookRotation = Quaternion.LookRotation(lookDirection);
+        enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, lookRotation, Time.deltaTime * enemy.rotationDampTime);
     }
 }

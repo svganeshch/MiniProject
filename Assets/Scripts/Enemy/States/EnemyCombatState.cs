@@ -21,7 +21,9 @@ public class EnemyCombatState : State
 
         SetNavAgent();
         CheckAttackDistance();
-        enemy.CheckRecallDistance();
+
+        if (!enemy.isLockedOn)
+            enemy.CheckRecallDistance();
     }
 
     public override void PhysicsUpdate()
@@ -57,14 +59,16 @@ public class EnemyCombatState : State
 
     private void CheckAttackDistance()
     {
-        if (enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance)
+        if (enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance + 0.2f)
         {
-            stateMachine.ChangeState(enemy.attackState);
+            stateMachine.ChangeState(enemy.strafeState);
         }
         else if (enemy.navMeshAgent.remainingDistance >= enemy.sprintDistance)
         {
             stateMachine.ChangeState(enemy.sprintState);
         }
+
+        Debug.Log("remaining dis : " + enemy.navMeshAgent.remainingDistance);
     }
 
     public float GetAngleOfTarget(Transform transform, Vector3 targetDirection)

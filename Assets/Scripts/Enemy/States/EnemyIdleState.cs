@@ -17,7 +17,7 @@ public class EnemyIdleState : State
         base.Enter();
 
         destinationPoint = 0;
-        enemy.moveAmount = 0.5f;
+        //enemy.moveAmount = 0.5f;
 
         enemy.navMeshAgent.autoBraking = false;
         SetPatrolPoint();
@@ -32,7 +32,7 @@ public class EnemyIdleState : State
 
         if (enemy.currentTarget)
         {
-            enemy.moveAmount = 1.0f;
+            //enemy.moveAmount = 1.0f;
 
             if (enemy.weaponEquipment.SetWeapon(defaultWeaponSlot))
             {
