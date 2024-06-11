@@ -3,12 +3,16 @@ using UnityEngine;
 public class StrafeState : State
 {
     bool strafeSwitch = false;
+    bool tryAttack = false;
 
     float strafeTimer = 0f;
     float strafeSwitchTimer = 0f;
-    float strafeDuration = 8f;
-    float strafeSwitchDuration = 10f;
+    float strafeDuration = 5f;
+    float strafeSwitchDuration = 5f;
     int strafeDirection = 1;
+
+    float attackRange = 2f;
+    float attackProbability = 0.5f;
 
     public StrafeState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
@@ -18,8 +22,10 @@ public class StrafeState : State
     {
         base.Enter();
 
+        enemy.canMove = false;
         enemy.isLockedOn = true;
         strafeSwitch = false;
+        tryAttack = false;
 
         strafeTimer = 0f;
         strafeSwitchTimer = 0f;
@@ -29,10 +35,25 @@ public class StrafeState : State
     {
         base.LogicUpdate();
 
-        CheckDistance();
+        enemy.navMeshAgent.destination = enemy.currentTarget.transform.position;
         enemy.CheckRecallDistance();
 
-        if (strafeSwitch) strafeSwitchTimer += Time.deltaTime;
+        TryAttack();
+        HandleStrafe();
+
+        enemy.navMeshAgent.nextPosition = enemy.transform.position;
+    }
+
+    private void HandleStrafe()
+    {
+        if (strafeSwitch)
+        {
+            CheckDistance();
+            strafeSwitchTimer += Time.deltaTime;
+
+            if (Random.value <= attackProbability)
+                tryAttack = true;
+        }
 
         if (strafeSwitchTimer >= strafeSwitchDuration)
         {
@@ -42,6 +63,8 @@ public class StrafeState : State
 
         if (!strafeSwitch)
         {
+            CheckDistance();
+
             strafeTimer += Time.deltaTime;
 
             if (strafeTimer >= strafeDuration)
@@ -56,24 +79,46 @@ public class StrafeState : State
             strafeDirectionVector.y = 0f;
             strafeDirectionVector.Normalize();
 
-            enemy.controller.Move(enemy.strafeSpeed * Time.deltaTime * strafeDirectionVector);
-
             enemy.enemyAnimatorManager.SetAnimatorParameters(strafeDirection * enemy.strafeSpeed, 0);
+            enemy.controller.Move(enemy.strafeSpeed * Time.deltaTime * strafeDirectionVector);
         }
         else
         {
             enemy.enemyAnimatorManager.SetAnimatorParameters(0, 0);
             enemy.moveAmount = 0;
         }
+
+        enemy.navMeshAgent.velocity = enemy.controller.velocity;
+    }
+
+    private void TryAttack()
+    {
+        if (!tryAttack) return;
+
+        if (enemy.navMeshAgent.remainingDistance > attackRange)
+        {
+            Vector3 attackDirection = enemy.currentTarget.transform.position - enemy.transform.position;
+            attackDirection.y = 0f;
+            attackDirection.Normalize();
+
+            enemy.controller.Move(enemy.walkingSpeed * Time.deltaTime * attackDirection);
+            enemy.enemyAnimatorManager.SetAnimatorParameters(0, 1);
+        }
+        else
+        {
+            stateMachine.ChangeState(enemy.attackState);
+        }
     }
 
     private void CheckDistance()
     {
-        enemy.navMeshAgent.destination = enemy.currentTarget.transform.position;
-
         if (enemy.navMeshAgent.remainingDistance > enemy.navMeshAgent.stoppingDistance + 1)
         {
             stateMachine.ChangeState(enemy.combatState);
+        }
+        else if (enemy.navMeshAgent.remainingDistance < attackRange)
+        {
+            stateMachine.ChangeState(enemy.attackState);
         }
     }
 
@@ -81,6 +126,7 @@ public class StrafeState : State
     {
         base.Exit();
 
+        enemy.canMove = true;
         enemy.isLockedOn = false;
     }
 }

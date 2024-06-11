@@ -11823,6 +11823,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5147669859834482255, guid: 3ec311d5bdfd8ae449b2480e08750abe, type: 3}
+      propertyPath: healthManager
+      value: 
+      objectReference: {fileID: 5547950107788293762}
     - target: {fileID: 8194150757844736055, guid: 3ec311d5bdfd8ae449b2480e08750abe, type: 3}
       propertyPath: m_Name
       value: PlayerHUD

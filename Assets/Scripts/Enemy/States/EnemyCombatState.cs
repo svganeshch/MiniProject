@@ -61,14 +61,13 @@ public class EnemyCombatState : State
     {
         if (enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance + 0.2f)
         {
-            stateMachine.ChangeState(enemy.strafeState);
+            if (enemy.currentTarget.inputValues == Vector2.zero)
+                stateMachine.ChangeState(enemy.strafeState);
         }
         else if (enemy.navMeshAgent.remainingDistance >= enemy.sprintDistance)
         {
             stateMachine.ChangeState(enemy.sprintState);
         }
-
-        Debug.Log("remaining dis : " + enemy.navMeshAgent.remainingDistance);
     }
 
     public float GetAngleOfTarget(Transform transform, Vector3 targetDirection)

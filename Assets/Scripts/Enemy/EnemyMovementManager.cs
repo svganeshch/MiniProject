@@ -53,17 +53,15 @@ public class EnemyMovementManager : CharacterMovementManager
             }
         }
 
-        enemy.navMeshAgent.velocity = enemy.controller.velocity;
-
         GetMovementInput();
+
+        enemy.navMeshAgent.velocity = enemy.controller.velocity;
     }
 
     public override void GetMovementInput()
     {
-        desiredVelocity = enemy.navMeshAgent.desiredVelocity;
-        Vector3 localVelocity = enemy.transform.InverseTransformDirection(enemy.controller.velocity);
-        horizontalInput = localVelocity.x;
-        verticalInput = localVelocity.z;
+        horizontalInput = enemy.controller.velocity.x;
+        verticalInput = enemy.controller.velocity.z;
 
         enemy.moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
 
@@ -82,6 +80,10 @@ public class EnemyMovementManager : CharacterMovementManager
             {
                 enemy.enemyAnimatorManager.SetAnimatorParameters(0, enemy.moveAmount);
             }
+        }
+        else
+        {
+            enemy.enemyAnimatorManager.SetAnimatorParameters(horizontalInput, verticalInput);
         }
     }
 

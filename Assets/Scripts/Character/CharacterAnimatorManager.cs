@@ -164,7 +164,7 @@ public class CharacterAnimatorManager : MonoBehaviour
         PlayCharacterActionAnimation(jumpHash);
     }
 
-    public void PlayLiteAttackAction(bool canCombo)
+    public void PlayLiteAttackAction(bool canCombo, bool canRotate = false)
     {
         if (canCombo)
         {
@@ -183,7 +183,7 @@ public class CharacterAnimatorManager : MonoBehaviour
         }
         else
         {
-            PlayCharacterActionAnimation(lite_attack1_hash);
+            PlayCharacterActionAnimation(lite_attack1_hash, canRotate);
         }
 
         Debug.Log("is combo : " + canCombo);

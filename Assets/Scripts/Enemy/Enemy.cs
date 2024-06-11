@@ -11,7 +11,7 @@ public class Enemy : Character
     public float recallDistance = 10;
     public float sprintDistance = 15;
     public Transform targetLock;
-    public Character currentTarget;
+    public Player currentTarget;
 
     public Transform[] patrolPoints;
 

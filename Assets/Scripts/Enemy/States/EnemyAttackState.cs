@@ -10,8 +10,6 @@ public class EnemyAttackState : State
     private float clipSpeed;
     private float clipTime;
 
-    float cooldownTime = 5f;
-
     int animatorActionsLayerindex;
 
     public EnemyAttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
@@ -27,7 +25,7 @@ public class EnemyAttackState : State
 
         animatorActionsLayerindex = enemy.animator.GetLayerIndex("Action Override");
 
-        enemy.enemyAnimatorManager.PlayLiteAttackAction(canCombo);
+        enemy.enemyAnimatorManager.PlayLiteAttackAction(canCombo, true);
         canCombo = false;
     }
 
@@ -35,7 +33,6 @@ public class EnemyAttackState : State
     {
         base.LogicUpdate();
 
-        LookAtTarget();
         canAttack = CheckAttackDistance();
 
         if (enemy.animator.GetCurrentAnimatorClipInfo(animatorActionsLayerindex).Length == 0) return;
@@ -48,27 +45,7 @@ public class EnemyAttackState : State
         //clipSpeed = character.animator.GetCurrentAnimatorStateInfo(animatorActionsLayerindex).speed * character.animator.GetCurrentAnimatorStateInfo(0).speedMultiplier;
         //clipTime = clipLength / clipSpeed;
 
-        if (canAttack && timePassed >= clipTime + cooldownTime)
-        {
-            //Debug.Log("switching state to next attack");
-            stateMachine.ChangeState(enemy.attackState, true);
-            canCombo = true;
-        }
-    }
-
-    private void LookAtTarget()
-    {
-        Vector3 targetDirection = enemy.currentTarget.transform.position - enemy.transform.position;
-        targetDirection.y = 0;
-        targetDirection.Normalize();
-
-        if (targetDirection == Vector3.zero)
-        {
-            targetDirection = enemy.transform.forward;
-        }
-
-        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-        enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, 0.5f);
+        enemy.navMeshAgent.nextPosition = enemy.transform.position;
     }
 
     private bool CheckAttackDistance()
@@ -80,5 +57,7 @@ public class EnemyAttackState : State
     public override void Exit()
     {
         base.Exit();
+
+        enemy.navMeshAgent.nextPosition = enemy.transform.position;
     }
 }
