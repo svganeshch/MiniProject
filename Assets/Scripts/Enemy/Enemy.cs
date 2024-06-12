@@ -10,6 +10,8 @@ public class Enemy : Character
     public float detectionRadius = 15;
     public float recallDistance = 10;
     public float sprintDistance = 15;
+    public float slowDownThreshold = 5;
+    public float minSpeedFactor = 0.3f;
     public float minimumFOV = -35;
     public float maximumFOV = 35;
     public Transform targetLock;

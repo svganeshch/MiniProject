@@ -10,6 +10,8 @@ public class EnemyMovementManager : CharacterMovementManager
     Quaternion lookRotation;
 
     float viewableAngle;
+    float speed = 0;
+    float speedFactor;
 
     private void Awake()
     {
@@ -42,29 +44,33 @@ public class EnemyMovementManager : CharacterMovementManager
 
         desiredVelocity = enemy.navMeshAgent.desiredVelocity;
 
+        speedFactor = Mathf.Clamp01(enemy.navMeshAgent.remainingDistance / enemy.slowDownThreshold);
+        speedFactor = Mathf.Max(speedFactor, enemy.minSpeedFactor);
+
         if (enemy.characterStateMachine.currentState == enemy.sprintState)
         {
             // sprint speed
-            enemy.controller.Move(enemy.sprintSpeed * Time.deltaTime * desiredVelocity.normalized);
+            speed = enemy.sprintSpeed;
         }
         else if (enemy.characterStateMachine.currentState == enemy.combatState)
         {
             // combat speed
-            enemy.controller.Move(enemy.combatSpeed * Time.deltaTime * desiredVelocity.normalized);
+            speed = enemy.combatSpeed;
         }
         else
         {
             if (enemy.moveAmount > 0.5f)
             {
                 // running speed
-                enemy.controller.Move(enemy.runningSpeed * Time.deltaTime * desiredVelocity.normalized);
+                speed = enemy.runningSpeed;
             }
             else if (enemy.moveAmount <= 0.5f)
             {
                 // walking speed
-                enemy.controller.Move(enemy.walkingSpeed * Time.deltaTime * desiredVelocity.normalized);
+                speed = enemy.walkingSpeed;
             }
         }
+        enemy.controller.Move(speed * speedFactor * Time.deltaTime * desiredVelocity.normalized);
         enemy.navMeshAgent.velocity = enemy.controller.velocity;
 
         GetMovementInput();
@@ -82,16 +88,17 @@ public class EnemyMovementManager : CharacterMovementManager
             enemy.moveAmount = 0.5f;
         }
 
+        enemy.moveAmount *= speedFactor;
+
         if (!enemy.isLockedOn)
         {
             if (enemy.characterStateMachine.currentState == enemy.sprintState)
             {
-                enemy.enemyAnimatorManager.SetAnimatorParameters(0, 1.5f);
+                enemy.moveAmount = 1.5f;
+                enemy.moveAmount *= speedFactor;
             }
-            else
-            {
-                enemy.enemyAnimatorManager.SetAnimatorParameters(0, enemy.moveAmount);
-            }
+
+            enemy.enemyAnimatorManager.SetAnimatorParameters(0, enemy.moveAmount);
         }
         else
         {

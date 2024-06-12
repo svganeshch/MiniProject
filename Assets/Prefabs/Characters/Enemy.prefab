@@ -5331,13 +5331,13 @@ MonoBehaviour:
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
-  speedDampTime: 0.1
-  rotationDampTime: 15
+  speedDampTime: 0.5
+  rotationDampTime: 6
   animationFadeTime: 0.2
   airControl: 0.5
   walkingSpeed: 1.75
   runningSpeed: 5
-  combatSpeed: 4.75
+  combatSpeed: 2.5
   sprintSpeed: 5
   animator: {fileID: 0}
   controller: {fileID: 0}
@@ -5348,9 +5348,14 @@ MonoBehaviour:
   hudManager: {fileID: 0}
   weaponEquipment: {fileID: 0}
   recallTimer: 0
+  strafeSpeed: 0.85
   detectionRadius: 15
   recallDistance: 5
   sprintDistance: 10
+  slowDownThreshold: 8
+  minSpeedFactor: 0.4
+  minimumFOV: -35
+  maximumFOV: 35
   targetLock: {fileID: 7415203626571703856}
   currentTarget: {fileID: 0}
   patrolPoints:
@@ -5535,12 +5540,12 @@ NavMeshAgent:
   m_Speed: 1
   m_Acceleration: 1
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 1.25
+  m_AngularSpeed: 0
+  m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1.8
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
