@@ -44,8 +44,6 @@ public class EnemyAttackState : State
         //clipLength = character.animator.GetCurrentAnimatorClipInfo(animatorActionsLayerindex)[0].clip.length;
         //clipSpeed = character.animator.GetCurrentAnimatorStateInfo(animatorActionsLayerindex).speed * character.animator.GetCurrentAnimatorStateInfo(0).speedMultiplier;
         //clipTime = clipLength / clipSpeed;
-
-        enemy.navMeshAgent.nextPosition = enemy.transform.position;
     }
 
     private bool CheckAttackDistance()
@@ -57,7 +55,5 @@ public class EnemyAttackState : State
     public override void Exit()
     {
         base.Exit();
-
-        enemy.navMeshAgent.nextPosition = enemy.transform.position;
     }
 }

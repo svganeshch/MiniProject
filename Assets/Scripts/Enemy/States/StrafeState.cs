@@ -46,6 +46,8 @@ public class StrafeState : State
 
     private void HandleStrafe()
     {
+        if (tryAttack) return;
+
         if (strafeSwitch)
         {
             CheckDistance();
@@ -108,6 +110,8 @@ public class StrafeState : State
         {
             stateMachine.ChangeState(enemy.attackState);
         }
+
+        enemy.navMeshAgent.velocity = enemy.controller.velocity;
     }
 
     private void CheckDistance()

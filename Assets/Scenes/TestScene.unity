@@ -1898,6 +1898,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2806058588978570779, guid: a4ef719fa84df5b4f87cbb46a2768dc9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806058588978570779, guid: a4ef719fa84df5b4f87cbb46a2768dc9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806058588978570779, guid: a4ef719fa84df5b4f87cbb46a2768dc9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806058588978570779, guid: a4ef719fa84df5b4f87cbb46a2768dc9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7413756614538244383, guid: a4ef719fa84df5b4f87cbb46a2768dc9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1961,8 +1977,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 255253245359740252, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
+      propertyPath: combatSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 255253245359740252, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
       propertyPath: strafeSpeed
       value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 255253245359740252, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
+      propertyPath: speedDampTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 255253245359740252, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
+      propertyPath: rotationDampTime
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 255253245359740252, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
       propertyPath: patrolPoints.Array.data[0]
@@ -1987,6 +2015,10 @@ PrefabInstance:
     - target: {fileID: 5381379645130712477, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
       propertyPath: m_Height
       value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5381379645130712477, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5381379645130712477, guid: 9c76d07bbb287ac43838ad0bb2d99e8a, type: 3}
       propertyPath: m_StoppingDistance

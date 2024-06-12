@@ -23,6 +23,12 @@ public class CharacterAnimatorManager : MonoBehaviour
     private static int lite_attack2_hash;
     private static int lite_attack3_hash;
 
+    // Pivot
+    private static int L90;
+    private static int L180;
+    private static int R90;
+    private static int R180;
+
     // Animation bools
     private static int isCombatHash;
     private static int isGroundedHash;
@@ -66,6 +72,11 @@ public class CharacterAnimatorManager : MonoBehaviour
         lite_attack1_hash = Animator.StringToHash("lite_attack1");
         lite_attack2_hash = Animator.StringToHash("lite_attack2");
         lite_attack3_hash = Animator.StringToHash("lite_attack3");
+
+        L90 = Animator.StringToHash("Turn_L90");
+        L180 = Animator.StringToHash("Turn_L180");
+        R90 = Animator.StringToHash("Turn_R90");
+        R180 = Animator.StringToHash("Turn_R180");
 
         isCombatHash = Animator.StringToHash("isCombat");
         isGroundedHash = Animator.StringToHash("isGrounded");
@@ -187,6 +198,25 @@ public class CharacterAnimatorManager : MonoBehaviour
         }
 
         Debug.Log("is combo : " + canCombo);
+    }
+
+    public void PlayPivotAction(int pivotAngle)
+    {
+        switch (pivotAngle)
+        {
+            case 90:
+                PlayCharacterActionAnimation(R90, false, false);
+                break;
+            case 180:
+                PlayCharacterActionAnimation(R180, false, true);
+                break;
+            case -90:
+                PlayCharacterActionAnimation(L90, false, false);
+                break;
+            case -180:
+                PlayCharacterActionAnimation(L180, false, true);
+                break;
+        }
     }
 
     public void PlayWeaponDrawAction()

@@ -9,6 +9,8 @@ public class EnemyMovementManager : CharacterMovementManager
 
     Quaternion lookRotation;
 
+    float viewableAngle;
+
     private void Awake()
     {
         enemy = GetComponent<Enemy>();
@@ -20,6 +22,17 @@ public class EnemyMovementManager : CharacterMovementManager
 
         enemy.navMeshAgent.updatePosition = false;
         enemy.navMeshAgent.updateRotation = false;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (enemy.currentTarget != null)
+        {
+            if (viewableAngle < enemy.minimumFOV || viewableAngle > enemy.maximumFOV)
+                PivotTowardsTarget(enemy.currentTarget.transform);
+        }
     }
 
     protected override void HandleGroundedMovement()
@@ -52,10 +65,9 @@ public class EnemyMovementManager : CharacterMovementManager
                 enemy.controller.Move(enemy.walkingSpeed * Time.deltaTime * desiredVelocity.normalized);
             }
         }
+        enemy.navMeshAgent.velocity = enemy.controller.velocity;
 
         GetMovementInput();
-
-        enemy.navMeshAgent.velocity = enemy.controller.velocity;
     }
 
     public override void GetMovementInput()
@@ -97,5 +109,46 @@ public class EnemyMovementManager : CharacterMovementManager
 
         lookRotation = Quaternion.LookRotation(lookDirection);
         enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, lookRotation, Time.deltaTime * enemy.rotationDampTime);
+    }
+
+    public void PivotTowardsTarget(Transform target)
+    {
+        Vector3 targetDirection = target.position - enemy.transform.position;
+        viewableAngle = GetAngleOfTarget(enemy.transform, targetDirection);
+
+        //Debug.Log("va : " + viewableAngle);
+
+        if (viewableAngle >= 61 && viewableAngle <= 110)
+        {
+            // Right 90
+            enemy.enemyAnimatorManager.PlayPivotAction(90);
+        }
+        else if (viewableAngle <= -61 && viewableAngle >= -110)
+        {
+            // Left 90
+            enemy.enemyAnimatorManager.PlayPivotAction(-90);
+        }
+        else if (viewableAngle >= 146 && viewableAngle <= 180)
+        {
+            // Right 180
+            enemy.enemyAnimatorManager.PlayPivotAction(180);
+        }
+        else if (viewableAngle <= -146 && viewableAngle >= -180)
+        {
+            // Left 180
+            enemy.enemyAnimatorManager.PlayPivotAction(-180);
+        }
+    }
+
+    public float GetAngleOfTarget(Transform transform, Vector3 targetDirection)
+    {
+        targetDirection.y = 0;
+        float viewableAngle = Vector3.Angle(transform.forward, targetDirection);
+        Vector3 cross = Vector3.Cross(transform.forward, targetDirection);
+
+        if (cross.y < 0)
+            viewableAngle = -viewableAngle;
+
+        return viewableAngle;
     }
 }

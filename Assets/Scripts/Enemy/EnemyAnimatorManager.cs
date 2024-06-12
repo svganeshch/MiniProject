@@ -19,6 +19,8 @@ public class EnemyAnimatorManager : CharacterAnimatorManager
 
             enemy.controller.Move(velocity);
             enemy.transform.rotation *= enemy.animator.deltaRotation;
+
+            enemy.navMeshAgent.nextPosition = enemy.transform.position;
         }
     }
 }

@@ -19,16 +19,13 @@ public class EnemyCombatState : State
     {
         base.LogicUpdate();
 
+        if (!enemy.currentTarget) stateMachine.ChangeState(enemy.idleState);
+
         SetNavAgent();
         CheckAttackDistance();
 
         if (!enemy.isLockedOn)
             enemy.CheckRecallDistance();
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
 
     private void SetNavAgent()
@@ -44,17 +41,6 @@ public class EnemyCombatState : State
 
         // new nav logic to control with character controller
         enemy.navMeshAgent.destination = enemy.currentTarget.transform.position;
-
-        //if (enemy.idleState.currentTarget != null )
-        //{
-        //    enemy.idleState.targetDirection = enemy.idleState.currentTarget.transform.position - enemy.transform.position;
-        //    enemy.idleState.viewableAngle = GetAngleOfTarget(enemy.transform, enemy.idleState.targetDirection);
-        //}
-
-        //Debug.Log("enemy controller : " + character.controller.velocity);
-        //Debug.Log("chasing player");
-
-
     }
 
     private void CheckAttackDistance()
@@ -68,18 +54,6 @@ public class EnemyCombatState : State
         {
             stateMachine.ChangeState(enemy.sprintState);
         }
-    }
-
-    public float GetAngleOfTarget(Transform transform, Vector3 targetDirection)
-    {
-        targetDirection.y = 0;
-        float viewableAngle = Vector3.Angle(transform.forward, targetDirection);
-        Vector3 cross = Vector3.Cross(transform.forward, targetDirection);
-
-        if (cross.y < 0)
-            viewableAngle = -viewableAngle;
-
-        return viewableAngle;
     }
 
     public override void Exit()

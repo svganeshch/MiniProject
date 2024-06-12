@@ -4,10 +4,6 @@ public class EnemyIdleState : State
 {
     int destinationPoint = 0;
 
-    public float viewableAngle;
-    public float minimumFOV = -35;
-    public float maximumFOV = 35;
-
     public EnemyIdleState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
     }
@@ -45,7 +41,7 @@ public class EnemyIdleState : State
 
     private void Patrol()
     {
-        if (!enemy.navMeshAgent.pathPending && enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance)
+        if (!enemy.navMeshAgent.pathPending && enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance + 0.2f)
         {
             SetPatrolPoint();
         }
@@ -58,6 +54,7 @@ public class EnemyIdleState : State
             return;
         }
 
+        enemy.enemyMovementManager.PivotTowardsTarget(enemy.patrolPoints[destinationPoint]);
         enemy.navMeshAgent.destination = enemy.patrolPoints[destinationPoint].position;
         destinationPoint = (destinationPoint + 1) % enemy.patrolPoints.Length;
     }
@@ -79,7 +76,7 @@ public class EnemyIdleState : State
             Vector3 targetDirection = targetCharacter.transform.position - enemy.transform.position;
             float angleOfTarget = Vector3.Angle(targetDirection, enemy.transform.forward);
 
-            if (angleOfTarget > minimumFOV && angleOfTarget < maximumFOV)
+            if (angleOfTarget > enemy.minimumFOV && angleOfTarget < enemy.maximumFOV)
             {
                 if (Physics.Linecast(enemy.targetLock.position, targetCharacter.targetLockCast.position, LayerMaskManager.Instance.obstaclesLayerMask))
                 {
@@ -87,25 +84,10 @@ public class EnemyIdleState : State
                 }
                 else
                 {
-                    //targetDirection = targetCharacter.transform.position - enemy.transform.position;
-                    //viewableAngle = enemy.pursueState.GetAngleOfTarget(enemy.transform, enemy.idleState.targetDirection);
                     enemy.currentTarget = targetCharacter;
-                    //PivotTowardsTarget();
                     Debug.Log("target found");
                 }
             }
-        }
-    }
-
-    public void PivotTowardsTarget()
-    {
-        if (viewableAngle >= 20 && viewableAngle <= 60)
-        {
-            enemy.animator.SetTrigger("R45");
-        }
-        else if (viewableAngle <= -20 && viewableAngle >= -60)
-        {
-            enemy.animator.SetTrigger("L45");
         }
     }
 
