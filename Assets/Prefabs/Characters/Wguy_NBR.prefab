@@ -11785,6 +11785,7 @@ MonoBehaviour:
   currentLockedOnTarget: {fileID: 0}
   moveAmount: 0
   applyRootMotion: 0
+  isPivoting: 0
   canRotate: 1
   canMove: 1
   speedDampTime: 0.1

@@ -14,6 +14,7 @@ public class Character : MonoBehaviour
 
     [Header("Animation Control Flags")]
     public bool applyRootMotion = false;
+    public bool isPivoting = false;
     public bool canRotate = true;
     public bool canMove = true;
 

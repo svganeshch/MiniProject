@@ -217,6 +217,9 @@ public class CharacterAnimatorManager : MonoBehaviour
                 PlayCharacterActionAnimation(L180, false, true);
                 break;
         }
+
+        character.isPivoting = true;
+        Debug.Log("setting pivot angle : " + pivotAngle);
     }
 
     public void PlayWeaponDrawAction()

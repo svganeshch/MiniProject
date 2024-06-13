@@ -28,13 +28,18 @@ public class EnemyMovementManager : CharacterMovementManager
 
     public override void Update()
     {
-        base.Update();
+        HandleGroundedMovement();
+        HandleGroundCheck();
 
-        if (enemy.currentTarget != null)
-        {
-            if (viewableAngle < enemy.minimumFOV || viewableAngle > enemy.maximumFOV)
-                PivotTowardsTarget(enemy.currentTarget.transform);
-        }
+        //Vector3 targetDirection = enemy.navMeshAgent.destination - enemy.transform.position;
+        //viewableAngle = GetAngleOfTarget(enemy.transform, targetDirection);
+
+        ////Debug.Log($"Viewable Angle: {viewableAngle}, isPivoting: {enemy.isPivoting}");
+
+        //if (viewableAngle < enemy.minimumFOV || viewableAngle > enemy.maximumFOV)
+        //    PivotTowardsTarget();
+
+        HandleRotation();
     }
 
     protected override void HandleGroundedMovement()
@@ -118,12 +123,14 @@ public class EnemyMovementManager : CharacterMovementManager
         enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, lookRotation, Time.deltaTime * enemy.rotationDampTime);
     }
 
-    public void PivotTowardsTarget(Transform target)
+    public void PivotTowardsTarget()
     {
-        Vector3 targetDirection = target.position - enemy.transform.position;
-        viewableAngle = GetAngleOfTarget(enemy.transform, targetDirection);
-
-        //Debug.Log("va : " + viewableAngle);
+        if (enemy.isPivoting)
+        {
+            Debug.Log("Already pivoting, skipping pivot.");
+            return;
+        }
+        //Debug.Log("Pivoting towards target. Viewable Angle: " + viewableAngle);
 
         if (viewableAngle >= 61 && viewableAngle <= 110)
         {

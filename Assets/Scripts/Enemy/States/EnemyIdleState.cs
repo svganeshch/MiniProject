@@ -54,7 +54,6 @@ public class EnemyIdleState : State
             return;
         }
 
-        enemy.enemyMovementManager.PivotTowardsTarget(enemy.patrolPoints[destinationPoint]);
         enemy.navMeshAgent.destination = enemy.patrolPoints[destinationPoint].position;
         destinationPoint = (destinationPoint + 1) % enemy.patrolPoints.Length;
     }
