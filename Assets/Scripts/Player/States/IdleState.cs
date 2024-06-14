@@ -34,36 +34,36 @@ public class IdleState : State
     {
         base.HandleInput();
 
-        if (player.jumpAction.triggered)
+        if (player.jumpAction.WasPressedThisFrame())
             jump = true;
 
-        if (player.sprintAction.triggered)
+        if (player.sprintAction.WasPressedThisFrame())
             sprint = true;
 
-        if (player.dodgeAction.triggered)
+        if (player.dodgeAction.WasPressedThisFrame())
         {
             dodge = true;
         }
 
-        if (player.drawWeaponAction.triggered)
+        if (player.drawWeaponAction.WasPressedThisFrame())
             drawWeapon = true;
 
-        if (player.weapon1Action.triggered)
+        if (player.weapon1Action.WasPressedThisFrame())
         {
             weaponSlot = 1;
             drawWeapon = true;
         }
-        if (player.weapon2Action.triggered)
+        if (player.weapon2Action.WasPressedThisFrame())
         {
             weaponSlot = 2;
             drawWeapon = true;
         }
-        if (player.weapon3Action.triggered)
+        if (player.weapon3Action.WasPressedThisFrame())
         {
             weaponSlot = 3;
             drawWeapon = true;
         }
-        if (player.weapon4Action.triggered)
+        if (player.weapon4Action.WasPressedThisFrame())
         {
             weaponSlot = 4;
             drawWeapon = true;

@@ -38,17 +38,17 @@ public class AttackStateLogic : State
     {
         base.HandleInput();
 
-        if (player.dodgeAction.triggered)
+        if (player.dodgeAction.WasPressedThisFrame())
         {
             dodge = true;
         }
 
-        if (player.blockAction.triggered)
+        if (player.blockAction.WasPressedThisFrame())
         {
             block = true;
         }
 
-        if (player.liteAttackWeaponAction.triggered)
+        if (player.liteAttackWeaponAction.WasPressedThisFrame())
         {
             attack = true;
         }

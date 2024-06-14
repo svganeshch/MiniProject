@@ -20,7 +20,7 @@ public class HitState : State
     {
         base.HandleInput();
 
-        if (player.dodgeAction.triggered)
+        if (player.dodgeAction.WasPressedThisFrame())
         {
             dodge = true;
         }

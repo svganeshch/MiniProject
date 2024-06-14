@@ -20,12 +20,12 @@ public class SprintState : State
     {
         base.HandleInput();
 
-        if (player.sprintAction.triggered || player.inputValues.sqrMagnitude == 0f)
+        if (player.sprintAction.WasPressedThisFrame() || player.inputValues.sqrMagnitude == 0f)
         {
             sprint = false;
         }
 
-        if (player.jumpAction.triggered)
+        if (player.jumpAction.WasPressedThisFrame())
         {
             sprintJump = true;
         }

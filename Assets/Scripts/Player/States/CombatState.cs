@@ -49,13 +49,13 @@ public class CombatState : State
 
     private void HandleActionInputs()
     {
-        if (player.jumpAction.triggered) jump = true;
-        if (player.dodgeAction.triggered) dodge = true;
-        if (player.drawWeaponAction.triggered) holsterWeapon = true;
-        if (player.blockAction.triggered) blocking = true;
-        if (player.heavyAttackWeaponAction.triggered) heavyAttackState = true;
+        if (player.jumpAction.WasPressedThisFrame()) jump = true;
+        if (player.dodgeAction.WasPressedThisFrame()) dodge = true;
+        if (player.drawWeaponAction.WasPressedThisFrame()) holsterWeapon = true;
+        if (player.blockAction.WasPressedThisFrame()) blocking = true;
+        if (player.heavyAttackWeaponAction.WasPressedThisFrame()) heavyAttackState = true;
 
-        if (player.liteAttackWeaponAction.triggered && !heavyAttackState && !character.animator.GetBool("swapWeapon"))
+        if (player.liteAttackWeaponAction.WasPressedThisFrame() && !heavyAttackState && !character.animator.GetBool("swapWeapon"))
         {
             attackState = true;
         }
@@ -63,10 +63,10 @@ public class CombatState : State
 
     private void HandleWeaponSwapInputs()
     {
-        if (player.weapon1Action.triggered) SetSwapWeapon(1);
-        if (player.weapon2Action.triggered) SetSwapWeapon(2);
-        if (player.weapon3Action.triggered) SetSwapWeapon(3);
-        if (player.weapon4Action.triggered) SetSwapWeapon(4);
+        if (player.weapon1Action.WasPressedThisFrame()) SetSwapWeapon(1);
+        if (player.weapon2Action.WasPressedThisFrame()) SetSwapWeapon(2);
+        if (player.weapon3Action.WasPressedThisFrame()) SetSwapWeapon(3);
+        if (player.weapon4Action.WasPressedThisFrame()) SetSwapWeapon(4);
     }
 
     private void SetSwapWeapon(int weaponSlot)
@@ -77,16 +77,16 @@ public class CombatState : State
 
     private void HandleLockOnInputs()
     {
-        if (player.lockOnAction.triggered) lockOnTrigger = true;
+        if (player.lockOnAction.WasPressedThisFrame()) lockOnTrigger = true;
 
         if (player.isLockedOn)
         {
-            if (player.leftLockOnAction.triggered || player.rightLockOnAction.triggered)
+            if (player.leftLockOnAction.WasPressedThisFrame() || player.rightLockOnAction.WasPressedThisFrame())
             {
                 if (player.playerInput.devices[0] is Gamepad)
                 {
-                    leftLockOnTrigger = player.leftLockOnAction.triggered;
-                    rightLockOnTrigger = player.rightLockOnAction.triggered;
+                    leftLockOnTrigger = player.leftLockOnAction.WasPressedThisFrame();
+                    rightLockOnTrigger = player.rightLockOnAction.WasPressedThisFrame();
                 }
                 else if (player.playerInput.devices[0] is Keyboard)
                 {

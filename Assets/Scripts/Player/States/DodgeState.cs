@@ -26,7 +26,7 @@ public class DodgeState : State
     {
         base.HandleInput();
 
-        if (player.blockAction.triggered)
+        if (player.blockAction.WasPressedThisFrame())
         {
             block = true;
         }
