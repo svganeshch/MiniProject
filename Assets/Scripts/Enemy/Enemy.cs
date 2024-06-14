@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,6 +8,10 @@ public class Enemy : Character
 
     [Header("Enemy Controls")]
     public float strafeSpeed = 0.75f;
+    public float strafeDuration = 5f;
+    public float strafeSwitchDuration = 5f;
+    public float attackRange = 2f;
+    public float attackProbability = 0.5f;
     public float detectionRadius = 15;
     public float recallDistance = 10;
     public float sprintDistance = 15;
@@ -25,7 +30,7 @@ public class Enemy : Character
     [HideInInspector] public EnemyMovementManager enemyMovementManager;
     [HideInInspector] public EnemySfxManager enemySfxManager;
 
-    // Enemy Specefic States
+    // Enemy Specific States
     [HideInInspector] public EnemyAttackState attackState;
     [HideInInspector] public StrafeState strafeState;
 
@@ -44,6 +49,33 @@ public class Enemy : Character
         enemyMovementManager = GetComponent<EnemyMovementManager>();
         enemySfxManager = GetComponent<EnemySfxManager>();
 
+        InitializeStates();
+
+        StartCoroutine(UpdateNavMeshDestinationCoroutine());
+    }
+
+    //protected override void Update()
+    //{
+    //    base.Update();
+
+    //    if (characterStateMachine.currentState != idleState && currentTarget != null)
+    //        navMeshAgent.destination = currentTarget.transform.position;
+    //}
+
+    private IEnumerator UpdateNavMeshDestinationCoroutine()
+    {
+        while (true)
+        {
+            if (characterStateMachine.currentState != idleState && currentTarget != null)
+            {
+                navMeshAgent.destination = currentTarget.transform.position;
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    protected override void InitializeStates()
+    {
         idleState = new EnemyIdleState(this, characterStateMachine);
         combatState = new EnemyCombatState(this, characterStateMachine);
         attackState = new EnemyAttackState(this, characterStateMachine);
@@ -53,15 +85,12 @@ public class Enemy : Character
         hitState = new EnemyHitState(this, characterStateMachine);
         sprintState = new EnemySprintState(this, characterStateMachine);
         strafeState = new StrafeState(this, characterStateMachine);
+
+        // Set initial state
         characterStateMachine.Initialize(idleState);
     }
 
-    protected override void Update()
-    {
-        characterStateMachine.currentState.LogicUpdate();
-    }
-
-    public void CheckRecallDistance()
+    public void RecallDistanceChecks()
     {
         recallTimer += Time.deltaTime;
 

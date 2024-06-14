@@ -7,8 +7,6 @@ public class StrafeState : State
 
     float strafeTimer = 0f;
     float strafeSwitchTimer = 0f;
-    float strafeDuration = 5f;
-    float strafeSwitchDuration = 5f;
     int strafeDirection = 1;
 
     float attackRange = 2f;
@@ -35,11 +33,9 @@ public class StrafeState : State
     {
         base.LogicUpdate();
 
-        enemy.navMeshAgent.destination = enemy.currentTarget.transform.position;
-        enemy.CheckRecallDistance();
-
-        TryAttack();
+        CheckDistance();
         HandleStrafe();
+        TryAttack();
 
         enemy.navMeshAgent.nextPosition = enemy.transform.position;
     }
@@ -50,14 +46,14 @@ public class StrafeState : State
 
         if (strafeSwitch)
         {
-            CheckDistance();
+            //CheckDistance();
             strafeSwitchTimer += Time.deltaTime;
 
             if (Random.value <= attackProbability)
                 tryAttack = true;
         }
 
-        if (strafeSwitchTimer >= strafeSwitchDuration)
+        if (strafeSwitchTimer >= enemy.strafeSwitchDuration)
         {
             strafeSwitchTimer = 0f;
             strafeSwitch = false;
@@ -65,11 +61,11 @@ public class StrafeState : State
 
         if (!strafeSwitch)
         {
-            CheckDistance();
+            //CheckDistance();
 
             strafeTimer += Time.deltaTime;
 
-            if (strafeTimer >= strafeDuration)
+            if (strafeTimer >= enemy.strafeDuration)
             {
                 strafeDirection *= -1;
                 strafeTimer = 0f;

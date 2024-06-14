@@ -9,48 +9,48 @@ public class EnemyCombatState : State
     public override void Enter()
     {
         base.Enter();
-
         enemy.recallTimer = 0f;
-
-        enemy.navMeshAgent.destination = enemy.currentTarget.transform.position;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if (!enemy.currentTarget) stateMachine.ChangeState(enemy.idleState);
+        ResetEnemy();
 
-        SetNavAgent();
+        enemy.RecallDistanceChecks();
+
         CheckAttackDistance();
-
-        if (!enemy.isLockedOn)
-            enemy.CheckRecallDistance();
     }
 
-    private void SetNavAgent()
+    private void ResetEnemy()
     {
         if (enemy.isDead)
         {
             enemy.navMeshAgent.enabled = false;
             enemy.currentTarget = null;
             stateMachine.ChangeState(enemy.idleState);
-
             return;
         }
-
-        // new nav logic to control with character controller
-        enemy.navMeshAgent.destination = enemy.currentTarget.transform.position;
+        else if (enemy.currentTarget == null)
+        {
+            stateMachine.ChangeState(enemy.idleState);
+            return;
+        }
     }
 
     private void CheckAttackDistance()
     {
-        if (enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance + 0.2f)
+        float remainingDistance = enemy.navMeshAgent.remainingDistance;
+
+        if (remainingDistance <= enemy.navMeshAgent.stoppingDistance + 0.2f)
         {
             if (enemy.currentTarget.inputValues == Vector2.zero)
+            {
                 stateMachine.ChangeState(enemy.strafeState);
+            }
         }
-        else if (enemy.navMeshAgent.remainingDistance >= enemy.sprintDistance)
+        else if (remainingDistance >= enemy.sprintDistance)
         {
             stateMachine.ChangeState(enemy.sprintState);
         }

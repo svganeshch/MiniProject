@@ -3,12 +3,14 @@ using UnityEngine;
 public class PlayerAnimatorManager : CharacterAnimatorManager
 {
     Player player;
+    Transform playerTransform;
 
     protected override void Awake()
     {
         base.Awake();
 
         player = GetComponent<Player>();
+        playerTransform = player.transform;
     }
 
     private void OnAnimatorMove()
@@ -18,7 +20,7 @@ public class PlayerAnimatorManager : CharacterAnimatorManager
             Vector3 velocity = player.animator.deltaPosition;
 
             player.controller.Move(velocity);
-            player.transform.rotation *= player.animator.deltaRotation;
+            playerTransform.rotation *= player.animator.deltaRotation;
         }
     }
 

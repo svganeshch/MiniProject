@@ -77,12 +77,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918e8bf2a3100f142a6f0bb8dc414645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraObj: {fileID: 7861794934421314678}
+  playerCameraObjTransform: {fileID: 8116169642250123877}
+  mainCameraTransform: {fileID: 7144099461333022512}
   cameraPivotTransform: {fileID: 5876413045896002731}
   followTarget: {fileID: 0}
   player: {fileID: 0}
   playerInput: {fileID: 0}
-  cameraSmoothSpeed: 0.2
+  cameraSmoothSpeed: 0.115
   MouseYSensitivity: 40
   MouseXSensitivity: 40
   GamepadYSensitivity: 220
@@ -94,7 +95,7 @@ MonoBehaviour:
   minimumViewableAngle: -50
   maximumViewableAngle: 50
   lockOnTargetFollowSpeed: 0.8
-  setCameraHeightSpeed: 0.05
+  setCameraHeightSpeed: 0.125
   mouseLockOnSwitchTreshold: 50
   unlockedCameraHeight: 1.65
   lockedCameraHeight: 2
@@ -217,7 +218,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

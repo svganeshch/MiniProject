@@ -43,7 +43,7 @@ public class WeaponSwapBehaviour : StateMachineBehaviour
 
         if (isWeaponSwap)
         {
-            character.combatState.SwapWeapon();
+            //character.combatState.SwapWeapon();
         }
     }
 }

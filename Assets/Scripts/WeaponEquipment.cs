@@ -25,6 +25,7 @@ public class Weapon
     public bool isDagger = false;
 
     [HideInInspector] public GameObject weaponObj;
+    [HideInInspector] public Transform weaponObjTransform;
     [HideInInspector] public WeaponAttack weaponAttackScript;
 }
 
@@ -51,6 +52,7 @@ public class WeaponEquipment : MonoBehaviour
             GameObject weaponObj = Instantiate(weapon.weaponPrefab, weapon.weaponHolsterPosition);
             weapon.weaponObj = weaponObj;
             weapon.weaponAttackScript = weaponObj.GetComponentInChildren<WeaponAttack>();
+            weapon.weaponObjTransform = weaponObj.transform;
 
             if (weapon.weaponAttackScript != null)
             {
@@ -64,36 +66,19 @@ public class WeaponEquipment : MonoBehaviour
 
     public bool SetWeapon(int weaponSlot)
     {
-        currentWeaponSlot = weapons.Find(weapon => weapon.weaponSlot == weaponSlot).weaponSlot;
-        currentWeapon = GetWeaponWithSlot(currentWeaponSlot);
+        Weapon selectedWeapon = GetWeaponWithSlot(weaponSlot);
 
-        if (!currentWeapon.Enabled)
+        if (selectedWeapon == null || !selectedWeapon.Enabled)
         {
             return false;
         }
 
+        currentWeapon = selectedWeapon;
+        currentWeaponSlot = weaponSlot;
         currentWeaponObj = currentWeapon.weaponObj;
         character.animator.runtimeAnimatorController = currentWeapon.animatorOverrideController;
 
-        AnimatorOverrideController animatorOverrideController = currentWeapon.animatorOverrideController;
-        List<KeyValuePair<AnimationClip, AnimationClip>> overrideClips;
-
-        overrideClips = new List<KeyValuePair<AnimationClip, AnimationClip>>(animatorOverrideController.overridesCount);
-        animatorOverrideController.GetOverrides(overrideClips);
-
-        foreach (KeyValuePair<AnimationClip, AnimationClip> overrideCl in overrideClips)
-        {
-            if (overrideCl.Key.name.CompareTo("draw_2") == 0 && overrideCl.Value != null)
-            {
-                character.animator.SetBool("hasDraw2", true);
-            }
-            else if (overrideCl.Key.name.CompareTo("holster_2") == 0 && overrideCl.Value != null)
-            {
-                character.animator.SetBool("hasHolster2", true);
-            }
-
-            //Debug.Log("clip : " +  overrideCl);
-        }
+        UpdateAnimatorOverrides(currentWeapon.animatorOverrideController);
 
         character.animator.SetBool("reverseDraw", currentWeapon.reverseDraw);
         character.animator.SetBool("reverseHolster", currentWeapon.reverseHolster);
@@ -104,20 +89,35 @@ public class WeaponEquipment : MonoBehaviour
         return true;
     }
 
+    private void UpdateAnimatorOverrides(AnimatorOverrideController animatorOverrideController)
+    {
+        List<KeyValuePair<AnimationClip, AnimationClip>> overrideClips = new List<KeyValuePair<AnimationClip, AnimationClip>>(animatorOverrideController.overridesCount);
+        animatorOverrideController.GetOverrides(overrideClips);
+
+        foreach (var overrideClip in overrideClips)
+        {
+            if (overrideClip.Key.name == "draw_2" && overrideClip.Value != null)
+            {
+                character.animator.SetBool("hasDraw2", true);
+            }
+            else if (overrideClip.Key.name == "holster_2" && overrideClip.Value != null)
+            {
+                character.animator.SetBool("hasHolster2", true);
+            }
+        }
+    }
+
     public void DrawWeapon()
     {
         character.characterAnimatorManager.CombatBool = true;
         character.animator.SetLayerWeight(1, 1);
-        
-        currentWeaponObj.transform.parent = currentWeapon.weaponHolderPosition.transform;
-        currentWeaponObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+
+        SetWeaponTransform(currentWeapon.weaponHolderPosition);
 
         if (currentWeapon.isDagger)
         {
-            Weapon dagger2 = weapons.FindLast(dagger => dagger.isDagger);
-
-            dagger2.weaponObj.transform.parent = dagger2.weaponHolderPosition.transform;
-            dagger2.weaponObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            Weapon dagger2 = GetDagger2();
+            SetWeaponTransform(dagger2.weaponHolderPosition, dagger2);
         }
     }
 
@@ -125,20 +125,35 @@ public class WeaponEquipment : MonoBehaviour
     {
         character.characterAnimatorManager.CombatBool = false;
         character.animator.SetLayerWeight(1, 0);
-        
-        currentWeaponObj.transform.parent = currentWeapon.weaponHolsterPosition.transform;
-        currentWeaponObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+
+        SetWeaponTransform(currentWeapon.weaponHolsterPosition);
 
         if (currentWeapon.isDagger)
         {
-            Weapon dagger2 = weapons.FindLast(dagger => dagger.isDagger);
-
-            dagger2.weaponObj.transform.parent = dagger2.weaponHolsterPosition.transform;
-            dagger2.weaponObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            Weapon dagger2 = GetDagger2();
+            SetWeaponTransform(dagger2.weaponHolsterPosition, dagger2);
         }
 
         character.animator.SetBool("hasDraw2", false);
         character.animator.SetBool("hasHolster2", false);
+    }
+
+    private void SetWeaponTransform(Transform parentTransform, Weapon weapon = null)
+    {
+        if (weapon == null)
+        {
+            weapon = currentWeapon;
+        }
+
+        Transform weaponTransform = weapon.weaponObjTransform; // Use cached transform
+        weaponTransform.SetParent(parentTransform);
+        weaponTransform.localPosition = Vector3.zero;
+        weaponTransform.localRotation = Quaternion.identity;
+    }
+
+    private Weapon GetDagger2()
+    {
+        return weapons.FindLast(dagger => dagger.isDagger);
     }
 
     public void StartDamage()
@@ -153,7 +168,7 @@ public class WeaponEquipment : MonoBehaviour
 
     public Weapon GetCurrentWeapon()
     {
-        return weapons.Find(weapon => weapon.weaponSlot == currentWeaponSlot);
+        return GetWeaponWithSlot(currentWeaponSlot);
     }
 
     public Weapon GetWeaponWithSlot(int weaponSlot)

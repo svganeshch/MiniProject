@@ -2,28 +2,25 @@ using UnityEngine;
 
 public abstract class CharacterMovementManager : MonoBehaviour
 {
-    public abstract void GetMovementInput();
-
-    Vector3 moveDirection;
-    Vector3 targetRotationDirection;
-    Vector3 lockedTargetDirection;
-    Quaternion targetRotation;
-    Quaternion finalRotation;
+    protected Vector3 moveDirection;
+    protected Vector3 targetRotationDirection;
+    protected Vector3 lockedTargetDirection;
+    protected Quaternion targetRotation;
+    protected Quaternion finalRotation;
 
     [HideInInspector] public Vector3 yVelocity;
     [HideInInspector] public float gravityForce = -40;
-    Vector3 jumpDirection;
-    float groundCheckSphereRadius = 0.3f;
-    float groundedYVelocity = -20;
-    float fallStartYVelocity = -5;
-    float inAirTime = 0;
-    bool fallingVelocitySet = false;
-    bool isGrounded = false;
+    protected float groundCheckSphereRadius = 0.3f;
+    protected float groundedYVelocity = -20;
+    protected float fallStartYVelocity = -5;
+    protected float inAirTime = 0;
+    protected bool fallingVelocitySet = false;
+    protected bool isGrounded = false;
 
     protected float horizontalInput;
     protected float verticalInput;
 
-    Character character;
+    protected Character character;
 
     public virtual void Start()
     {
@@ -44,34 +41,21 @@ public abstract class CharacterMovementManager : MonoBehaviour
 
         GetMovementInput();
 
-        moveDirection = PlayerCamera.Instance.transform.forward * verticalInput;
-        moveDirection += PlayerCamera.Instance.transform.right * horizontalInput;
+        moveDirection = PlayerCamera.Instance.playerCameraObjTransform.forward * verticalInput;
+        moveDirection += PlayerCamera.Instance.playerCameraObjTransform.right * horizontalInput;
         moveDirection.Normalize();
         moveDirection.y = 0;
 
+        float speed = character.walkingSpeed;
+
         if (character.characterStateMachine.currentState == character.sprintState)
-        {
-            // sprint speed
-            character.controller.Move(character.sprintSpeed * Time.deltaTime * moveDirection);
-        }
+            speed = character.sprintSpeed;
         else if (character.characterStateMachine.currentState == character.combatState)
-        {
-            // combat speed
-            character.controller.Move(character.combatSpeed * Time.deltaTime * moveDirection);
-        }
-        else
-        {
-            if (character.moveAmount > 0.5f)
-            {
-                // running speed
-                character.controller.Move(character.runningSpeed * Time.deltaTime * moveDirection);
-            }
-            else if (character.moveAmount <= 0.5f)
-            {
-                // walking speed
-                character.controller.Move(character.walkingSpeed * Time.deltaTime * moveDirection);
-            }
-        }
+            speed = character.combatSpeed;
+        else if (character.moveAmount > 0.5f)
+            speed = character.runningSpeed;
+
+        character.controller.Move(speed * Time.deltaTime * moveDirection);
     }
 
     protected virtual void HandleGroundCheck()
@@ -113,23 +97,36 @@ public abstract class CharacterMovementManager : MonoBehaviour
 
         if (character.isLockedOn)
         {
-            if (!character.currentLockedOnTarget)
-                return;
+            if (character.characterStateMachine.currentState == character.sprintState ||
+                character.characterStateMachine.currentState == character.dodgeState)
+            {
+                targetRotationDirection = PlayerCamera.Instance.mainCameraTransform.forward * verticalInput;
+                targetRotationDirection += PlayerCamera.Instance.mainCameraTransform.right * horizontalInput;
+                targetRotationDirection.y = 0f;
+                targetRotationDirection.Normalize();
 
-            lockedTargetDirection = Vector3.zero;
-            lockedTargetDirection = character.currentLockedOnTarget.transform.position - character.transform.position;
-            lockedTargetDirection.y = 0f;
-            lockedTargetDirection.Normalize();
+                if (targetRotationDirection == Vector3.zero)
+                {
+                    targetRotationDirection = character.transform.forward;
+                }
 
-            targetRotation = Quaternion.LookRotation(lockedTargetDirection);
-            finalRotation = Quaternion.Slerp(character.transform.rotation, targetRotation, character.rotationDampTime * Time.deltaTime);
-            character.transform.rotation = finalRotation;
+                targetRotation = Quaternion.LookRotation(targetRotationDirection);
+            }
+            else
+            {
+                if (character.currentLockedOnTarget == null) return;
+
+                lockedTargetDirection = character.currentLockedOnTarget.transform.position - character.transform.position;
+                lockedTargetDirection.y = 0f;
+                lockedTargetDirection.Normalize();
+
+                targetRotation = Quaternion.LookRotation(lockedTargetDirection);
+            }
         }
         else
         {
-            targetRotationDirection = Vector3.zero;
-            targetRotationDirection = PlayerCamera.Instance.cameraObj.transform.forward * verticalInput;
-            targetRotationDirection += PlayerCamera.Instance.cameraObj.transform.right * horizontalInput;
+            targetRotationDirection = PlayerCamera.Instance.mainCameraTransform.forward * verticalInput;
+            targetRotationDirection += PlayerCamera.Instance.mainCameraTransform.right * horizontalInput;
             targetRotationDirection.y = 0f;
             targetRotationDirection.Normalize();
 
@@ -139,14 +136,17 @@ public abstract class CharacterMovementManager : MonoBehaviour
             }
 
             targetRotation = Quaternion.LookRotation(targetRotationDirection);
-            finalRotation = Quaternion.Slerp(character.transform.rotation, targetRotation, character.rotationDampTime * Time.deltaTime);
-            character.transform.rotation = finalRotation;
         }
+
+        finalRotation = Quaternion.Slerp(character.transform.rotation, targetRotation, character.rotationDampTime * Time.deltaTime);
+        character.transform.rotation = finalRotation;
     }
+
+    public abstract void GetMovementInput();
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, groundCheckSphereRadius);
+        Gizmos.DrawWireSphere(transform.position, groundCheckSphereRadius);
     }
 }

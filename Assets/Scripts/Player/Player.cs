@@ -19,44 +19,26 @@ public class Player : Character
     [HideInInspector] public float verticalInput;
 
     // Unity components
-    [HideInInspector]
-    public PlayerInput playerInput;
-    [HideInInspector]
-    public PlayerMovementManager playerMovementManager;
-    [HideInInspector]
-    public PlayerAnimatorManager playerAnimatorManager;
+    [HideInInspector] public PlayerInput playerInput;
+    [HideInInspector] public PlayerMovementManager playerMovementManager;
+    [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
 
     // Input Actions
-    [HideInInspector]
-    public InputAction moveAction;
-    [HideInInspector]
-    public InputAction jumpAction;
-    [HideInInspector]
-    public InputAction sprintAction;
-    [HideInInspector]
-    public InputAction dodgeAction;
-    [HideInInspector]
-    public InputAction drawWeaponAction;
-    [HideInInspector]
-    public InputAction blockAction;
-    [HideInInspector]
-    public InputAction liteAttackWeaponAction;
-    [HideInInspector]
-    public InputAction heavyAttackWeaponAction;
-    [HideInInspector]
-    public InputAction lockOnAction;
-    [HideInInspector]
-    public InputAction leftLockOnAction;
-    [HideInInspector]
-    public InputAction rightLockOnAction;
-    [HideInInspector]
-    public InputAction weapon1Action;
-    [HideInInspector]
-    public InputAction weapon2Action;
-    [HideInInspector]
-    public InputAction weapon3Action;
-    [HideInInspector]
-    public InputAction weapon4Action;
+    [HideInInspector] public InputAction moveAction;
+    [HideInInspector] public InputAction jumpAction;
+    [HideInInspector] public InputAction sprintAction;
+    [HideInInspector] public InputAction dodgeAction;
+    [HideInInspector] public InputAction drawWeaponAction;
+    [HideInInspector] public InputAction blockAction;
+    [HideInInspector] public InputAction liteAttackWeaponAction;
+    [HideInInspector] public InputAction heavyAttackWeaponAction;
+    [HideInInspector] public InputAction lockOnAction;
+    [HideInInspector] public InputAction leftLockOnAction;
+    [HideInInspector] public InputAction rightLockOnAction;
+    [HideInInspector] public InputAction weapon1Action;
+    [HideInInspector] public InputAction weapon2Action;
+    [HideInInspector] public InputAction weapon3Action;
+    [HideInInspector] public InputAction weapon4Action;
 
     protected override void Awake()
     {
@@ -81,18 +63,8 @@ public class Player : Character
         playerMovementManager = GetComponent<PlayerMovementManager>();
         playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
 
-        // FSM
-        idleState = new IdleState(this, characterStateMachine);
-        jumpState = new JumpState(this, characterStateMachine);
-        sprintState = new SprintState(this, characterStateMachine);
-        dodgeState = new DodgeState(this, characterStateMachine);
-        combatState = new CombatState(this, characterStateMachine);
-        blockState = new BlockState(this, characterStateMachine);
-        blockBrokenState = new BlockBrokenState(this, characterStateMachine);
-        liteAttackState = new LiteAttackState(this, characterStateMachine);
-        heavyAttackState = new HeavyAttackState(this, characterStateMachine);
-        hitState = new HitState(this, characterStateMachine);
-        characterStateMachine.Initialize(idleState);
+        // Initialize states
+        InitializeStates();
 
         // Input actions
         moveAction = playerInput.actions["Move"];
@@ -111,6 +83,8 @@ public class Player : Character
         weapon2Action = playerInput.actions["Weapon2"];
         weapon3Action = playerInput.actions["Weapon3"];
         weapon4Action = playerInput.actions["Weapon4"];
+
+        moveAction.performed += input => inputValues = input.ReadValue<Vector2>();
     }
 
     protected override void Update()
@@ -128,9 +102,25 @@ public class Player : Character
         PlayerCamera.Instance.CameraActions();
     }
 
+    protected override void InitializeStates()
+    {
+        idleState = new IdleState(this, characterStateMachine);
+        jumpState = new JumpState(this, characterStateMachine);
+        sprintState = new SprintState(this, characterStateMachine);
+        dodgeState = new DodgeState(this, characterStateMachine);
+        combatState = new CombatState(this, characterStateMachine);
+        blockState = new BlockState(this, characterStateMachine);
+        blockBrokenState = new BlockBrokenState(this, characterStateMachine);
+        liteAttackState = new LiteAttackState(this, characterStateMachine);
+        heavyAttackState = new HeavyAttackState(this, characterStateMachine);
+        hitState = new HitState(this, characterStateMachine);
+
+        // Set initial state
+        characterStateMachine.Initialize(idleState);
+    }
+
     private void HandlePlayerMovementInput()
     {
-        inputValues = moveAction.ReadValue<Vector2>();
         horizontalInput = inputValues.x;
         verticalInput = inputValues.y;
 

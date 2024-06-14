@@ -7,100 +7,90 @@ public class State
     protected Enemy enemy;
     protected StateMachine stateMachine;
 
-    private Vector3 characterDirection;
-    private Vector3 lockedTargetDirection;
-    private Vector3 targetRotationDirection;
-    private Quaternion targetRotation;
-
-    // Swap weapon vars
+    // Swap weapon variables
     public int defaultWeaponSlot = 1;
     public int previousWeaponSlot = 0;
-    public virtual void SwapWeapon() { }
-
-    // Player lockon
-    public virtual void SetTarget(Enemy target) { }
 
     public State(Character _character, StateMachine _stateMachine)
     {
         character = _character;
         stateMachine = _stateMachine;
 
-        switch (_character)
+        if (_character is Player p)
         {
-            case Player:
-                player = _character as Player;
-                break;
-            case Enemy:
-                enemy = _character as Enemy;
-                break;
+            player = p;
+        }
+        else if (_character is Enemy e)
+        {
+            enemy = e;
         }
     }
 
     public virtual void Enter()
     {
-        //Debug.Log("Entered state " + character.name + " : " + this.ToString());
+        // Debug.Log("Entered state " + character.name + " : " + this);
     }
 
-    public virtual void HandleInput()
-    {
+    public virtual void HandleInput() { }
 
-    }
+    public virtual void LogicUpdate() { }
 
-    public virtual void LogicUpdate()
-    {
-
-    }
-
-    public virtual void PhysicsUpdate()
-    {
-
-    }
+    public virtual void PhysicsUpdate() { }
 
     public virtual void Exit()
     {
-        //Debug.Log("Previous state " + character.name + " : " + stateMachine.previousState);
-        //Debug.Log("Exited state " + character.name + " : " + this.ToString());
+        // Debug.Log("Exited state " + character.name + " : " + this);
     }
+
+    public virtual void SetTarget(Enemy target) { }
 
     public Vector3 GetCharacterDirection()
     {
-        characterDirection = PlayerCamera.Instance.transform.forward * player.verticalInput;
-        characterDirection += PlayerCamera.Instance.transform.right * player.horizontalInput;
+        Vector3 characterDirection = PlayerCamera.Instance.playerCameraObjTransform.forward * player.verticalInput;
+        characterDirection += PlayerCamera.Instance.playerCameraObjTransform.right * player.horizontalInput;
         characterDirection.y = 0;
 
-        return characterDirection;
+        return characterDirection.normalized;
     }
 
     public void HandleRotation()
     {
         if (player.isLockedOn)
         {
-            if (!player.currentLockedOnTarget)
-                return;
-
-            lockedTargetDirection = Vector3.zero;
-            lockedTargetDirection = player.currentLockedOnTarget.transform.position - player.transform.position;
-            lockedTargetDirection.y = 0f;
-            lockedTargetDirection.Normalize();
-
-            targetRotation = Quaternion.LookRotation(lockedTargetDirection);
-            player.transform.rotation = targetRotation;
+            HandleLockedOnRotation();
         }
         else
         {
-            targetRotationDirection = Vector3.zero;
-            targetRotationDirection = PlayerCamera.Instance.cameraObj.transform.forward * player.verticalInput;
-            targetRotationDirection += PlayerCamera.Instance.cameraObj.transform.right * player.horizontalInput;
-            targetRotationDirection.y = 0f;
-            targetRotationDirection.Normalize();
-
-            if (targetRotationDirection == Vector3.zero)
-            {
-                targetRotationDirection = player.transform.forward;
-            }
-
-            targetRotation = Quaternion.LookRotation(targetRotationDirection);
-            player.transform.rotation = targetRotation;
+            HandleFreeRotation();
         }
+    }
+
+    private void HandleLockedOnRotation()
+    {
+        if (player.currentLockedOnTarget == null)
+        {
+            return;
+        }
+
+        Vector3 lockedTargetDirection = player.currentLockedOnTarget.transform.position - player.transform.position;
+        lockedTargetDirection.y = 0f;
+
+        Quaternion targetRotation = Quaternion.LookRotation(lockedTargetDirection.normalized);
+        player.transform.rotation = targetRotation;
+    }
+
+    private void HandleFreeRotation()
+    {
+        Vector3 targetRotationDirection = PlayerCamera.Instance.mainCameraTransform.forward * player.verticalInput;
+        targetRotationDirection += PlayerCamera.Instance.mainCameraTransform.right * player.horizontalInput;
+        targetRotationDirection.y = 0f;
+
+        if (targetRotationDirection == Vector3.zero)
+        {
+            targetRotationDirection = player.transform.forward;
+        }
+
+        Quaternion targetRotation = Quaternion.LookRotation(targetRotationDirection.normalized);
+        player.transform.rotation = targetRotation;
     }
 }

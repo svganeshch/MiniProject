@@ -10,16 +10,18 @@ public class HealthManager : MonoBehaviour
 
     [HideInInspector] public Character character;
 
-    Vector3 attackDirection;
+    private Vector3 attackDirection;
     [HideInInspector] public bool isFacingAttacker;
+
+    private void Awake()
+    {
+        character = GetComponent<Character>();
+    }
 
     private void Start()
     {
         currentHealth = Health;
         attackDirection = Vector3.zero;
-
-        character = GetComponent<Character>();
-
         onHealthManagerInitializedEvent.Invoke();
     }
 
@@ -34,16 +36,11 @@ public class HealthManager : MonoBehaviour
     public virtual void TakeDamage(float weaponDamage, Character attacker, Character receiver)
     {
         attackDirection = (attacker.transform.position - receiver.transform.position).normalized;
-        if (Vector3.Dot(receiver.transform.forward, attackDirection) >= 0.8f)
-        {
-            isFacingAttacker = true;
-            //Debug.Log("facing towards attacker : " + isFacingAttacker);
-        }
+        isFacingAttacker = Vector3.Dot(receiver.transform.forward, attackDirection) >= 0.8f;
 
         if (isFacingAttacker && character.characterStateMachine.currentState == character.blockState)
         {
             currentHealth -= weaponDamage / 2;
-
             character.characterStateMachine.ChangeState(character.blockBrokenState);
         }
         else
@@ -53,7 +50,6 @@ public class HealthManager : MonoBehaviour
         }
 
         character.hudManager.SetHealth();
-
         Debug.Log("damage received");
     }
 

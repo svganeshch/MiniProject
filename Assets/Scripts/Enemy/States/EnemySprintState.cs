@@ -15,13 +15,11 @@
     {
         base.LogicUpdate();
 
-        enemy.navMeshAgent.destination = enemy.currentTarget.transform.position;
-
         if (enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance + 0.5f)
         {
             stateMachine.ChangeState(enemy.combatState);
         }
 
-        enemy.CheckRecallDistance();
+        enemy.RecallDistanceChecks();
     }
 }

@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class EnemyIdleState : State
 {
-    int destinationPoint = 0;
+    private int destinationPoint;
+
+    private LayerMask playerLayerMask;
+    private LayerMask obstaclesLayerMask;
 
     public EnemyIdleState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
@@ -11,80 +14,70 @@ public class EnemyIdleState : State
     public override void Enter()
     {
         base.Enter();
+        playerLayerMask = LayerMaskManager.Instance.playerLayerMask;
+        obstaclesLayerMask = LayerMaskManager.Instance.obstaclesLayerMask;
 
         destinationPoint = 0;
-        //enemy.moveAmount = 0.5f;
 
-        enemy.navMeshAgent.autoBraking = false;
-        SetPatrolPoint();
+        SetNextPatrolPoint();
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
         Patrol();
-        FindTarget();
-
-        if (enemy.currentTarget)
-        {
-            //enemy.moveAmount = 1.0f;
-
-            if (enemy.weaponEquipment.SetWeapon(defaultWeaponSlot))
-            {
-                enemy.enemyAnimatorManager.PlayWeaponDrawAction();
-            }
-
-            stateMachine.ChangeState(enemy.combatState);
-        }
+        DetectTarget();
     }
 
     private void Patrol()
     {
         if (!enemy.navMeshAgent.pathPending && enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance + 0.2f)
         {
-            SetPatrolPoint();
+            SetNextPatrolPoint();
         }
     }
 
-    private void SetPatrolPoint()
+    private void SetNextPatrolPoint()
     {
-        if (enemy.patrolPoints.Length == 0)
-        {
-            return;
-        }
+        if (enemy.patrolPoints.Length == 0) return;
 
         enemy.navMeshAgent.destination = enemy.patrolPoints[destinationPoint].position;
         destinationPoint = (destinationPoint + 1) % enemy.patrolPoints.Length;
     }
 
-    private void FindTarget()
+    private void DetectTarget()
     {
-        if (enemy.isDead)
-            return;
+        if (enemy.isDead) return;
 
-        Collider[] colliders = Physics.OverlapSphere(enemy.transform.position,
-                                                     enemy.detectionRadius,
-                                                     LayerMaskManager.Instance.playerLayerMask);
+        Collider[] colliders = new Collider[1];
+        int colliderCount = Physics.OverlapSphereNonAlloc(
+            enemy.transform.position,
+            enemy.detectionRadius,
+            colliders,
+            playerLayerMask
+        );
 
-        for (int i = 0; i < colliders.Length; i++)
+        for (int i = 0; i < colliderCount; i++)
         {
-            if (!colliders[i].transform.TryGetComponent<Player>(out var targetCharacter))
-                continue;
+            if (!colliders[i].transform.TryGetComponent(out Player targetCharacter)) continue;
 
             Vector3 targetDirection = targetCharacter.transform.position - enemy.transform.position;
-            float angleOfTarget = Vector3.Angle(targetDirection, enemy.transform.forward);
+            float angleToTarget = Vector3.Angle(targetDirection, enemy.transform.forward);
 
-            if (angleOfTarget > enemy.minimumFOV && angleOfTarget < enemy.maximumFOV)
+            if (angleToTarget > enemy.minimumFOV && angleToTarget < enemy.maximumFOV)
             {
-                if (Physics.Linecast(enemy.targetLock.position, targetCharacter.targetLockCast.position, LayerMaskManager.Instance.obstaclesLayerMask))
-                {
-                    continue;
-                }
-                else
+                if (!Physics.Linecast(enemy.targetLock.position, targetCharacter.targetLockCast.position, obstaclesLayerMask))
                 {
                     enemy.currentTarget = targetCharacter;
-                    Debug.Log("target found");
+                    Debug.Log("Target found");
+
+                    if (enemy.weaponEquipment.SetWeapon(defaultWeaponSlot))
+                    {
+                        enemy.enemyAnimatorManager.PlayWeaponDrawAction();
+                    }
+
+                    stateMachine.ChangeState(enemy.combatState);
+                    return;
                 }
             }
         }
@@ -93,7 +86,5 @@ public class EnemyIdleState : State
     public override void Exit()
     {
         base.Exit();
-
-        enemy.navMeshAgent.autoBraking = true;
     }
 }

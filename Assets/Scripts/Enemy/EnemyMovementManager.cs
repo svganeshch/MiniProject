@@ -2,16 +2,12 @@ using UnityEngine;
 
 public class EnemyMovementManager : CharacterMovementManager
 {
-    Enemy enemy;
-
-    Vector3 desiredVelocity;
-    Vector3 lookDirection;
-
-    Quaternion lookRotation;
-
-    float viewableAngle;
-    float speed = 0;
-    float speedFactor;
+    private Enemy enemy;
+    private Vector3 desiredVelocity;
+    private Vector3 lookDirection;
+    private Vector3 targetDirection;
+    private Quaternion lookRotation;
+    private float speed;
 
     private void Awake()
     {
@@ -21,7 +17,6 @@ public class EnemyMovementManager : CharacterMovementManager
     public override void Start()
     {
         base.Start();
-
         enemy.navMeshAgent.updatePosition = false;
         enemy.navMeshAgent.updateRotation = false;
     }
@@ -30,51 +25,35 @@ public class EnemyMovementManager : CharacterMovementManager
     {
         HandleGroundedMovement();
         HandleGroundCheck();
+        HandleRotation();
 
-        //Vector3 targetDirection = enemy.navMeshAgent.destination - enemy.transform.position;
-        //viewableAngle = GetAngleOfTarget(enemy.transform, targetDirection);
-
+        //targetDirection = enemy.navMeshAgent.destination - enemy.transform.position;
         ////Debug.Log($"Viewable Angle: {viewableAngle}, isPivoting: {enemy.isPivoting}");
-
         //if (viewableAngle < enemy.minimumFOV || viewableAngle > enemy.maximumFOV)
         //    PivotTowardsTarget();
-
-        HandleRotation();
     }
 
     protected override void HandleGroundedMovement()
     {
-        if (!enemy.canMove)
-            return;
+        if (!enemy.canMove) return;
 
         desiredVelocity = enemy.navMeshAgent.desiredVelocity;
-
-        speedFactor = Mathf.Clamp01(enemy.navMeshAgent.remainingDistance / enemy.slowDownThreshold);
+        float speedFactor = Mathf.Clamp01(enemy.navMeshAgent.remainingDistance / enemy.slowDownThreshold);
         speedFactor = Mathf.Max(speedFactor, enemy.minSpeedFactor);
 
-        if (enemy.characterStateMachine.currentState == enemy.sprintState)
+        switch (enemy.characterStateMachine.currentState)
         {
-            // sprint speed
-            speed = enemy.sprintSpeed;
+            case var state when state == enemy.sprintState:
+                speed = enemy.sprintSpeed;
+                break;
+            case var state when state == enemy.combatState:
+                speed = enemy.combatSpeed;
+                break;
+            default:
+                speed = enemy.moveAmount > 0.5f ? enemy.runningSpeed : enemy.walkingSpeed;
+                break;
         }
-        else if (enemy.characterStateMachine.currentState == enemy.combatState)
-        {
-            // combat speed
-            speed = enemy.combatSpeed;
-        }
-        else
-        {
-            if (enemy.moveAmount > 0.5f)
-            {
-                // running speed
-                speed = enemy.runningSpeed;
-            }
-            else if (enemy.moveAmount <= 0.5f)
-            {
-                // walking speed
-                speed = enemy.walkingSpeed;
-            }
-        }
+
         enemy.controller.Move(speed * speedFactor * Time.deltaTime * desiredVelocity.normalized);
         enemy.navMeshAgent.velocity = enemy.controller.velocity;
 
@@ -93,17 +72,16 @@ public class EnemyMovementManager : CharacterMovementManager
             enemy.moveAmount = 0.5f;
         }
 
-        enemy.moveAmount *= speedFactor;
+        enemy.moveAmount *= Mathf.Clamp01(enemy.navMeshAgent.remainingDistance / enemy.slowDownThreshold);
 
         if (!enemy.isLockedOn)
         {
             if (enemy.characterStateMachine.currentState == enemy.sprintState)
             {
-                enemy.moveAmount = 1.5f;
-                enemy.moveAmount *= speedFactor;
+                enemy.moveAmount = 1.5f * Mathf.Clamp01(enemy.navMeshAgent.remainingDistance / enemy.slowDownThreshold);
             }
 
-            enemy.enemyAnimatorManager.SetAnimatorParameters(0, enemy.moveAmount);
+            enemy.enemyAnimatorManager.SetAnimatorParameters(0, enemy.moveAmount, true);
         }
         else
         {
@@ -113,8 +91,7 @@ public class EnemyMovementManager : CharacterMovementManager
 
     protected override void HandleRotation()
     {
-        if (!enemy.canRotate)
-            return;
+        if (!enemy.canRotate) return;
 
         lookDirection = enemy.navMeshAgent.destination - enemy.transform.position;
         lookDirection.y = 0;
@@ -130,27 +107,20 @@ public class EnemyMovementManager : CharacterMovementManager
             Debug.Log("Already pivoting, skipping pivot.");
             return;
         }
-        //Debug.Log("Pivoting towards target. Viewable Angle: " + viewableAngle);
 
-        if (viewableAngle >= 61 && viewableAngle <= 110)
+        float angle = GetAngleOfTarget(enemy.transform, targetDirection);
+
+        if (angle >= 61 && angle <= 110)
         {
-            // Right 90
             enemy.enemyAnimatorManager.PlayPivotAction(90);
         }
-        else if (viewableAngle <= -61 && viewableAngle >= -110)
+        else if (angle <= -61 && angle >= -110)
         {
-            // Left 90
             enemy.enemyAnimatorManager.PlayPivotAction(-90);
         }
-        else if (viewableAngle >= 146 && viewableAngle <= 180)
+        else if (angle >= 146 || angle <= -146)
         {
-            // Right 180
-            enemy.enemyAnimatorManager.PlayPivotAction(180);
-        }
-        else if (viewableAngle <= -146 && viewableAngle >= -180)
-        {
-            // Left 180
-            enemy.enemyAnimatorManager.PlayPivotAction(-180);
+            enemy.enemyAnimatorManager.PlayPivotAction(angle >= 0 ? 180 : -180);
         }
     }
 
@@ -160,9 +130,6 @@ public class EnemyMovementManager : CharacterMovementManager
         float viewableAngle = Vector3.Angle(transform.forward, targetDirection);
         Vector3 cross = Vector3.Cross(transform.forward, targetDirection);
 
-        if (cross.y < 0)
-            viewableAngle = -viewableAngle;
-
-        return viewableAngle;
+        return cross.y < 0 ? -viewableAngle : viewableAngle;
     }
 }

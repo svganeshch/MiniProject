@@ -9,6 +9,6 @@ public class EnemyHudManager : HudManager
 
     private void LookCamera()
     {
-        transform.rotation = Quaternion.LookRotation(transform.position - PlayerCamera.Instance.transform.position);
+        transform.rotation = Quaternion.LookRotation(transform.position - PlayerCamera.Instance.playerCameraObjTransform.position);
     }
 }

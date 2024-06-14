@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class HelperFunctions : MonoBehaviour
+public class HelperFunctions
 {
     public static HelperFunctions instance;
 
@@ -11,10 +9,6 @@ public class HelperFunctions : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
 
@@ -61,5 +55,26 @@ public class HelperFunctions : MonoBehaviour
             Debug.LogWarning("Ccomponent not found in the topmost parent GameObject.");
             return null;
         }
+    }
+
+    private float SnapInput(float input)
+    {
+        if (input > 0 && input <= 0.5f)
+        {
+            return 0.5f;
+        }
+        if (input > 0.5f && input <= 1)
+        {
+            return 1;
+        }
+        if (input < 0 && input >= -0.5f)
+        {
+            return -0.5f;
+        }
+        if (input < -0.5f && input >= -1)
+        {
+            return -1;
+        }
+        return 0;
     }
 }

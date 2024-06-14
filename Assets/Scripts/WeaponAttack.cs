@@ -3,65 +3,74 @@ using UnityEngine;
 
 public abstract class WeaponAttack : MonoBehaviour
 {
-    HealthManager healthManager;
-    public Character characterCausingDamage;
-    public Character characterTakingDamage;
+    private Transform weaponRayTransform;
+    private Character characterCausingDamage;
+    private Character characterTakingDamage;
+    private HealthManager healthManager;
+    private Character hitCharacter;
 
     public float weaponLength;
     [HideInInspector] public float weaponDamage;
-    LayerMask damageLayerMask;
+    private LayerMask damageLayerMask;
 
-    RaycastHit hit;
-    bool canDealDamage;
-    List<GameObject> hasDealtDamage;
+    private RaycastHit hit;
+    private bool canDealDamage;
+    private HashSet<GameObject> hasDealtDamage;
 
-    void Start()
+    private void Awake()
     {
-        canDealDamage = false;
-        hasDealtDamage = new List<GameObject>();
-        damageLayerMask = LayerMaskManager.Instance.damagableLayerMask;
-
-        //characterCausingDamage = HelperFunctions.GetComponentFromTopParent<HealthManager>(transform).gameObject;
+        weaponRayTransform = transform;
         characterCausingDamage = GetComponentInParent<Character>();
     }
 
-    void Update()
+    private void Start()
     {
-        if (canDealDamage)
-        {
-            if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength, damageLayerMask))
-            {
-                if (hit.transform != null)
-                {
-                    if (characterTakingDamage == null)
-                    {
-                        //characterTakingDamage = HelperFunctions.GetComponentFromTopParent<HealthManager>(hit.transform, out healthManager).gameObject;
-                        characterTakingDamage = hit.transform.GetComponentInParent<Character>();
-                        healthManager = characterTakingDamage.healthManager;
-                    }
-                    else
-                    {
-                        if (characterTakingDamage == characterCausingDamage)
-                            return;
+        canDealDamage = false;
+        hasDealtDamage = new HashSet<GameObject>();
+        damageLayerMask = LayerMaskManager.Instance.damagableLayerMask;
+    }
 
-                        if (!hasDealtDamage.Contains(characterTakingDamage.gameObject))
-                        {
-                            healthManager.TakeDamage(weaponDamage, characterCausingDamage, characterTakingDamage);
-                            hasDealtDamage.Add(characterTakingDamage.gameObject);
-                        }
-                    }
-                }
+    private void Update()
+    {
+        if (!canDealDamage)
+            return;
+
+        if (Physics.Raycast(weaponRayTransform.position, -weaponRayTransform.up, out hit, weaponLength, damageLayerMask))
+        {
+            if (hit.transform == null) return;
+
+            hitCharacter = GetHitCharacter();
+
+            if (hitCharacter == null || hitCharacter == characterCausingDamage)
+                return;
+
+            if (healthManager == null || hitCharacter != characterTakingDamage)
+            {
+                characterTakingDamage = hitCharacter;
+                healthManager = characterTakingDamage.healthManager;
+            }
+
+            if (hasDealtDamage.Add(characterTakingDamage.gameObject))
+            {
+                healthManager.TakeDamage(weaponDamage, characterCausingDamage, characterTakingDamage);
             }
         }
     }
+
+    private Character GetHitCharacter()
+    {
+        if (hitCharacter != null && hit.transform.root == hitCharacter.transform)
+            return hitCharacter;
+
+        return hit.transform.GetComponentInParent<Character>();
+    }
+
     public void StartDealDamage()
     {
         canDealDamage = true;
-
         hasDealtDamage.Clear();
-        characterTakingDamage = null;
-        healthManager = null;
     }
+
     public void StopDealDamage()
     {
         canDealDamage = false;
