@@ -1,16 +1,17 @@
+using UnityEngine;
+
 public class AttackStateLogic : State
 {
-    protected bool canComboAttack;
+    protected bool liteAttack;
 
-    bool attack;
     bool dodge;
     bool block;
 
-    private float clipTime;
-    private float attackCancelTreshold;
-    private float attackComboTreshold;
+    bool input_que_active = false;
+    float default_que_input_timer = 0.35f;
+    float que_input_timer;
 
-    int animatorActionsLayerindex;
+    bool attack_que = false;
 
     public AttackStateLogic(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
@@ -20,18 +21,8 @@ public class AttackStateLogic : State
     {
         base.Enter();
 
-        attack = false;
         dodge = false;
         block = false;
-
-        clipTime = 0f;
-
-        attackCancelTreshold = player.attackCancelTreshold;
-        attackComboTreshold = player.attackComboTreshold;
-
-        player.characterSfxManager.PlayWeaponSlashSound();
-
-        animatorActionsLayerindex = player.animator.GetLayerIndex("Action Override");
     }
 
     public override void HandleInput()
@@ -50,49 +41,103 @@ public class AttackStateLogic : State
 
         if (player.liteAttackWeaponAction.WasPressedThisFrame())
         {
-            attack = true;
+            if (!attack_que)
+            {
+                QueInput(ref attack_que);
+                return;
+            }
+            liteAttack = true;
         }
+
+        HandleQuedInputs();
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if (player.animator.GetCurrentAnimatorClipInfo(animatorActionsLayerindex).Length == 0) return;
-        clipTime = player.animator.GetCurrentAnimatorStateInfo(animatorActionsLayerindex).normalizedTime;
-
-        //Debug.Log("clip time : " + clipTime);
-
-        if (clipTime <= attackCancelTreshold * 0.9f)
+        if (player.canPerformAction)
         {
             HandleRotation();
 
             if (dodge)
             {
+                player.canPerformAction = false;
                 dodge = false;
                 stateMachine.ChangeState(player.dodgeState);
             }
 
             if (block)
             {
+                player.canPerformAction = false;
                 block = false;
                 stateMachine.ChangeState(player.blockState);
             }
         }
 
-        if (clipTime >= attackComboTreshold * 0.9f)
+        if (liteAttack)
         {
-            if (attack)
+            liteAttack = false;
+
+            if (player.canCombo)
             {
-                attack = false;
-                canComboAttack = true;
-                stateMachine.ChangeState(this, true);
+                player.canCombo = false;
+                player.playerAnimatorManager.PlayLiteAttackAction(true);
+            }
+            else
+            {
+                if (!player.isAttacking)
+                {
+                    player.playerAnimatorManager.PlayLiteAttackAction(false);
+                }
             }
         }
+    }
+
+    private void QueInput(ref bool quedInput)
+    {
+        ResetQueFlags();
+
+        quedInput = true;
+        que_input_timer = default_que_input_timer;
+        input_que_active = true;
+    }
+
+    private void ProcessQuedInputs()
+    {
+        if (attack_que) liteAttack = true;
+    }
+
+    private void HandleQuedInputs()
+    {
+        if (input_que_active)
+        {
+            if (que_input_timer > 0)
+            {
+                que_input_timer -= Time.deltaTime;
+                ProcessQuedInputs();
+            }
+            else
+            {
+                ResetQueFlags();
+            }
+        }
+    }
+
+    private void ResetQueFlags()
+    {
+        attack_que = false;
+
+        input_que_active = false;
+        que_input_timer = 0;
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        liteAttack = false;
+
+        ResetQueFlags();
     }
 }

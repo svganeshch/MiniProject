@@ -13,6 +13,7 @@ public class ResetActionBools : StateMachineBehaviour
 
         character.applyRootMotion = false;
         character.isPivoting = false;
+        character.isAttacking = false;
         character.canRotate = true;
         character.canMove = true;
 

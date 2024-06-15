@@ -5329,8 +5329,12 @@ MonoBehaviour:
   currentLockedOnTarget: {fileID: 0}
   moveAmount: 0
   applyRootMotion: 0
+  isPivoting: 0
   canRotate: 1
   canMove: 1
+  isAttacking: 0
+  canPerformAction: 0
+  canCombo: 0
   speedDampTime: 0.5
   rotationDampTime: 6
   animationFadeTime: 0.2
@@ -5349,6 +5353,10 @@ MonoBehaviour:
   weaponEquipment: {fileID: 0}
   recallTimer: 0
   strafeSpeed: 0.85
+  strafeDuration: 5
+  strafeSwitchDuration: 5
+  attackRange: 2
+  attackProbability: 0.5
   detectionRadius: 15
   recallDistance: 5
   sprintDistance: 10
@@ -5451,6 +5459,7 @@ MonoBehaviour:
     reverseDraw: 0
     isDagger: 0
     weaponObj: {fileID: 0}
+    weaponObjTransform: {fileID: 0}
     weaponAttackScript: {fileID: 0}
   weaponSwapSpeed: 4
 --- !u!95 &3552597940111269527
@@ -16245,8 +16254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0671a2f3ee147ca45b4a0d6316b67374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterCausingDamage: {fileID: 0}
-  characterTakingDamage: {fileID: 0}
   weaponLength: 0.87
   weaponDamage: 1
 --- !u!1 &8744806175337600637
@@ -16650,7 +16657,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0671a2f3ee147ca45b4a0d6316b67374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterCausingDamage: {fileID: 0}
-  characterTakingDamage: {fileID: 0}
   weaponLength: 0.87
   weaponDamage: 1

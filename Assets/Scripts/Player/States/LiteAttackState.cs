@@ -8,7 +8,6 @@ public class LiteAttackState : AttackStateLogic
     {
         base.Enter();
 
-        player.playerAnimatorManager.PlayLiteAttackAction(canComboAttack);
-        canComboAttack = false;
+        liteAttack = true;
     }
 }

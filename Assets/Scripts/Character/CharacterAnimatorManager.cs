@@ -153,7 +153,9 @@ public class CharacterAnimatorManager : MonoBehaviour
                 nextAttackHash = liteAttack3Hash;
         }
 
+        character.isAttacking = true;
         PlayCharacterActionAnimation(nextAttackHash, canRotate);
+        character.characterSfxManager.PlayWeaponSlashSound();
     }
 
     public void PlayPivotAction(int pivotAngle)
@@ -185,5 +187,26 @@ public class CharacterAnimatorManager : MonoBehaviour
     public void PlayHitAction()
     {
         PlayCharacterActionAnimation(hitHash);
+    }
+
+    // Common animation event calls
+    public void EnablePerformAction()
+    {
+        character.canPerformAction = true;
+    }
+
+    public void DisablePerformAction()
+    {
+        character.canPerformAction = false;
+    }
+
+    public void EnableCombo()
+    {
+        character.canCombo = true;
+    }
+
+    public void DisableCombo()
+    {
+        character.canCombo = false;
     }
 }

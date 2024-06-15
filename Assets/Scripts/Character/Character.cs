@@ -12,6 +12,9 @@ public class Character : MonoBehaviour
     public bool isPivoting = false;
     public bool canRotate = true;
     public bool canMove = true;
+    public bool isAttacking = false;
+    public bool canPerformAction = false;
+    public bool canCombo = false;
 
     [Header("Animation Smoothing")]
     [Range(0, 1)] public float speedDampTime = 0.1f;

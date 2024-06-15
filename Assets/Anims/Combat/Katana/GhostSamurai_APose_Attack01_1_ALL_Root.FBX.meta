@@ -541,7 +541,8 @@ ModelImporter:
       will be discarded.\n\t'ball_l' has translation animation that will be discarded.\n\t'calf_r'
       has translation animation that will be discarded.\n\t'foot_r' has translation
       animation that will be discarded.\n\t'ball_r' has translation animation that
-      will be discarded.\n"
+      will be discarded.\nEvent EnablePerformAction has a time (0.000000) outside
+      the clip's valid range (0.000000..0.833333). It will never be fired"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -579,6 +580,20 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0
+        functionName: EnablePerformAction
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.1995682
+        functionName: DisablePerformAction
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.40121466
         functionName: StartDamage
         data: 
@@ -588,6 +603,20 @@ ModelImporter:
         messageOptions: 0
       - time: 0.4844129
         functionName: StopDamage
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.50145274
+        functionName: EnableCombo
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.8282543
+        functionName: DisableCombo
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

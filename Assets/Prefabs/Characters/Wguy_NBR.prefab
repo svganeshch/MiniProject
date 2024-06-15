@@ -44,8 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0671a2f3ee147ca45b4a0d6316b67374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterCausingDamage: {fileID: 0}
-  characterTakingDamage: {fileID: 0}
   weaponLength: 0.87
   weaponDamage: 1
 --- !u!1 &1599356614331503166
@@ -280,8 +278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0671a2f3ee147ca45b4a0d6316b67374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterCausingDamage: {fileID: 0}
-  characterTakingDamage: {fileID: 0}
   weaponLength: 0.87
   weaponDamage: 1
 --- !u!1 &2405648113316019047
@@ -11246,9 +11242,13 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -3115161542585466322, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3115161542585466322, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5814b5d2c1ce45e4cb59f09a499b637f, type: 2}
+      objectReference: {fileID: 2100000, guid: 6252d89d7166fe641bac7b9a350ca685, type: 2}
     - target: {fileID: -3086436065929644917, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -11788,6 +11788,9 @@ MonoBehaviour:
   isPivoting: 0
   canRotate: 1
   canMove: 1
+  isAttacking: 0
+  canPerformAction: 0
+  canCombo: 0
   speedDampTime: 0.1
   rotationDampTime: 15
   animationFadeTime: 0.2
@@ -12036,6 +12039,7 @@ MonoBehaviour:
     reverseDraw: 0
     isDagger: 0
     weaponObj: {fileID: 0}
+    weaponObjTransform: {fileID: 0}
     weaponAttackScript: {fileID: 0}
   - Enabled: 0
     animatorOverrideController: {fileID: 22100000, guid: eb0dbc82df9adeb41a2b674f4ee56689, type: 2}
@@ -12051,6 +12055,7 @@ MonoBehaviour:
     reverseDraw: 0
     isDagger: 0
     weaponObj: {fileID: 0}
+    weaponObjTransform: {fileID: 0}
     weaponAttackScript: {fileID: 0}
   - Enabled: 0
     animatorOverrideController: {fileID: 22100000, guid: 2ac9285d14ea69341bd2aa4614b490ff, type: 2}
@@ -12066,6 +12071,7 @@ MonoBehaviour:
     reverseDraw: 1
     isDagger: 1
     weaponObj: {fileID: 0}
+    weaponObjTransform: {fileID: 0}
     weaponAttackScript: {fileID: 0}
   - Enabled: 0
     animatorOverrideController: {fileID: 22100000, guid: d3abace068def784b8fc1fdc839033d2, type: 2}
@@ -12081,6 +12087,7 @@ MonoBehaviour:
     reverseDraw: 0
     isDagger: 0
     weaponObj: {fileID: 0}
+    weaponObjTransform: {fileID: 0}
     weaponAttackScript: {fileID: 0}
   - Enabled: 0
     animatorOverrideController: {fileID: 0}
@@ -12096,6 +12103,7 @@ MonoBehaviour:
     reverseDraw: 0
     isDagger: 1
     weaponObj: {fileID: 0}
+    weaponObjTransform: {fileID: 0}
     weaponAttackScript: {fileID: 0}
   weaponSwapSpeed: 4
 --- !u!82 &621063570088387430
