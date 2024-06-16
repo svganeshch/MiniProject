@@ -5335,7 +5335,7 @@ MonoBehaviour:
   isAttacking: 0
   canPerformAction: 0
   canCombo: 0
-  speedDampTime: 0.5
+  speedDampTime: 0.15
   rotationDampTime: 6
   animationFadeTime: 0.2
   airControl: 0.5
@@ -5351,21 +5351,26 @@ MonoBehaviour:
   healthManager: {fileID: 0}
   hudManager: {fileID: 0}
   weaponEquipment: {fileID: 0}
+  isInCoolDown: 0
+  attackCoolDownTimer: 0
   recallTimer: 0
-  strafeSpeed: 0.85
-  strafeDuration: 5
-  strafeSwitchDuration: 5
-  attackRange: 2
-  attackProbability: 0.5
   detectionRadius: 15
   recallDistance: 5
-  sprintDistance: 10
-  slowDownThreshold: 8
-  minSpeedFactor: 0.4
   minimumFOV: -35
   maximumFOV: 35
   targetLock: {fileID: 7415203626571703856}
   currentTarget: {fileID: 0}
+  slowDownThreshold: 5
+  minSpeedFactor: 0.4
+  attackCoolDownDuration: 5
+  attackRange: 2
+  attackProbability: 0.5
+  sprintDistance: 10
+  sprintSlowDownThreshold: 15
+  strafeSpeed: 0.85
+  strafeSlowDownThreshold: 10
+  strafeDistance: 5
+  strafeSwitchDuration: 5
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -5389,6 +5394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yVelocity: {x: 0, y: 0, z: 0}
   gravityForce: -40
+  manualUpdate: 0
 --- !u!114 &5150036091294903745
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HelperFunctions
+public class HelperFunctions : MonoBehaviour
 {
     public static HelperFunctions instance;
 
@@ -57,7 +57,7 @@ public class HelperFunctions
         }
     }
 
-    private float SnapInput(float input)
+    public float SnapInput(float input)
     {
         if (input > 0 && input <= 0.5f)
         {

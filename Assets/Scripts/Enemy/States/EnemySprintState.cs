@@ -20,6 +20,6 @@
             stateMachine.ChangeState(enemy.combatState);
         }
 
-        enemy.RecallDistanceChecks();
+        enemy.HandleRecallDistanceChecks();
     }
 }

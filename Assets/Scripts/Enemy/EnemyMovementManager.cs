@@ -2,12 +2,16 @@ using UnityEngine;
 
 public class EnemyMovementManager : CharacterMovementManager
 {
+    [HideInInspector] public bool manualUpdate = false;
+
     private Enemy enemy;
     private Vector3 desiredVelocity;
     private Vector3 lookDirection;
     private Vector3 targetDirection;
     private Quaternion lookRotation;
     private float speed;
+    private float slowDownThreshold;
+    private float speedFactor;
 
     private void Awake()
     {
@@ -38,26 +42,42 @@ public class EnemyMovementManager : CharacterMovementManager
         if (!enemy.canMove) return;
 
         desiredVelocity = enemy.navMeshAgent.desiredVelocity;
-        float speedFactor = Mathf.Clamp01(enemy.navMeshAgent.remainingDistance / enemy.slowDownThreshold);
-        speedFactor = Mathf.Max(speedFactor, enemy.minSpeedFactor);
 
         switch (enemy.characterStateMachine.currentState)
         {
             case var state when state == enemy.sprintState:
                 speed = enemy.sprintSpeed;
+                slowDownThreshold = enemy.sprintSlowDownThreshold;
                 break;
             case var state when state == enemy.combatState:
                 speed = enemy.combatSpeed;
                 break;
+            case var state when state == enemy.strafeState:
+                speed = enemy.strafeSpeed;
+                slowDownThreshold = enemy.strafeSlowDownThreshold;
+                break;
             default:
                 speed = enemy.moveAmount > 0.5f ? enemy.runningSpeed : enemy.walkingSpeed;
+                slowDownThreshold = enemy.slowDownThreshold;
                 break;
         }
 
-        enemy.controller.Move(speed * speedFactor * Time.deltaTime * desiredVelocity.normalized);
-        enemy.navMeshAgent.velocity = enemy.controller.velocity;
+        if (!manualUpdate)
+        {
+            UpdateMovement(speed, desiredVelocity.normalized, enemy.navMeshAgent.remainingDistance);
+        }
 
         GetMovementInput();
+    }
+
+    public void UpdateMovement(float speed, Vector3 direction, float remainingDistance)
+    {
+        speedFactor = Mathf.Clamp01(remainingDistance / slowDownThreshold);
+        speedFactor = Mathf.Max(speedFactor, enemy.minSpeedFactor);
+
+        enemy.controller.Move(speed * speedFactor * Time.deltaTime * direction);
+        enemy.navMeshAgent.nextPosition = enemy.transform.position;
+        enemy.navMeshAgent.velocity = enemy.controller.velocity;
     }
 
     public override void GetMovementInput()
@@ -72,20 +92,27 @@ public class EnemyMovementManager : CharacterMovementManager
             enemy.moveAmount = 0.5f;
         }
 
-        enemy.moveAmount *= Mathf.Clamp01(enemy.navMeshAgent.remainingDistance / enemy.slowDownThreshold);
+        enemy.moveAmount *= speedFactor;
 
         if (!enemy.isLockedOn)
         {
             if (enemy.characterStateMachine.currentState == enemy.sprintState)
             {
-                enemy.moveAmount = 1.5f * Mathf.Clamp01(enemy.navMeshAgent.remainingDistance / enemy.slowDownThreshold);
+                enemy.moveAmount = 1.5f * speedFactor;
             }
 
             enemy.enemyAnimatorManager.SetAnimatorParameters(0, enemy.moveAmount, true);
         }
         else
         {
-            enemy.enemyAnimatorManager.SetAnimatorParameters(horizontalInput, verticalInput);
+            if (enemy.characterStateMachine.currentState == enemy.strafeState)
+            {
+                enemy.enemyAnimatorManager.SetAnimatorParameters(horizontalInput, 0, true);
+            }
+            else
+            {
+                enemy.enemyAnimatorManager.SetAnimatorParameters(horizontalInput, verticalInput, true);
+            }
         }
     }
 

@@ -82,8 +82,8 @@ public class CharacterAnimatorManager : MonoBehaviour
     {
         if (!ignoreSnapping)
         {
-            horizontalInput = SnapInput(horizontalInput);
-            verticalInput = SnapInput(verticalInput);
+            horizontalInput = HelperFunctions.instance.SnapInput(horizontalInput);
+            verticalInput = HelperFunctions.instance.SnapInput(verticalInput);
 
             if (character.characterStateMachine.currentState == character.sprintState)
             {
@@ -93,27 +93,6 @@ public class CharacterAnimatorManager : MonoBehaviour
 
         character.animator.SetFloat("speedX", horizontalInput, character.speedDampTime, Time.deltaTime);
         character.animator.SetFloat("speedY", verticalInput, character.speedDampTime, Time.deltaTime);
-    }
-
-    private float SnapInput(float input)
-    {
-        if (input > 0 && input <= 0.5f)
-        {
-            return 0.5f;
-        }
-        if (input > 0.5f && input <= 1)
-        {
-            return 1;
-        }
-        if (input < 0 && input >= -0.5f)
-        {
-            return -0.5f;
-        }
-        if (input < -0.5f && input >= -1)
-        {
-            return -1;
-        }
-        return 0;
     }
 
     public void PlayDodgeAction()

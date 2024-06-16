@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyCombatState : State
 {
+    Vector3 startPos;
+
     public EnemyCombatState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
     }
@@ -9,7 +11,9 @@ public class EnemyCombatState : State
     public override void Enter()
     {
         base.Enter();
+
         enemy.recallTimer = 0f;
+        startPos = enemy.transform.position;
     }
 
     public override void LogicUpdate()
@@ -18,9 +22,16 @@ public class EnemyCombatState : State
 
         ResetEnemy();
 
-        enemy.RecallDistanceChecks();
+        if (enemy.isInCoolDown)
+        {
+            enemy.enemyMovementManager.manualUpdate = true;
+            FallBack();
 
-        CheckAttackDistance();
+            return;
+        }
+
+        HandleTargetDistanceChecks();
+        enemy.HandleRecallDistanceChecks();
     }
 
     private void ResetEnemy()
@@ -39,7 +50,24 @@ public class EnemyCombatState : State
         }
     }
 
-    private void CheckAttackDistance()
+    private void FallBack()
+    {
+        if (enemy.navMeshAgent.remainingDistance < enemy.navMeshAgent.stoppingDistance)
+        {
+            Vector3 fallbackDirection = enemy.currentTarget.transform.position - enemy.transform.position;
+            fallbackDirection.y = 0f;
+            fallbackDirection.Normalize();
+
+            enemy.enemyMovementManager.UpdateMovement(enemy.walkingSpeed, -fallbackDirection, 2);
+        }
+        else
+        {
+            enemy.isInCoolDown = false;
+            enemy.enemyMovementManager.manualUpdate = false;
+        }
+    }
+
+    private void HandleTargetDistanceChecks()
     {
         float remainingDistance = enemy.navMeshAgent.remainingDistance;
 

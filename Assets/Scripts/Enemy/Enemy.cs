@@ -4,24 +4,38 @@ using UnityEngine.AI;
 
 public class Enemy : Character
 {
+    [HideInInspector] public bool isInCoolDown = false;
+    [HideInInspector] public float attackCoolDownTimer = 0;
     [HideInInspector] public float recallTimer = 0;
 
     [Header("Enemy Controls")]
-    public float strafeSpeed = 0.75f;
-    public float strafeDuration = 5f;
-    public float strafeSwitchDuration = 5f;
-    public float attackRange = 2f;
-    public float attackProbability = 0.5f;
     public float detectionRadius = 15;
     public float recallDistance = 10;
-    public float sprintDistance = 15;
-    public float slowDownThreshold = 5;
-    public float minSpeedFactor = 0.3f;
     public float minimumFOV = -35;
     public float maximumFOV = 35;
     public Transform targetLock;
     public Player currentTarget;
 
+    [Header("Enemy Movement Smoothing Controls")]
+    public float slowDownThreshold = 5;
+    public float minSpeedFactor = 0.3f;
+
+    [Header("Enemy Attack Controls")]
+    public float attackCoolDownDuration = 5;
+    public float attackRange = 2f;
+    public float attackProbability = 0.5f;
+
+    [Header("Enemy Sprint Controls")]
+    public float sprintDistance = 15;
+    public float sprintSlowDownThreshold = 8;
+
+    [Header("Enemy Strafe Controls")]
+    public float strafeSpeed = 0.75f;
+    public float strafeSlowDownThreshold = 4;
+    public float strafeDistance = 5f;
+    public float strafeSwitchDuration = 5f;
+
+    [Header("Enemy Patrol Points")]
     public Transform[] patrolPoints;
 
     // Unity components
@@ -69,6 +83,8 @@ public class Enemy : Character
             if (characterStateMachine.currentState != idleState && currentTarget != null)
             {
                 navMeshAgent.destination = currentTarget.transform.position;
+
+                HandleInstantAttack();
             }
             yield return new WaitForSeconds(0.2f);
         }
@@ -90,7 +106,28 @@ public class Enemy : Character
         characterStateMachine.Initialize(idleState);
     }
 
-    public void RecallDistanceChecks()
+    public void HandleInstantAttack()
+    {
+        if (isInCoolDown) return;
+
+        if (navMeshAgent.remainingDistance < attackRange)
+        {
+            characterStateMachine.ChangeState(attackState);
+            return;
+        }
+    }
+
+    public void HandleAttackCoolDown()
+    {
+        attackCoolDownTimer += Time.deltaTime;
+
+        if (attackCoolDownTimer >= attackCoolDownDuration)
+        {
+            isInCoolDown = false;
+        }
+    }
+
+    public void HandleRecallDistanceChecks()
     {
         recallTimer += Time.deltaTime;
 
