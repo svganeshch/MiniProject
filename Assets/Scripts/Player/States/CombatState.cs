@@ -215,7 +215,7 @@ public class CombatState : State
         PlayerCamera.Instance.SetLockOnCameraHeight();
     }
 
-    public void SwapWeapon()
+    public override void SwapWeapon()
     {
         if (character.weaponEquipment.SetWeapon(swapWeaponTo))
         {

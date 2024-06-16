@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HudManager : MonoBehaviour
 {
     public HealthManager healthManager;
-    public Slider healthSlider;
+
 
     protected virtual void Start()
     {
@@ -19,13 +18,7 @@ public class HudManager : MonoBehaviour
         SetHealth();
     }
 
-    public void InitializeStatBars()
-    {
-        healthSlider.maxValue = healthManager.Health;
-    }
+    public virtual void InitializeStatBars() { }
 
-    public void SetHealth()
-    {
-        healthSlider.value = healthManager.currentHealth;
-    }
+    public virtual void SetHealth() { }
 }

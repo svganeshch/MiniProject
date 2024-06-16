@@ -44,6 +44,8 @@ public class State
 
     public virtual void SetTarget(Enemy target) { }
 
+    public virtual void SwapWeapon() { }
+
     public Vector3 GetCharacterDirection()
     {
         Vector3 characterDirection = PlayerCamera.Instance.playerCameraObjTransform.forward * player.verticalInput;
