@@ -8,6 +8,7 @@ public class State
     protected StateMachine stateMachine;
 
     // Swap weapon variables
+    public bool isSwappingWeapon = false;
     public int defaultWeaponSlot = 1;
     public int previousWeaponSlot = 0;
 

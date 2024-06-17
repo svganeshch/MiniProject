@@ -15,10 +15,17 @@ public class CharacterAnimatorManager : MonoBehaviour
     private static readonly int hitHash = Animator.StringToHash("hit");
 
     // Weapon Actions
+    private static readonly int holsterSpeedHash = Animator.StringToHash("holsterSpeed");
+    private static readonly int drawSpeedHash = Animator.StringToHash("drawSpeed");
     private static readonly int weaponDrawHash = Animator.StringToHash("weaponDraw");
     private static readonly int weaponHolsterHash = Animator.StringToHash("weaponHolster");
+    private static readonly int weaponGSDrawHash = Animator.StringToHash("gs_draw1");
+    private static readonly int weaponGSHolsterHash = Animator.StringToHash("gs_holster1");
+    private static readonly int weaponDaggerDrawHash = Animator.StringToHash("WTD_draw");
+    private static readonly int weaponDaggerHolsterHash = Animator.StringToHash("WTD_holster");
 
     // Lite attacks
+    private static readonly int attackSpeedMultiplierHash = Animator.StringToHash("attackSpeed");
     private static readonly int liteAttack1Hash = Animator.StringToHash("lite_attack1");
     private static readonly int liteAttack2Hash = Animator.StringToHash("lite_attack2");
     private static readonly int liteAttack3Hash = Animator.StringToHash("lite_attack3");
@@ -32,6 +39,7 @@ public class CharacterAnimatorManager : MonoBehaviour
     // Animation bools
     private static readonly int isCombatHash = Animator.StringToHash("isCombat");
     private static readonly int isGroundedHash = Animator.StringToHash("isGrounded");
+    private static readonly int swapWeaponHash = Animator.StringToHash("swapWeapon");
 
     // Animation floats
     private static readonly int inAirTimeHash = Animator.StringToHash("inAirTime");
@@ -46,6 +54,27 @@ public class CharacterAnimatorManager : MonoBehaviour
     {
         get => character.animator.GetBool(isGroundedHash);
         set => character.animator.SetBool(isGroundedHash, value);
+    }
+
+    public bool SwapWeapon
+    {
+        get => character.animator.GetBool(swapWeaponHash);
+        set => character.animator.SetBool(swapWeaponHash, value);
+    }
+
+    public float HolsterSpeed
+    {
+        set => character.animator.SetFloat(holsterSpeedHash, value);
+    }
+
+    public float DrawSpeed
+    {
+        set => character.animator.SetFloat(drawSpeedHash, value);
+    }
+
+    public float AttackSpeedMultiplier
+    {
+        set => character.animator.SetFloat(attackSpeedMultiplierHash, value);
     }
 
     public float InAirTime
@@ -155,12 +184,40 @@ public class CharacterAnimatorManager : MonoBehaviour
 
     public void PlayWeaponDrawAction()
     {
-        PlayCharacterActionAnimation(weaponDrawHash, true, true, false);
+        switch (character.weaponEquipment.GetCurrentWeapon().weaponSlot)
+        {
+            case 1:
+                PlayCharacterActionAnimation(weaponDrawHash, true, true, false);
+                break;
+            case 2:
+                PlayCharacterActionAnimation(weaponGSDrawHash, true, true, false);
+                break;
+            case 3:
+                PlayCharacterActionAnimation(weaponDaggerDrawHash, true, true, false);
+                break;
+            default:
+                PlayCharacterActionAnimation(weaponDrawHash, true, true, false);
+                break;
+        }
     }
 
     public void PlayWeaponHolsterAction()
     {
-        PlayCharacterActionAnimation(weaponHolsterHash, true, true, false);
+        switch (character.weaponEquipment.GetCurrentWeapon().weaponSlot)
+        {
+            case 1:
+                PlayCharacterActionAnimation(weaponHolsterHash, true, true, false);
+                break;
+            case 2:
+                PlayCharacterActionAnimation(weaponGSHolsterHash, true, true, false);
+                break;
+            case 3:
+                PlayCharacterActionAnimation(weaponDaggerHolsterHash, true, true, false);
+                break;
+            default:
+                PlayCharacterActionAnimation(weaponHolsterHash, true, true, false);
+                break;
+        }
     }
 
     public void PlayHitAction()

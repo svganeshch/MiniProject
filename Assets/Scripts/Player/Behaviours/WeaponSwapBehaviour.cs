@@ -2,24 +2,36 @@ using UnityEngine;
 
 public class WeaponSwapBehaviour : StateMachineBehaviour
 {
-    private bool isWeaponSwap = false;
-
-    Player player;
+    Character character;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        if (player == null)
+        if (character == null)
         {
-            player = animator.GetComponent<Player>();
+            character = animator.GetComponent<Character>();
         }
 
-        isWeaponSwap = animator.GetBool("swapWeapon");
-
-        if (isWeaponSwap)
+        if (character.characterAnimatorManager.SwapWeapon)
         {
-            player.combatState.SwapWeapon();
+            if (character.combatState.isSwappingWeapon)
+            {
+                character.combatState.isSwappingWeapon = false;
+                character.characterAnimatorManager.SwapWeapon = false;
+
+                // Reset timescale after swap
+                Time.timeScale = 1f;
+                Time.fixedDeltaTime = Time.deltaTime;
+
+                // Reset to default draw/holster speeds
+                character.characterAnimatorManager.HolsterSpeed = 1;
+                character.characterAnimatorManager.DrawSpeed = 1;
+
+                return;
+            }
+
+            character.combatState.SwapWeapon();
         }
     }
 }

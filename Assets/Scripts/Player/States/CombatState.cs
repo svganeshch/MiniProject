@@ -138,9 +138,10 @@ public class CombatState : State
         if (character.weaponEquipment.GetWeaponWithSlot(swapWeaponTo).Enabled)
         {
             SlowDownTime();
-            character.animator.SetFloat("holsterSpeed", character.weaponEquipment.weaponSwapSpeed);
-            character.animator.SetFloat("drawSpeed", character.weaponEquipment.weaponSwapSpeed);
-            character.animator.SetBool("swapWeapon", true);
+            character.characterAnimatorManager.HolsterSpeed = character.weaponEquipment.weaponSwapSpeed;
+            character.characterAnimatorManager.DrawSpeed = character.weaponEquipment.weaponSwapSpeed;
+
+            character.characterAnimatorManager.SwapWeapon = true;
             player.playerAnimatorManager.PlayWeaponHolsterAction();
         }
     }
@@ -221,6 +222,8 @@ public class CombatState : State
         {
             player.idleState.previousWeaponSlot = swapWeaponTo;
             player.playerAnimatorManager.PlayWeaponDrawAction();
+
+            isSwappingWeapon = true;
         }
     }
 
