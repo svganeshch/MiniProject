@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4186874006486387761}
   - component: {fileID: 6484835211078192329}
   m_Layer: 0
-  m_Name: TerrainCam
+  m_Name: IceLandTerrainCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 136388774767348480}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 50, y: 200, z: 50}
+  m_LocalPosition: {x: 180, y: 200, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74,7 +74,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 8
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: b1c5097d0ae4ee64e85b60c877ba74af, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 434a154d23b9711459c4a9af46c061ab, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
