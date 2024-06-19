@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: IceLandGrass_mat
+  m_Name: FireLandGrass_mat
   m_Shader: {fileID: -6465566751694194690, guid: 9338814d1d5519d4980127134fb169da, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -89,7 +89,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TerrainTexture:
-        m_Texture: {fileID: 8400000, guid: 434a154d23b9711459c4a9af46c061ab, type: 2}
+        m_Texture: {fileID: 8400000, guid: 4cb437382f3a8274f8e9b20f1cbb9a59, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _WindTexture:
@@ -156,8 +156,8 @@ Material:
     - _BottomColor: {r: 0.63522005, g: 0.025968, b: 0.03174836, a: 0}
     - _Color: {r: 0.6970375, g: 1, b: 0.24842751, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FarColor: {r: 0.5803922, g: 0.79215693, b: 0.81568635, a: 0}
-    - _NearColor: {r: 0.7411765, g: 0.9058824, b: 0.89019614, a: 0}
+    - _FarColor: {r: 0.09019608, g: 0.16078432, b: 0.019607844, a: 0}
+    - _NearColor: {r: 0.8196079, g: 0.5019608, b: 0.019607844, a: 0}
     - _NearFarRange: {r: 0.2, g: 25, b: 0, a: 0}
     - _ShadowColor: {r: 0, g: 0.035718743, b: 0.35686275, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}

@@ -6,11 +6,11 @@ TerrainLayer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RiverPebbles
-  m_DiffuseTexture: {fileID: 2800000, guid: 3a1d631bcf6c8ff4db839bbb10913ec5, type: 3}
+  m_Name: FireGrass
+  m_DiffuseTexture: {fileID: 2800000, guid: 6d15fb86624020e4d9aa830770d8154f, type: 3}
   m_NormalMapTexture: {fileID: 0}
   m_MaskMapTexture: {fileID: 0}
-  m_TileSize: {x: 5, y: 5}
+  m_TileSize: {x: 15, y: 15}
   m_TileOffset: {x: 0, y: 0}
   m_Specular: {r: 0, g: 0, b: 0, a: 0}
   m_Metallic: 0
