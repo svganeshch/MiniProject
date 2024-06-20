@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 054f31b9c1f5c92478142ddd37249bc6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 054f31b9c1f5c92478142ddd37249bc6, type: 3}
       propertyPath: m_LocalRotation.y
@@ -58,14 +58,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 054f31b9c1f5c92478142ddd37249bc6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4548409108079580948}
+      addedObject: {fileID: 6760216374017448408}
   m_SourcePrefab: {fileID: 100100000, guid: 054f31b9c1f5c92478142ddd37249bc6, type: 3}
 --- !u!1 &8117064668039977153 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 054f31b9c1f5c92478142ddd37249bc6, type: 3}
   m_PrefabInstance: {fileID: 8963555922440398224}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &4548409108079580948
+--- !u!64 &6760216374017448408
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
