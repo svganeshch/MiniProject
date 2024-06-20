@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -36,7 +37,7 @@ public class Enemy : Character
     public float strafeSwitchDuration = 5f;
 
     [Header("Enemy Patrol Points")]
-    public Transform[] patrolPoints;
+    public List<Vector3> patrolPoints = new List<Vector3>();
 
     // Unity components
     [HideInInspector] public NavMeshAgent navMeshAgent;
@@ -58,6 +59,8 @@ public class Enemy : Character
     protected override void Start()
     {
         base.Start();
+
+        hudManager = GetComponentInChildren<EnemyHudManager>();
 
         enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
         enemyMovementManager = GetComponent<EnemyMovementManager>();

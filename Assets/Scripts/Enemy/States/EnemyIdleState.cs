@@ -39,10 +39,10 @@ public class EnemyIdleState : State
 
     private void SetNextPatrolPoint()
     {
-        if (enemy.patrolPoints.Length == 0) return;
+        if (enemy.patrolPoints.Count == 0) return;
 
-        enemy.navMeshAgent.destination = enemy.patrolPoints[destinationPoint].position;
-        destinationPoint = (destinationPoint + 1) % enemy.patrolPoints.Length;
+        enemy.navMeshAgent.destination = enemy.patrolPoints.ToArray()[destinationPoint];
+        destinationPoint = (destinationPoint + 1) % enemy.patrolPoints.Count;
     }
 
     private void DetectTarget()

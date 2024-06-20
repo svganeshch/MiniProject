@@ -42,6 +42,7 @@ public class EnemyMovementManager : CharacterMovementManager
         if (!enemy.canMove) return;
 
         desiredVelocity = enemy.navMeshAgent.desiredVelocity;
+        if (desiredVelocity == Vector3.zero) return;
 
         switch (enemy.characterStateMachine.currentState)
         {

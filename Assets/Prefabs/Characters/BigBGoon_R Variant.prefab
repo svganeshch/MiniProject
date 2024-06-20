@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2560936545018126161, guid: cabedd6853ecd064b8f5a6185e85f494, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 43792a7ae1bc3874aa5596365bcf4fcb, type: 2}
+    - target: {fileID: 2572309713297623377, guid: cabedd6853ecd064b8f5a6185e85f494, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4728202231037051337, guid: cabedd6853ecd064b8f5a6185e85f494, type: 3}
       propertyPath: m_Name
       value: BigBGoon_R Variant
