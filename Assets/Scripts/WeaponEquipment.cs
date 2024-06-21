@@ -85,9 +85,6 @@ public class WeaponEquipment : MonoBehaviour
 
     public void DrawWeapon()
     {
-        character.characterAnimatorManager.CombatBool = true;
-        character.animator.SetLayerWeight(1, 1);
-
         SetWeaponTransform(currentWeapon.weaponHolderPosition);
 
         if (currentWeapon.isDagger)
@@ -95,13 +92,13 @@ public class WeaponEquipment : MonoBehaviour
             Weapon dagger2 = GetDagger2();
             SetWeaponTransform(dagger2.weaponHolderPosition, dagger2);
         }
+
+        character.characterAnimatorManager.CombatBool = true;
+        character.animator.SetLayerWeight(1, 1);
     }
 
     public void HolsterWeapon()
     {
-        character.characterAnimatorManager.CombatBool = false;
-        character.animator.SetLayerWeight(1, 0);
-
         SetWeaponTransform(currentWeapon.weaponHolsterPosition);
 
         if (currentWeapon.isDagger)
@@ -109,6 +106,9 @@ public class WeaponEquipment : MonoBehaviour
             Weapon dagger2 = GetDagger2();
             SetWeaponTransform(dagger2.weaponHolsterPosition, dagger2);
         }
+
+        character.characterAnimatorManager.CombatBool = false;
+        character.animator.SetLayerWeight(1, 0);
     }
 
     private void SetWeaponTransform(Transform parentTransform, Weapon weapon = null)

@@ -312,14 +312,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5304997651781803027}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.016318228, y: 0.05225334, z: 0.6008697, w: 0.79747033}
-  m_LocalPosition: {x: 0.112, y: -0.016, z: -0.013}
+  m_LocalRotation: {x: 0.7071068, y: -0.7071068, z: 0, w: 0}
+  m_LocalPosition: {x: 0.076, y: 0.064, z: 0.046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4560123982629686764}
   m_Father: {fileID: 8709365654963595580}
-  m_LocalEulerAnglesHint: {x: -5.096, y: 3.668, z: 73.831}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 90}
 --- !u!1 &8625591473111958931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2391,7 +2391,7 @@ MonoBehaviour:
     slashSound: {fileID: 8300000, guid: b3aecb26c81473e44a0fff9ff05e29d8, type: 3}
     hitSound: {fileID: 8300000, guid: ce9c91d89424ead4ba9c91b4c82557a0, type: 3}
     weaponSlot: 1
-    weaponDamage: 50
+    weaponDamage: 10
     attackSpeedMultiplier: 1.125
     isDagger: 0
     weaponObj: {fileID: 0}
@@ -2419,7 +2419,7 @@ MonoBehaviour:
     slashSound: {fileID: 0}
     hitSound: {fileID: 0}
     weaponSlot: 3
-    weaponDamage: 50
+    weaponDamage: 10
     attackSpeedMultiplier: 1
     isDagger: 1
     weaponObj: {fileID: 0}
@@ -2433,7 +2433,7 @@ MonoBehaviour:
     slashSound: {fileID: 0}
     hitSound: {fileID: 0}
     weaponSlot: 0
-    weaponDamage: 50
+    weaponDamage: 10
     attackSpeedMultiplier: 1
     isDagger: 1
     weaponObj: {fileID: 0}
