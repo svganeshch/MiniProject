@@ -14,15 +14,18 @@ public class ResetJumpState : StateMachineBehaviour
             player = animator.GetComponent<Player>();
         }
 
-        if (player.characterStateMachine.currentState == player.jumpState)
+        if (character.characterStateMachine.currentState != null)
         {
-            if (character.characterAnimatorManager.CombatBool)
+            if (character.characterStateMachine.currentState == player.jumpState)
             {
-                character.characterStateMachine.ChangeState(character.combatState);
-            }
-            else
-            {
-                character.characterStateMachine.ChangeState(character.idleState);
+                if (character.characterAnimatorManager.CombatBool)
+                {
+                    character.characterStateMachine.ChangeState(character.combatState);
+                }
+                else
+                {
+                    character.characterStateMachine.ChangeState(character.idleState);
+                }
             }
         }
     }

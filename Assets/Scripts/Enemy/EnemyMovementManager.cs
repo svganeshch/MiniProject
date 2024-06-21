@@ -124,6 +124,8 @@ public class EnemyMovementManager : CharacterMovementManager
         lookDirection = enemy.navMeshAgent.destination - enemy.transform.position;
         lookDirection.y = 0;
 
+        if (lookDirection == Vector3.zero) return;
+
         lookRotation = Quaternion.LookRotation(lookDirection);
         enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, lookRotation, Time.deltaTime * enemy.rotationDampTime);
     }

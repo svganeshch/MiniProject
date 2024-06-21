@@ -41,7 +41,7 @@ public class EnemyIdleState : State
     {
         if (enemy.patrolPoints.Count == 0) return;
 
-        enemy.navMeshAgent.destination = enemy.patrolPoints.ToArray()[destinationPoint];
+        enemy.navMeshAgent.destination = enemy.patrolPoints[destinationPoint];
         destinationPoint = (destinationPoint + 1) % enemy.patrolPoints.Count;
     }
 

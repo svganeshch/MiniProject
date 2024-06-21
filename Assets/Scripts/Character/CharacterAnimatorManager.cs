@@ -184,7 +184,8 @@ public class CharacterAnimatorManager : MonoBehaviour
 
     public void PlayWeaponDrawAction()
     {
-        switch (character.weaponEquipment.GetCurrentWeapon().weaponSlot)
+        int weaponSlot = character.weaponEquipment.GetCurrentWeapon().weaponSlot;
+        switch (weaponSlot)
         {
             case 1:
                 PlayCharacterActionAnimation(weaponDrawHash, true, true, false);
@@ -199,11 +200,14 @@ public class CharacterAnimatorManager : MonoBehaviour
                 PlayCharacterActionAnimation(weaponDrawHash, true, true, false);
                 break;
         }
+
+        character.hudManager.SetWeaponWheel(weaponSlot);
     }
 
     public void PlayWeaponHolsterAction()
     {
-        switch (character.weaponEquipment.GetCurrentWeapon().weaponSlot)
+        int weaponSlot = character.weaponEquipment.GetCurrentWeapon().weaponSlot;
+        switch (weaponSlot)
         {
             case 1:
                 PlayCharacterActionAnimation(weaponHolsterHash, true, true, false);
@@ -218,6 +222,9 @@ public class CharacterAnimatorManager : MonoBehaviour
                 PlayCharacterActionAnimation(weaponHolsterHash, true, true, false);
                 break;
         }
+
+        if (!SwapWeapon)
+            character.hudManager.SetWeaponWheel(0);
     }
 
     public void PlayHitAction()

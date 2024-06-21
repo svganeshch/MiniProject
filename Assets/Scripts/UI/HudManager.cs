@@ -21,4 +21,6 @@ public class HudManager : MonoBehaviour
     public virtual void InitializeStatBars() { }
 
     public virtual void SetHealth() { }
+
+    public virtual void SetWeaponWheel(int weaponSlot) { }
 }

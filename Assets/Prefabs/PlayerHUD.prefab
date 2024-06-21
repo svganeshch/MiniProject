@@ -70,7 +70,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 3
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -648,7 +648,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 3
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -723,7 +723,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 3
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1028,6 +1028,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthManager: {fileID: 0}
   healthbar: {fileID: 567767980870936732}
+  hand: {fileID: 2903000995863759883}
+  katana: {fileID: 6779240529600490068}
+  greatSword: {fileID: 5095496069708153372}
+  daggers: {fileID: 6494609707440429500}
 --- !u!1 &8605064534857848629
 GameObject:
   m_ObjectHideFlags: 0
