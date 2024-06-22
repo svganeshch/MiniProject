@@ -24,6 +24,21 @@ public class PlayerAnimatorManager : CharacterAnimatorManager
         }
     }
 
+    public override void PlayWeaponDrawAction()
+    {
+        base.PlayWeaponDrawAction();
+
+        player.hudManager.SetWeaponWheel(player.weaponEquipment.GetCurrentWeapon().weaponSlot);
+    }
+
+    public override void PlayWeaponHolsterAction()
+    {
+        base.PlayWeaponHolsterAction();
+
+        if (!SwapWeapon)
+            player.hudManager.SetWeaponWheel(0);
+    }
+
     // Animation event calls
     public void ApplyJumpVelocity()
     {

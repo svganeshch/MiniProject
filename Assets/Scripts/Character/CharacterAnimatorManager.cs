@@ -185,7 +185,7 @@ public class CharacterAnimatorManager : MonoBehaviour
         character.isPivoting = true;
     }
 
-    public void PlayWeaponDrawAction()
+    public virtual void PlayWeaponDrawAction()
     {
         int weaponSlot = character.weaponEquipment.GetCurrentWeapon().weaponSlot;
         int weaponToDrawAnimHash;
@@ -207,10 +207,9 @@ public class CharacterAnimatorManager : MonoBehaviour
         }
 
         PlayCharacterActionAnimation(weaponToDrawAnimHash, true, true, false);
-        character.hudManager.SetWeaponWheel(weaponSlot);
     }
 
-    public void PlayWeaponHolsterAction()
+    public virtual void PlayWeaponHolsterAction()
     {
         int weaponSlot = character.weaponEquipment.GetCurrentWeapon().weaponSlot;
         int weaponToHolsterAnimHash;
@@ -232,9 +231,6 @@ public class CharacterAnimatorManager : MonoBehaviour
         }
 
         PlayCharacterActionAnimation(weaponToHolsterAnimHash, true, true, false);
-
-        if (!SwapWeapon)
-            character.hudManager.SetWeaponWheel(0);
     }
 
     public void PlayHitAction()
