@@ -2222,7 +2222,7 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ce9c91d89424ead4ba9c91b4c82557a0, type: 3}
     weaponSlot: 1
     weaponDamage: 5
-    attackSpeedMultiplier: 0.75
+    attackSpeedMultiplier: 0.9
     isDagger: 0
     weaponObj: {fileID: 0}
     weaponObjTransform: {fileID: 0}

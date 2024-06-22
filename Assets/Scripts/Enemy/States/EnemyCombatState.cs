@@ -20,7 +20,7 @@ public class EnemyCombatState : State
     {
         base.LogicUpdate();
 
-        ResetEnemy();
+        //ResetEnemy();
 
         if (enemy.isInCoolDown)
         {

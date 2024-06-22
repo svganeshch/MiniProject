@@ -36,6 +36,9 @@ public class CharacterAnimatorManager : MonoBehaviour
     private static readonly int turnR90Hash = Animator.StringToHash("Turn_R90");
     private static readonly int turnR180Hash = Animator.StringToHash("Turn_R180");
 
+    // Death or Execution animations
+    private static readonly int deathCommonHash = Animator.StringToHash("death");
+
     // Animation bools
     private static readonly int isCombatHash = Animator.StringToHash("isCombat");
     private static readonly int isGroundedHash = Animator.StringToHash("isGrounded");
@@ -236,7 +239,12 @@ public class CharacterAnimatorManager : MonoBehaviour
 
     public void PlayHitAction()
     {
-        PlayCharacterActionAnimation(hitHash);
+        PlayCharacterActionAnimation(hitHash, false, false, true);
+    }
+
+    public void PlayDeathCommonAnimation()
+    {
+        PlayCharacterActionAnimation(deathCommonHash, false, false, true);
     }
 
     // Common animation event calls

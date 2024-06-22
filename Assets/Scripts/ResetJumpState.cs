@@ -16,7 +16,7 @@ public class ResetJumpState : StateMachineBehaviour
 
         if (character.characterStateMachine.currentState != null)
         {
-            if (character.characterStateMachine.currentState == player.jumpState)
+            if (character.characterStateMachine.currentState == character.jumpState)
             {
                 if (character.characterAnimatorManager.CombatBool)
                 {

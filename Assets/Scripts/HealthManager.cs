@@ -29,7 +29,8 @@ public class HealthManager : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-            Die();
+            if (!character.isDead)
+                Die();
         }
     }
 
@@ -56,6 +57,10 @@ public class HealthManager : MonoBehaviour
     public virtual void Die()
     {
         character.isDead = true;
-        Destroy(gameObject, 5f);
+        character.gameObject.GetComponent<Character>().enabled = false;
+        character.gameObject.GetComponent<CharacterMovementManager>().enabled = false;
+        character.characterAnimatorManager.PlayDeathCommonAnimation();
+
+        Destroy(character.gameObject, 10f);
     }
 }
