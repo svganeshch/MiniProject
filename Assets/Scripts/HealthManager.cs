@@ -50,7 +50,7 @@ public class HealthManager : MonoBehaviour
         }
 
         character.hudManager.SetHealth();
-        Debug.Log("damage received");
+        Debug.Log(character.name + " damage received");
     }
 
     public virtual void Die()

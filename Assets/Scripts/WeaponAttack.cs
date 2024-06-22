@@ -3,82 +3,84 @@ using UnityEngine;
 
 public abstract class WeaponAttack : MonoBehaviour
 {
-    private Transform weaponRayTransform;
     private Character characterCausingDamage;
     private Character characterTakingDamage;
     private HealthManager healthManager;
     private Character hitCharacter;
 
-    public float weaponLength;
     [HideInInspector] public float weaponDamage;
     private LayerMask damageLayerMask;
 
-    private RaycastHit hit;
-    private bool canDealDamage;
-    private HashSet<GameObject> hasDealtDamage;
+    [SerializeField] protected Collider weaponCollider;
+    [SerializeField] private HashSet<GameObject> hasDealtDamage;
 
     private void Awake()
     {
-        weaponRayTransform = transform;
+        if (weaponCollider == null)
+        {
+            weaponCollider = GetComponentInChildren<Collider>();
+        }
         characterCausingDamage = GetComponentInParent<Character>();
     }
 
     private void Start()
     {
-        canDealDamage = false;
         hasDealtDamage = new HashSet<GameObject>();
         damageLayerMask = LayerMaskManager.Instance.damagableLayerMask;
+
+        weaponCollider.enabled = false;
     }
 
-    private void Update()
+    private void OnTriggerEnter(Collider collidedWith)
     {
-        if (!canDealDamage)
+        if (collidedWith.gameObject == null) return;
+        //Debug.Log("collided with : " + collidedWith.name + " layer : " + (1 << collidedWith.gameObject.layer) + " damageMask : " + damageLayerMask.value);
+
+        if ((1 << collidedWith.gameObject.layer) != damageLayerMask.value) return;
+        //Debug.Log("collided with a damagable layer : " + collidedWith.name);
+
+        hitCharacter = GetHitCharacter(collidedWith);
+        //hitCharacter = collidedWith.gameObject.GetComponentInParent<Character>();
+
+        if (hitCharacter == null || hitCharacter == characterCausingDamage)
             return;
 
-        if (Physics.Raycast(weaponRayTransform.position, -weaponRayTransform.up, out hit, weaponLength, damageLayerMask))
-        {
-            if (hit.transform == null) return;
+        healthManager = hitCharacter.healthManager;
+        //if (healthManager == null || hitCharacter != characterTakingDamage)
+        //{
+        //    characterTakingDamage = hitCharacter;
+        //    healthManager = characterTakingDamage.healthManager;
+        //}
 
-            hitCharacter = GetHitCharacter();
-
-            if (hitCharacter == null || hitCharacter == characterCausingDamage)
-                return;
-
-            if (healthManager == null || hitCharacter != characterTakingDamage)
-            {
-                characterTakingDamage = hitCharacter;
-                healthManager = characterTakingDamage.healthManager;
-            }
-
-            if (hasDealtDamage.Add(characterTakingDamage.gameObject))
-            {
-                healthManager.TakeDamage(weaponDamage, characterCausingDamage, characterTakingDamage);
-            }
-        }
+        //if (hasDealtDamage.Add(hitCharacter.gameObject))
+        //{
+        healthManager.TakeDamage(weaponDamage, characterCausingDamage, hitCharacter);
+        //}
+        //else
+        //{
+        //    Debug.Log("Already hit : " + hitCharacter.name);
+        //}
     }
 
-    private Character GetHitCharacter()
+    private Character GetHitCharacter(Collider collidedWith)
     {
-        if (hitCharacter != null && hit.transform.root == hitCharacter.transform)
+        if (hitCharacter != null && collidedWith.transform.root == hitCharacter.transform)
             return hitCharacter;
 
-        return hit.transform.GetComponentInParent<Character>();
+        return collidedWith.transform.GetComponentInParent<Character>();
     }
 
     public void StartDealDamage()
     {
-        canDealDamage = true;
-        hasDealtDamage.Clear();
+        weaponCollider.enabled = true;
+
+        //Debug.Log(characterCausingDamage.name + " damage enabled : " + characterCausingDamage.animator.GetCurrentAnimatorClipInfo(3)[0].clip.name);
     }
 
     public void StopDealDamage()
     {
-        canDealDamage = false;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position - transform.up * weaponLength);
+        weaponCollider.enabled = false;
+        hasDealtDamage.Clear();
+        //Debug.Log(characterCausingDamage.name + " damage disabled " + characterCausingDamage.animator.GetCurrentAnimatorClipInfo(3)[0].clip.name);
     }
 }

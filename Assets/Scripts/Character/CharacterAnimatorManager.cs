@@ -185,43 +185,50 @@ public class CharacterAnimatorManager : MonoBehaviour
     public void PlayWeaponDrawAction()
     {
         int weaponSlot = character.weaponEquipment.GetCurrentWeapon().weaponSlot;
+        int weaponToDrawAnimHash;
+
         switch (weaponSlot)
         {
             case 1:
-                PlayCharacterActionAnimation(weaponDrawHash, true, true, false);
+                weaponToDrawAnimHash = weaponDrawHash;
                 break;
             case 2:
-                PlayCharacterActionAnimation(weaponGSDrawHash, true, true, false);
+                weaponToDrawAnimHash = weaponGSDrawHash;
                 break;
             case 3:
-                PlayCharacterActionAnimation(weaponDaggerDrawHash, true, true, false);
+                weaponToDrawAnimHash = weaponDaggerDrawHash;
                 break;
             default:
-                PlayCharacterActionAnimation(weaponDrawHash, true, true, false);
+                weaponToDrawAnimHash = weaponDrawHash;
                 break;
         }
 
+        PlayCharacterActionAnimation(weaponToDrawAnimHash, true, true, false);
         character.hudManager.SetWeaponWheel(weaponSlot);
     }
 
     public void PlayWeaponHolsterAction()
     {
         int weaponSlot = character.weaponEquipment.GetCurrentWeapon().weaponSlot;
+        int weaponToHolsterAnimHash;
+
         switch (weaponSlot)
         {
             case 1:
-                PlayCharacterActionAnimation(weaponHolsterHash, true, true, false);
+                weaponToHolsterAnimHash = weaponHolsterHash;
                 break;
             case 2:
-                PlayCharacterActionAnimation(weaponGSHolsterHash, true, true, false);
+                weaponToHolsterAnimHash = weaponGSHolsterHash;
                 break;
             case 3:
-                PlayCharacterActionAnimation(weaponDaggerHolsterHash, true, true, false);
+                weaponToHolsterAnimHash = weaponDaggerHolsterHash;
                 break;
             default:
-                PlayCharacterActionAnimation(weaponHolsterHash, true, true, false);
+                weaponToHolsterAnimHash = weaponHolsterHash;
                 break;
         }
+
+        PlayCharacterActionAnimation(weaponToHolsterAnimHash, true, true, false);
 
         if (!SwapWeapon)
             character.hudManager.SetWeaponWheel(0);

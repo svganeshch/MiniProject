@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -90,10 +91,22 @@ public class Character : MonoBehaviour
 
     private void IgnoreMyOwnColliders()
     {
-        Collider[] characterColliders = GetComponentsInChildren<Collider>();
-        foreach (var collider in characterColliders)
+        Collider characterControllerCollider = GetComponent<Collider>();
+        Collider[] damagableColliders = GetComponentsInChildren<Collider>();
+        List<Collider> ignoreColliders = new List<Collider>();
+
+        foreach (var collider in damagableColliders)
         {
-            Physics.IgnoreCollision(controller, collider);
+            ignoreColliders.Add(collider);
+        }
+        ignoreColliders.Add(characterControllerCollider);
+
+        foreach (Collider collider in ignoreColliders)
+        {
+            foreach (Collider otherCollider in ignoreColliders)
+            {
+                Physics.IgnoreCollision(collider, otherCollider, true);
+            }
         }
     }
 

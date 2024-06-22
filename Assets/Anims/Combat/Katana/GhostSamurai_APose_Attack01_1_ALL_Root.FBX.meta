@@ -560,7 +560,7 @@ ModelImporter:
       takeName: GhostSamurai_APose_Attack01_1_ALL_Root
       internalID: 0
       firstFrame: 600
-      lastFrame: 700
+      lastFrame: 860
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -587,35 +587,35 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.1995682
+      - time: 0.11690153
         functionName: DisablePerformAction
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.40121466
+      - time: 0.13188131
         functionName: StartDamage
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.4844129
+      - time: 0.21241291
         functionName: StopDamage
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.50145274
+      - time: 0.25611943
         functionName: EnableCombo
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.8282543
+      - time: 0.49758762
         functionName: DisableCombo
         data: 
         objectReferenceParameter: {instanceID: 0}

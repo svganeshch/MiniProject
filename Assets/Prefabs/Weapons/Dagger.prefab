@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8447802408952820671
+--- !u!1 &1132627531531326300
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,44 +8,66 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1916140864753321546}
-  - component: {fileID: 3094197256962775341}
+  - component: {fileID: 8425614479897520718}
+  - component: {fileID: 2487773398742506590}
+  - component: {fileID: 5602073860737124638}
   m_Layer: 10
-  m_Name: WeaponScript
+  m_Name: DamageCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1916140864753321546
+--- !u!4 &8425614479897520718
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8447802408952820671}
+  m_GameObject: {fileID: 1132627531531326300}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.427, y: 0.236, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 63665163539239916}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!114 &3094197256962775341
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2487773398742506590
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8447802408952820671}
+  m_GameObject: {fileID: 1132627531531326300}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfe873305267c3e4692b485e374887c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponLength: 0.59
   weaponDamage: 0
+  weaponCollider: {fileID: 5602073860737124638}
+--- !u!65 &5602073860737124638
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132627531531326300}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5972261, y: 0.30266002, z: 0.10427233}
+  m_Center: {x: 0.16231188, y: 0.24046208, z: 0.00030430034}
 --- !u!1001 &533841879870977031
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98,12 +120,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dagger
       objectReference: {fileID: 0}
+    - target: {fileID: 7750397243111347764, guid: fcc3a072107880e439fd92448eafea71, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: fcc3a072107880e439fd92448eafea71, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1916140864753321546}
+      addedObject: {fileID: 8425614479897520718}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcc3a072107880e439fd92448eafea71, type: 3}
 --- !u!4 &63665163539239916 stripped
