@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class EnemyIdleState : State
@@ -71,7 +72,7 @@ public class EnemyIdleState : State
                     enemy.currentTarget = targetCharacter;
                     Debug.Log("Target found");
 
-                    if (enemy.weaponEquipment.SetWeapon(defaultWeaponSlot))
+                    if (enemy.weaponEquipment.SetWeapon(enemy.weaponEquipment.weapons.First<Weapon>().weaponSlot))
                     {
                         enemy.enemyAnimatorManager.PlayWeaponDrawAction();
                     }
