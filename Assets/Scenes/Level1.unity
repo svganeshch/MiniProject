@@ -5250,6 +5250,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigWGoon_R
       objectReference: {fileID: 0}
+    - target: {fileID: 5245239547483501072, guid: cabedd6853ecd064b8f5a6185e85f494, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5245239547483501072, guid: cabedd6853ecd064b8f5a6185e85f494, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5245239547483501072, guid: cabedd6853ecd064b8f5a6185e85f494, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5245239547483501072, guid: cabedd6853ecd064b8f5a6185e85f494, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5392535315206118259, guid: cabedd6853ecd064b8f5a6185e85f494, type: 3}
       propertyPath: m_LocalPosition.x
       value: 38.65

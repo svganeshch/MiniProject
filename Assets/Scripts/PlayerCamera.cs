@@ -24,6 +24,8 @@ public class PlayerCamera : MonoBehaviour
 
     [Range(0.0f, 0.5f)]
     public float cameraSmoothSpeed = 1.0f;
+    [Range(0.0f, 10f)]
+    public float cameraPullSpeed = 1.0f;
     [Range(0.0f, 250f)]
     public float MouseYSensitivity = 40;
     [Range(0.0f, 250f)]
@@ -213,7 +215,7 @@ public class PlayerCamera : MonoBehaviour
             targetCameraZPosition = -cameraCollisionRadius;
         }
 
-        cameraObjPosition.z = Mathf.Lerp(mainCameraTransform.localPosition.z, targetCameraZPosition, 0.2f * Time.deltaTime);
+        cameraObjPosition.z = Mathf.Lerp(mainCameraTransform.localPosition.z, targetCameraZPosition, cameraPullSpeed * Time.deltaTime);
         mainCameraTransform.localPosition = cameraObjPosition;
     }
 

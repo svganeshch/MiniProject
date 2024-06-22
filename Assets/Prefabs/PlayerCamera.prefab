@@ -84,6 +84,7 @@ MonoBehaviour:
   player: {fileID: 0}
   playerInput: {fileID: 0}
   cameraSmoothSpeed: 0.115
+  cameraPullSpeed: 3
   MouseYSensitivity: 40
   MouseXSensitivity: 40
   GamepadYSensitivity: 220
