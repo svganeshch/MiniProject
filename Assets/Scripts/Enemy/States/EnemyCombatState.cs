@@ -20,7 +20,7 @@ public class EnemyCombatState : State
     {
         base.LogicUpdate();
 
-        //ResetEnemy();
+        ResetEnemy();
 
         if (enemy.isInCoolDown)
         {
@@ -52,7 +52,7 @@ public class EnemyCombatState : State
 
     private void FallBack()
     {
-        if (enemy.navMeshAgent.remainingDistance < enemy.navMeshAgent.stoppingDistance)
+        if (enemy.navMeshAgent.remainingDistance < enemy.attackRange)
         {
             Vector3 fallbackDirection = enemy.currentTarget.transform.position - enemy.transform.position;
             fallbackDirection.y = 0f;

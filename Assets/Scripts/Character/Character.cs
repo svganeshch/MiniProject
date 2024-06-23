@@ -32,6 +32,7 @@ public class Character : MonoBehaviour
     [HideInInspector] public Animator animator;
     [HideInInspector] public CharacterController controller;
     [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
+    [HideInInspector] public CharacterRigController characterRigController;
     [HideInInspector] public CharacterMovementManager characterMovementManager;
     [HideInInspector] public CharacterSfxManager characterSfxManager;
     [HideInInspector] public HealthManager healthManager;
@@ -59,6 +60,7 @@ public class Character : MonoBehaviour
         controller = GetComponent<CharacterController>();
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         characterMovementManager = GetComponent<CharacterMovementManager>();
+        characterRigController = GetComponent<CharacterRigController>();
         characterSfxManager = GetComponent<CharacterSfxManager>();
         healthManager = GetComponent<HealthManager>();
         weaponEquipment = GetComponent<WeaponEquipment>();

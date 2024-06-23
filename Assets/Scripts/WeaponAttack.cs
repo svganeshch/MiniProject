@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class WeaponAttack : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public abstract class WeaponAttack : MonoBehaviour
 
     [SerializeField] protected Collider weaponCollider;
     [SerializeField] private HashSet<GameObject> hasDealtDamage;
+
+    public UnityEvent OnStartDamageEvent = new();
+    public UnityEvent OnStopDamageEvent = new();
 
     private void Awake()
     {
@@ -72,13 +76,16 @@ public abstract class WeaponAttack : MonoBehaviour
 
     public void StartDealDamage()
     {
-        weaponCollider.enabled = true;
+        OnStartDamageEvent.Invoke();
 
+        weaponCollider.enabled = true;
         //Debug.Log(characterCausingDamage.name + " damage enabled : " + characterCausingDamage.animator.GetCurrentAnimatorClipInfo(3)[0].clip.name);
     }
 
     public void StopDealDamage()
     {
+        OnStopDamageEvent.Invoke();
+
         weaponCollider.enabled = false;
         hasDealtDamage.Clear();
         //Debug.Log(characterCausingDamage.name + " damage disabled " + characterCausingDamage.animator.GetCurrentAnimatorClipInfo(3)[0].clip.name);

@@ -16,8 +16,12 @@ public class EnemyAttackState : State
     {
         base.Enter();
 
+        //character.weaponEquipment.GetCurrentWeapon().weaponAttackScript.OnStartDamageEvent.AddListener(SetDamageState);
+        //character.weaponEquipment.GetCurrentWeapon().weaponAttackScript.OnStopDamageEvent.AddListener(ResetDamageState);
+
         canAttack = false;
         isCombo = false;
+
         enemy.attackCoolDownTimer = 0;
 
         startPos = enemy.transform.position;
@@ -65,6 +69,17 @@ public class EnemyAttackState : State
         {
             canAttack = true;
         }
+    }
+
+    private void SetDamageState()
+    {
+        enemy.characterRigController.SetRigWeight(1f);
+        enemy.characterRigController.SetRigTarget();
+    }
+
+    private void ResetDamageState()
+    {
+        enemy.characterRigController.SetRigWeight(0f);
     }
 
     public override void Exit()

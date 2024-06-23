@@ -23,7 +23,8 @@ public class Enemy : Character
 
     [Header("Enemy Attack Controls")]
     public float attackCoolDownDuration = 5;
-    public float attackRange = 2f;
+    public float attackRange = 5f;
+    public float instantAttackRange = 2f;
     public float attackProbability = 0.5f;
 
     [Header("Enemy Sprint Controls")]
@@ -113,7 +114,7 @@ public class Enemy : Character
     {
         if (isInCoolDown) return;
 
-        if (navMeshAgent.remainingDistance < attackRange)
+        if (navMeshAgent.remainingDistance < instantAttackRange)
         {
             characterStateMachine.ChangeState(attackState);
             return;
