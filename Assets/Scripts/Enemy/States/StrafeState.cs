@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class StrafeState : State
 {
-    bool strafeSwitch = false;
+    float strafeAttackTimer = 0f;
 
-    float strafeSwitchTimer = 0f;
-    int strafeDirection = 1;
-
-    Vector3 strafeStartPosition;
+    Vector3 targetPreviousPosition;
+    Vector3 rightAngle;
+    Vector3 leftAngle;
+    Vector3 targetAngle;
+ 
+    float remainingDistanceToTheAnglePoint = 0;
 
     public StrafeState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
@@ -19,10 +21,11 @@ public class StrafeState : State
 
         enemy.enemyMovementManager.manualUpdate = true;
         enemy.isLockedOn = true;
-        strafeSwitch = false;
+ 
+        strafeAttackTimer = 0f;
 
-        strafeSwitchTimer = 0f;
-        strafeStartPosition = enemy.transform.position;
+        targetPreviousPosition = enemy.currentTarget.transform.position;
+        SetStrafeAngle();
     }
 
     public override void LogicUpdate()
@@ -37,47 +40,68 @@ public class StrafeState : State
 
     private void HandleStrafe()
     {
-        if (strafeSwitch)
-        {
-            strafeSwitchTimer += Time.deltaTime;
+        strafeAttackTimer += Time.deltaTime;
 
-            if (Random.value <= enemy.attackProbability)
-                stateMachine.ChangeState(enemy.attackState);
+        if (enemy.currentTarget.transform.position != targetPreviousPosition)
+        {
+            SetStrafeAngle();
+            targetPreviousPosition = enemy.currentTarget.transform.position;
         }
 
-        if (strafeSwitchTimer >= enemy.strafeSwitchDuration)
-        {
-            strafeSwitchTimer = 0f;
-            strafeSwitch = false;
-            strafeStartPosition = enemy.transform.position;
-        }
+        remainingDistanceToTheAnglePoint = Vector3.Distance(enemy.transform.position, targetAngle);
 
-        if (!strafeSwitch)
+        if (remainingDistanceToTheAnglePoint <= 0.25f)
         {
-            float distanceMoved = Vector3.Distance(strafeStartPosition, enemy.transform.position);
-            float remainingDistance = enemy.strafeDistance - distanceMoved;
-
-            if (distanceMoved >= enemy.strafeDistance)
+            // Switch to the other angle
+            if (targetAngle == rightAngle)
             {
-                strafeDirection *= -1;
-                strafeStartPosition = enemy.transform.position;
-                strafeSwitch = true;
+                targetAngle = leftAngle;
             }
             else
             {
-                Vector3 strafeDirectionVector = enemy.transform.right * strafeDirection;
-                strafeDirectionVector.y = 0f;
-                strafeDirectionVector.Normalize();
-
-                enemy.enemyMovementManager.UpdateMovement(enemy.strafeSpeed, strafeDirectionVector, remainingDistance);
+                targetAngle = rightAngle;
             }
+        }
+
+        Vector3 strafeDirectionVector = targetAngle - enemy.transform.position;
+        strafeDirectionVector.y = 0f;
+        strafeDirectionVector.Normalize();
+
+        enemy.enemyMovementManager.UpdateMovement(enemy.strafeSpeed, strafeDirectionVector, remainingDistanceToTheAnglePoint);
+
+        if (strafeAttackTimer > enemy.strafeAttackDuration)
+        {
+            if (Random.value <= enemy.attackProbability)
+                stateMachine.ChangeState(enemy.attackState);
+
+            strafeAttackTimer = 0;
         }
     }
 
+    private void SetStrafeAngle()
+    {
+        Transform center = enemy.currentTarget.transform;
+        float radius = Vector3.Distance(enemy.transform.position, enemy.currentTarget.transform.position);
+
+        rightAngle = center.position + Quaternion.AngleAxis(enemy.strafeAngle, Vector3.up) * center.forward * radius;
+        leftAngle = center.position + Quaternion.AngleAxis(-enemy.strafeAngle, Vector3.up) * center.forward * radius;
+
+        float distanceToRightAngle = Vector3.Distance(enemy.transform.position, rightAngle);
+        float distanceToLeftAngle = Vector3.Distance(enemy.transform.position, leftAngle);
+
+        if (distanceToRightAngle < distanceToLeftAngle)
+        {
+            targetAngle = rightAngle;
+        }
+        else
+        {
+            targetAngle = leftAngle;
+        }
+    }
 
     private void CheckDistance()
     {
-        if (enemy.navMeshAgent.remainingDistance > enemy.navMeshAgent.stoppingDistance + 1)
+        if (enemy.navMeshAgent.remainingDistance > enemy.attackRange + 2f)
         {
             stateMachine.ChangeState(enemy.combatState);
         }
@@ -89,5 +113,41 @@ public class StrafeState : State
 
         enemy.enemyMovementManager.manualUpdate = false;
         enemy.isLockedOn = false;
+    }
+
+    private void DrawCircle(Vector3 center, float radius, Color color)
+    {
+        int segments = 100;
+        float angle = 0f;
+        float angleStep = 360f / segments;
+
+        Vector3 previousPoint = center + new Vector3(Mathf.Cos(0f) * radius, 0f, Mathf.Sin(0f) * radius);
+
+        for (int i = 1; i <= segments; i++)
+        {
+            angle += angleStep;
+            float rad = angle * Mathf.Deg2Rad;
+            Vector3 newPoint = center + new Vector3(Mathf.Cos(rad) * radius, 0f, Mathf.Sin(rad) * radius);
+            Debug.DrawLine(previousPoint, newPoint, color);
+            previousPoint = newPoint;
+        }
+    }
+
+    private void DrawAngleLines(Vector3 center, Vector3 rightAngle, Vector3 leftAngle, Color color)
+    {
+        Debug.DrawLine(center, rightAngle, color);
+        Debug.DrawLine(center, leftAngle, color);
+
+        Debug.DrawLine(rightAngle, leftAngle, color);
+    }
+
+    public override void OnDrawGizmos()
+    {
+        DrawCircle(enemy.currentTarget.transform.position, Vector3.Distance(enemy.transform.position, enemy.currentTarget.transform.position), Color.red);
+        DrawAngleLines(enemy.currentTarget.transform.position, rightAngle, leftAngle, Color.blue);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(rightAngle, 0.25f);
+        Gizmos.DrawSphere(leftAngle, 0.25f);
     }
 }

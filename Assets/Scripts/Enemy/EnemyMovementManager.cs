@@ -68,7 +68,7 @@ public class EnemyMovementManager : CharacterMovementManager
             UpdateMovement(speed, desiredVelocity.normalized, enemy.navMeshAgent.remainingDistance);
         }
 
-        GetMovementInput();
+        //Debug.Log(enemy.navMeshAgent.remainingDistance);
     }
 
     public void UpdateMovement(float speed, Vector3 direction, float remainingDistance)
@@ -79,6 +79,8 @@ public class EnemyMovementManager : CharacterMovementManager
         enemy.controller.Move(speed * speedFactor * Time.deltaTime * direction);
         enemy.navMeshAgent.nextPosition = enemy.transform.position;
         enemy.navMeshAgent.velocity = enemy.controller.velocity;
+
+        GetMovementInput();
     }
 
     public override void GetMovementInput()
@@ -112,7 +114,7 @@ public class EnemyMovementManager : CharacterMovementManager
             }
             else
             {
-                enemy.enemyAnimatorManager.SetAnimatorParameters(horizontalInput, verticalInput, true);
+                enemy.enemyAnimatorManager.SetAnimatorParameters(-horizontalInput, verticalInput, true);
             }
         }
     }

@@ -52,7 +52,7 @@ MonoBehaviour:
     m_Bits: 128
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 9
+    m_Bits: 32777
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 32777

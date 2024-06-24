@@ -15,7 +15,7 @@
     {
         base.LogicUpdate();
 
-        if (enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance + 0.5f)
+        if (enemy.navMeshAgent.remainingDistance <= enemy.attackRange + 2f)
         {
             stateMachine.ChangeState(enemy.combatState);
         }

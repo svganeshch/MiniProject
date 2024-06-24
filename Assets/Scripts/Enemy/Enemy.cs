@@ -22,6 +22,7 @@ public class Enemy : Character
     public float minSpeedFactor = 0.3f;
 
     [Header("Enemy Attack Controls")]
+    public float attackSpeed = 8;
     public float attackCoolDownDuration = 5;
     public float attackRange = 5f;
     public float instantAttackRange = 2f;
@@ -34,8 +35,8 @@ public class Enemy : Character
     [Header("Enemy Strafe Controls")]
     public float strafeSpeed = 0.75f;
     public float strafeSlowDownThreshold = 4;
-    public float strafeDistance = 5f;
-    public float strafeSwitchDuration = 5f;
+    public float strafeAngle = 45;
+    public float strafeAttackDuration = 5f;
 
     [Header("Enemy Patrol Points")]
     public List<Vector3> patrolPoints = new List<Vector3>();
@@ -114,7 +115,7 @@ public class Enemy : Character
     {
         if (isInCoolDown) return;
 
-        if (navMeshAgent.remainingDistance < instantAttackRange)
+        if (navMeshAgent.remainingDistance <= instantAttackRange)
         {
             characterStateMachine.ChangeState(attackState);
             return;

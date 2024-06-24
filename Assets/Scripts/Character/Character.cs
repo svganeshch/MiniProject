@@ -113,4 +113,9 @@ public class Character : MonoBehaviour
     }
 
     public virtual void OnGUI() { }
+
+    public virtual void OnDrawGizmos()
+    {
+        characterStateMachine?.currentState.OnDrawGizmos();
+    }
 }

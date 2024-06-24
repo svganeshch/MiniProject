@@ -71,16 +71,16 @@ public class EnemyCombatState : State
     {
         float remainingDistance = enemy.navMeshAgent.remainingDistance;
 
-        if (remainingDistance <= enemy.navMeshAgent.stoppingDistance + 0.2f)
+        if (remainingDistance >= enemy.sprintDistance)
+        {
+            stateMachine.ChangeState(enemy.sprintState);
+        }
+        else if (remainingDistance <= enemy.attackRange + 0.5f)
         {
             if (enemy.currentTarget.inputValues == Vector2.zero)
             {
                 stateMachine.ChangeState(enemy.strafeState);
             }
-        }
-        else if (remainingDistance >= enemy.sprintDistance)
-        {
-            stateMachine.ChangeState(enemy.sprintState);
         }
     }
 

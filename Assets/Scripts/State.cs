@@ -43,6 +43,8 @@ public class State
         // Debug.Log("Exited state " + character.name + " : " + this);
     }
 
+    public virtual void OnDrawGizmos() { }
+
     public virtual void SetTarget(Enemy target) { }
 
     public virtual void SwapWeapon() { }

@@ -1691,6 +1691,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   controller: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
+  characterRigController: {fileID: 0}
   characterMovementManager: {fileID: 0}
   characterSfxManager: {fileID: 0}
   healthManager: {fileID: 0}
@@ -1707,15 +1708,17 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   slowDownThreshold: 5
   minSpeedFactor: 0.4
+  attackSpeed: 3.5
   attackCoolDownDuration: 5
-  attackRange: 2
+  attackRange: 4
+  instantAttackRange: 1.25
   attackProbability: 0.5
   sprintDistance: 10
   sprintSlowDownThreshold: 15
-  strafeSpeed: 0.85
+  strafeSpeed: 2
   strafeSlowDownThreshold: 10
-  strafeDistance: 5
-  strafeSwitchDuration: 5
+  strafeAngle: 45
+  strafeAttackDuration: 5
   patrolPoints: []
   navMeshAgent: {fileID: 0}
   enemyAnimatorManager: {fileID: 0}

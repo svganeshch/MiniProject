@@ -57,13 +57,13 @@ public class EnemyAttackState : State
 
     private void TryAttack()
     {
-        if (enemy.navMeshAgent.remainingDistance > enemy.attackRange)
+        if (enemy.navMeshAgent.remainingDistance > enemy.instantAttackRange)
         {
             Vector3 attackDirection = enemy.currentTarget.transform.position - enemy.transform.position;
             attackDirection.y = 0f;
             attackDirection.Normalize();
 
-            enemy.enemyMovementManager.UpdateMovement(enemy.walkingSpeed, attackDirection, 5);
+            enemy.enemyMovementManager.UpdateMovement(enemy.attackSpeed, attackDirection, enemy.navMeshAgent.remainingDistance);
         }
         else
         {
