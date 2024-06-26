@@ -34,23 +34,17 @@ public class WeaponEquipment : MonoBehaviour
 
     private GameObject currentWeaponObj;
     private Weapon currentWeapon;
-    private int currentWeaponSlot = 1;
+    protected int currentWeaponSlot = 1;
 
     private Character character;
-    private Player player;
-
-    private Material[] scarfMaterials;
 
     private void Awake()
     {
         character = GetComponent<Character>();
-        player = character as Player;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
-        scarfMaterials = player.playerScarf.GetComponent<SkinnedMeshRenderer>().materials;
-
         foreach (var weapon in weapons)
         {
             GameObject weaponObj = Instantiate(weapon.weaponPrefab, weapon.weaponHolsterPosition);
@@ -89,7 +83,7 @@ public class WeaponEquipment : MonoBehaviour
         return true;
     }
 
-    public void DrawWeapon()
+    public virtual void DrawWeapon()
     {
         SetWeaponTransform(currentWeapon.weaponHolderPosition);
 
@@ -101,11 +95,9 @@ public class WeaponEquipment : MonoBehaviour
 
         character.characterAnimatorManager.CombatBool = true;
         character.animator.SetLayerWeight(1, 1);
-
-        HandleScarfChange();
     }
 
-    public void HolsterWeapon()
+    public virtual void HolsterWeapon()
     {
         SetWeaponTransform(currentWeapon.weaponHolsterPosition);
 
@@ -117,9 +109,6 @@ public class WeaponEquipment : MonoBehaviour
 
         character.characterAnimatorManager.CombatBool = false;
         character.animator.SetLayerWeight(1, 0);
-
-        currentWeaponSlot = 0;
-        HandleScarfChange();
     }
 
     private void SetWeaponTransform(Transform parentTransform, Weapon weapon = null)
@@ -133,38 +122,6 @@ public class WeaponEquipment : MonoBehaviour
         weaponTransform.SetParent(parentTransform);
         weaponTransform.localPosition = Vector3.zero;
         weaponTransform.localRotation = Quaternion.identity;
-    }
-
-    private void HandleScarfChange()
-    {
-        Color baseColor;
-        Color shineColor;
-
-        switch (currentWeaponSlot)
-        {
-            case 1:
-                baseColor = player.katanaBaseColor;
-                shineColor = player.katanaColor;
-                break;
-            case 2:
-                baseColor = player.greatSwordBaseColor;
-                shineColor = player.greatSwordColor;
-                break;
-            case 3:
-                baseColor = player.daggerBaseColor;
-                shineColor = player.daggerColor;
-                break;
-            default:
-                baseColor = player.unarmedBaseColor;
-                shineColor = player.unarmedColor;
-                break;
-        }
-
-        foreach (Material scarfMaterial in scarfMaterials)
-        {
-            scarfMaterial.SetColor("_BaseColor", baseColor);
-            scarfMaterial.SetColor("_ShineColor", shineColor);
-        }
     }
 
     private Weapon GetDagger2()

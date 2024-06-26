@@ -1707,7 +1707,7 @@ PrefabInstance:
       addedObject: {fileID: 1914829759765659964}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       insertIndex: 6
-      addedObject: {fileID: 2927088782694947258}
+      addedObject: {fileID: 454392611428988706}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 621063570088387430}
@@ -2314,7 +2314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81583dcb94b6d414e9d4227c7fb51ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2927088782694947258
+--- !u!114 &454392611428988706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2323,7 +2323,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7901887638409407397}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ec56ef72622a4e4b973a7df0f70f6df, type: 3}
+  m_Script: {fileID: 11500000, guid: 4629070f91922e949836ff2184269489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
@@ -2335,7 +2335,7 @@ MonoBehaviour:
     slashSound: {fileID: 8300000, guid: b3aecb26c81473e44a0fff9ff05e29d8, type: 3}
     hitSound: {fileID: 8300000, guid: ce9c91d89424ead4ba9c91b4c82557a0, type: 3}
     weaponSlot: 1
-    weaponDamage: 50
+    weaponDamage: 25
     attackSpeedMultiplier: 1
     isDagger: 0
     weaponObj: {fileID: 0}
@@ -2349,7 +2349,7 @@ MonoBehaviour:
     slashSound: {fileID: 0}
     hitSound: {fileID: 0}
     weaponSlot: 2
-    weaponDamage: 75
+    weaponDamage: 50
     attackSpeedMultiplier: 1
     isDagger: 0
     weaponObj: {fileID: 0}
@@ -2363,7 +2363,7 @@ MonoBehaviour:
     slashSound: {fileID: 0}
     hitSound: {fileID: 0}
     weaponSlot: 3
-    weaponDamage: 25
+    weaponDamage: 15
     attackSpeedMultiplier: 1
     isDagger: 1
     weaponObj: {fileID: 0}
@@ -2377,7 +2377,7 @@ MonoBehaviour:
     slashSound: {fileID: 0}
     hitSound: {fileID: 0}
     weaponSlot: 0
-    weaponDamage: 25
+    weaponDamage: 15
     attackSpeedMultiplier: 1
     isDagger: 1
     weaponObj: {fileID: 0}
