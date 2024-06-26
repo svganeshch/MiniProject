@@ -838,15 +838,15 @@ PrefabInstance:
     - target: {fileID: -5323692252657626704, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 41a1a7019b406214795a88812b79973d, type: 2}
+      objectReference: {fileID: 2100000, guid: 867d3509637895049bc2b991697c2686, type: 2}
     - target: {fileID: -5323692252657626704, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 41a1a7019b406214795a88812b79973d, type: 2}
+      objectReference: {fileID: 2100000, guid: 867d3509637895049bc2b991697c2686, type: 2}
     - target: {fileID: -5323692252657626704, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: 41a1a7019b406214795a88812b79973d, type: 2}
+      objectReference: {fileID: 2100000, guid: 867d3509637895049bc2b991697c2686, type: 2}
     - target: {fileID: -5298595947160739361, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -2012,6 +2012,11 @@ CapsuleCollider:
   m_Height: 0.29308355
   m_Direction: 1
   m_Center: {x: 0.000000021465674, y: 0.14654177, z: 0.000000006815826}
+--- !u!1 &6834046421645136029 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -4629942163083606423, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
+  m_PrefabInstance: {fileID: 7018944823562098420}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7167319767188313266 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9070493210130169274, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
@@ -2102,6 +2107,15 @@ MonoBehaviour:
   attackComboTreshold: 0.55
   weaponSwapSlowTime: 0.5
   targetLockCast: {fileID: 871820040859857859}
+  unarmedBaseColor: {r: 0.019607844, g: 0.5764706, b: 0.22352941, a: 0}
+  unarmedColor: {r: 0.23394139, g: 1.4758214, b: 0.2044835, a: 0}
+  katanaBaseColor: {r: 0.4627451, g: 0.4627451, b: 0.4627451, a: 0}
+  katanaColor: {r: 10.247167, g: 10.247167, b: 10.247167, a: 0}
+  greatSwordBaseColor: {r: 0.5647059, g: 0.050980393, b: 0.09019608, a: 0}
+  greatSwordColor: {r: 3.8663228, g: 0.13258742, b: 0, a: 0}
+  daggerBaseColor: {r: 0.11764706, g: 0.49019608, b: 0.7647059, a: 0}
+  daggerColor: {r: 0, g: 4.2841854, b: 5.9158754, a: 0}
+  playerScarf: {fileID: 6834046421645136029}
   inputValues: {x: 0, y: 0}
   horizontalInput: 0
   verticalInput: 0
@@ -2327,7 +2341,7 @@ MonoBehaviour:
     weaponObj: {fileID: 0}
     weaponObjTransform: {fileID: 0}
     weaponAttackScript: {fileID: 0}
-  - Enabled: 1
+  - Enabled: 0
     animatorOverrideController: {fileID: 22100000, guid: eb0dbc82df9adeb41a2b674f4ee56689, type: 2}
     weaponPrefab: {fileID: 8170885926518125938, guid: 2de546cec8719dc468e43a4954685422, type: 3}
     weaponHolderPosition: {fileID: 4268612431359179272}

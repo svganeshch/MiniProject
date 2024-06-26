@@ -13,6 +13,17 @@ public class Player : Character
     public float weaponSwapSlowTime = 0.5f;
     public Transform targetLockCast;
 
+    [Header("Scarf properties")]
+    [ColorUsage(true, true)] public Color unarmedBaseColor;
+    [ColorUsage(true, true)] public Color unarmedColor;
+    [ColorUsage(true, true)] public Color katanaBaseColor;
+    [ColorUsage(true, true)] public Color katanaColor;
+    [ColorUsage(true, true)] public Color greatSwordBaseColor;
+    [ColorUsage(true, true)] public Color greatSwordColor;
+    [ColorUsage(true, true)] public Color daggerBaseColor;
+    [ColorUsage(true, true)] public Color daggerColor;
+    public GameObject playerScarf;
+
     // Input values
     [HideInInspector] public Vector2 inputValues;
     [HideInInspector] public float horizontalInput;
