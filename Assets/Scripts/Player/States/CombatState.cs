@@ -5,6 +5,7 @@ public class CombatState : State
 {
     int swapWeaponTo;
 
+    bool sprint;
     bool jump;
     bool dodge;
     bool holsterWeapon;
@@ -49,6 +50,7 @@ public class CombatState : State
 
     private void HandleActionInputs()
     {
+        if (player.sprintAction.WasPressedThisFrame()) sprint = true;
         if (player.jumpAction.WasPressedThisFrame()) jump = true;
         if (player.dodgeAction.WasPressedThisFrame()) dodge = true;
         if (player.drawWeaponAction.WasPressedThisFrame()) holsterWeapon = true;
@@ -99,6 +101,7 @@ public class CombatState : State
 
     private void PerformActions()
     {
+        if (sprint) ChangeStateAndResetFlag(ref sprint, player.sprintState);
         if (jump) ChangeStateAndResetFlag(ref jump, player.jumpState);
         if (dodge) ChangeStateAndResetFlag(ref dodge, player.dodgeState);
         if (holsterWeapon) HandleHolsterWeapon();
