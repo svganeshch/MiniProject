@@ -1511,8 +1511,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 46.436565, y: 12.133263, z: 34.019722}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8322127148370023150}
   - {fileID: 8608816842926054551}
@@ -1547,9 +1547,9 @@ MonoBehaviour:
   rotationDampTime: 6
   animationFadeTime: 0.2
   airControl: 0.5
-  walkingSpeed: 1.75
+  walkingSpeed: 2
   runningSpeed: 5
-  combatSpeed: 2.5
+  combatSpeed: 4
   sprintSpeed: 5
   targetLockCast: {fileID: 4418594777477749551}
   animator: {fileID: 0}
@@ -1573,9 +1573,9 @@ MonoBehaviour:
   minSpeedFactor: 0.4
   attackSpeed: 8
   attackCoolDownDuration: 5
-  attackRange: 8
+  attackRange: 6
   instantAttackRange: 2
-  attackProbability: 0.5
+  attackProbability: 0.85
   sprintDistance: 10
   sprintSlowDownThreshold: 15
   strafeSpeed: 0.85

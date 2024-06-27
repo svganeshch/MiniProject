@@ -112,7 +112,7 @@ public class Enemy : Character
 
     public void HandleInstantAttack()
     {
-        if (isInCoolDown) return;
+        //if (isInCoolDown) return;
 
         if (navMeshAgent.remainingDistance <= instantAttackRange)
         {

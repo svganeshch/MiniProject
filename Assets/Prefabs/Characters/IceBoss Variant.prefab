@@ -1,0 +1,620 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &414552858262637284
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2705358776914750634}
+  m_Layer: 6
+  m_Name: DaggerLH_WeaponHolder_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2705358776914750634
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414552858262637284}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.782, y: -0.212, z: 0.026}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3073672051716182891}
+  m_Father: {fileID: 2059343059279514394}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3267599799344293455
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4588505631075824262}
+  m_Layer: 6
+  m_Name: Dagger2_Holster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4588505631075824262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3267599799344293455}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.35020733, y: 0.9366723, z: -0, w: 0}
+  m_LocalPosition: {x: 0.163, y: -0.151, z: -0.12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4589643973560445605}
+  m_Father: {fileID: 8866092838851648975}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: -41}
+--- !u!1 &6121344332488989548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 739910009271506341}
+  m_Layer: 6
+  m_Name: DaggerRH_WeaponHolder_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &739910009271506341
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6121344332488989548}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.74, y: -0.35, z: 0.062}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1443743200520065863}
+  m_Father: {fileID: 6853785407995044113}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &6859649013461506047
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2674258495818441703}
+  m_Layer: 6
+  m_Name: Dagger1_Holster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2674258495818441703
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6859649013461506047}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0000000037252903, y: -7.858034e-10, z: -0.356338, w: 0.9343571}
+  m_LocalPosition: {x: -0.134, y: -0.162, z: -0.127}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1678466023442688086}
+  m_Father: {fileID: 8866092838851648975}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -41.751}
+--- !u!1 &8921388521862727609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8866092838851648975}
+  m_Layer: 6
+  m_Name: Daggers_WeaponHolster_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8866092838851648975
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8921388521862727609}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.106, y: 0.112, z: -0.469}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2674258495818441703}
+  - {fileID: 4588505631075824262}
+  m_Father: {fileID: 969064466837936550}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1182530580284695853
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 739910009271506341}
+    m_Modifications:
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0000000036581822
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 7.039095e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 8.402566e-19
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093201711380950224, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_Name
+      value: DaggerVillian Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+--- !u!4 &1443743200520065863 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+  m_PrefabInstance: {fileID: 1182530580284695853}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1381231186077589052
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2674258495818441703}
+    m_Modifications:
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0000000036581822
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 7.039095e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 8.402566e-19
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093201711380950224, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_Name
+      value: DaggerVillian
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+--- !u!4 &1678466023442688086 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+  m_PrefabInstance: {fileID: 1381231186077589052}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3370915685173781761
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2705358776914750634}
+    m_Modifications:
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0000000036581822
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 7.039095e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 8.402566e-19
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093201711380950224, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_Name
+      value: DaggerVillian Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+--- !u!4 &3073672051716182891 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+  m_PrefabInstance: {fileID: 3370915685173781761}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4310425768087821519
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4588505631075824262}
+    m_Modifications:
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0000000036581822
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 7.039095e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 8.402566e-19
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093201711380950224, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+      propertyPath: m_Name
+      value: DaggerVillian Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+--- !u!4 &4589643973560445605 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 315258049147549290, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+  m_PrefabInstance: {fileID: 4310425768087821519}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8793955233061782833
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 602769566855161419, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8f2382f96cf0c0c4db8a378bc4144e51, type: 2}
+    - target: {fileID: 947322982158349956, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 947322982158349956, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 947322982158349956, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 947322982158349956, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032090427608462509, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2617153964019300017, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b9b68ead5c151c4438dda6b9b179e9f4, type: 2}
+    - target: {fileID: 3486678015272806073, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_Name
+      value: IceBoss Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262933583486761987, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 176.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262933583486761987, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 12.133263
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262933583486761987, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 47.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262933583486761987, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262933583486761987, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262933583486761987, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262933583486761987, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262933583486761987, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262933583486761987, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262933583486761987, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4707436932037659788, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4ea48fa0f822081419a0b241145b6977, type: 2}
+    - target: {fileID: 5672708756885532300, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6b8381bd4105592459eb3d61ed9361f9, type: 2}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[1].Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[0].isDagger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[1].hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: ce9c91d89424ead4ba9c91b4c82557a0, type: 3}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[1].isDagger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[0].weaponSlot
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[1].slashSound
+      value: 
+      objectReference: {fileID: 8300000, guid: b3aecb26c81473e44a0fff9ff05e29d8, type: 3}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[0].weaponPrefab
+      value: 
+      objectReference: {fileID: 1093201711380950224, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[1].weaponDamage
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[1].weaponPrefab
+      value: 
+      objectReference: {fileID: 1093201711380950224, guid: eec6ec3667294e64e905f51f4b4c1d71, type: 3}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[0].weaponHolderPosition
+      value: 
+      objectReference: {fileID: 2705358776914750634}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[1].weaponHolderPosition
+      value: 
+      objectReference: {fileID: 739910009271506341}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[0].weaponHolsterPosition
+      value: 
+      objectReference: {fileID: 2674258495818441703}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[1].attackSpeedMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[1].weaponHolsterPosition
+      value: 
+      objectReference: {fileID: 4588505631075824262}
+    - target: {fileID: 6072003924132418315, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: weapons.Array.data[0].animatorOverrideController
+      value: 
+      objectReference: {fileID: 22100000, guid: 2ac9285d14ea69341bd2aa4614b490ff, type: 2}
+    - target: {fileID: 6127936387068943145, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3b69214d8af37e84593783d74a192d7b, type: 2}
+    - target: {fileID: 7376309765064707525, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7888572803328106506, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0d2592c80fc3ab34aba9d399a4d1cae0, type: 2}
+    - target: {fileID: 8367277747828618861, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b2fc3508335734942a6a4a35b7cf87b1, type: 2}
+    - target: {fileID: 8384668220402158947, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 24faaf78965834c4aa4997fe74d39fd6, type: 2}
+    - target: {fileID: 8901586738243502441, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6b46e697130fceb4b80990b528fb72a5, type: 2}
+    - target: {fileID: 9050283787832027358, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bfed565703ca6a244bc305de8bdd826f, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8608816842926054551, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8866092838851648975}
+    - targetCorrespondingSourceObject: {fileID: 7394389594957958699, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2705358776914750634}
+    - targetCorrespondingSourceObject: {fileID: 2672866816058532896, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 739910009271506341}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+--- !u!4 &969064466837936550 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8608816842926054551, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+  m_PrefabInstance: {fileID: 8793955233061782833}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2059343059279514394 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7394389594957958699, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+  m_PrefabInstance: {fileID: 8793955233061782833}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6853785407995044113 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2672866816058532896, guid: a3a928a7cd21919489f2dd2b7aaae4a4, type: 3}
+  m_PrefabInstance: {fileID: 8793955233061782833}
+  m_PrefabAsset: {fileID: 0}

@@ -22,6 +22,7 @@ public class EnemyAttackState : State
         canAttack = false;
         isCombo = false;
 
+        enemy.isInCoolDown = false;
         enemy.attackCoolDownTimer = 0;
 
         startPos = enemy.transform.position;
