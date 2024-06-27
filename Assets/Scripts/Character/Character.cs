@@ -28,6 +28,7 @@ public class Character : MonoBehaviour
     public float runningSpeed = 5f;
     public float combatSpeed = 6f;
     public float sprintSpeed = 10f;
+    public Transform targetLockCast;
 
     [HideInInspector] public Animator animator;
     [HideInInspector] public CharacterController controller;

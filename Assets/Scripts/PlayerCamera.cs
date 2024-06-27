@@ -167,13 +167,13 @@ public class PlayerCamera : MonoBehaviour
     {
         if (player.currentLockedOnTarget == null) return;
 
-        Vector3 rotationDirection = player.currentLockedOnTarget.targetLock.position - playerCameraObjTransform.position;
+        Vector3 rotationDirection = player.currentLockedOnTarget.targetLockCast.position - playerCameraObjTransform.position;
         rotationDirection.Normalize();
         rotationDirection.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(rotationDirection);
         playerCameraObjTransform.rotation = Quaternion.Slerp(playerCameraObjTransform.rotation, targetRotation, lockOnTargetFollowSpeed);
 
-        rotationDirection = player.currentLockedOnTarget.targetLock.position - cameraPivotTransform.position;
+        rotationDirection = player.currentLockedOnTarget.targetLockCast.position - cameraPivotTransform.position;
         rotationDirection.Normalize();
         targetRotation = Quaternion.LookRotation(rotationDirection);
         cameraPivotTransform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed);
@@ -241,7 +241,7 @@ public class PlayerCamera : MonoBehaviour
             if (viewableAngle < minimumViewableAngle || viewableAngle > maximumViewableAngle)
                 continue;
 
-            if (Physics.Linecast(player.targetLockCast.position, lockOnTarget.targetLock.transform.position, out RaycastHit hit, LayerMaskManager.Instance.obstaclesLayerMask))
+            if (Physics.Linecast(player.targetLockCast.position, lockOnTarget.targetLockCast.transform.position, out RaycastHit hit, LayerMaskManager.Instance.obstaclesLayerMask))
                 continue;
 
             availableTargets.Add(lockOnTarget);

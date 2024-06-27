@@ -10,6 +10,9 @@ public class PlayerHudManager : HudManager
     public Image greatSword;
     public Image daggers;
 
+    public RectTransform crossHairObj;
+    private Transform crosshairTarget;
+
     private float maxHealth;
     private float healthPercentage;
 
@@ -17,6 +20,25 @@ public class PlayerHudManager : HudManager
     private int currentWeaponSlot;
 
     private float transitionDuration = 0.25f;
+
+    private bool crosshairTargetSet = false;
+
+    private Camera cam;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        cam = Camera.main;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (crosshairTargetSet)
+            UpdateCrosshairPosition();
+    }
 
     public override void InitializeStatBars()
     {
@@ -32,6 +54,27 @@ public class PlayerHudManager : HudManager
 
         healthPercentage = healthManager.currentHealth / maxHealth;
         healthbar.fillAmount = healthPercentage;
+    }
+
+    public override void SetLockedOnTargetCrosshair(Character target)
+    {
+        if (target == null)
+        {
+            crosshairTargetSet = false;
+            crossHairObj.anchoredPosition = Vector2.zero;
+            crossHairObj.gameObject.SetActive(false);
+
+            return;
+        }
+
+        crosshairTarget = target.targetLockCast.transform;
+        crosshairTargetSet = true;
+        crossHairObj.gameObject.SetActive(true);
+    }
+
+    private void UpdateCrosshairPosition()
+    {
+        crossHairObj.position = RectTransformUtility.WorldToScreenPoint(Camera.main, crosshairTarget.position);
     }
 
     public override void SetWeaponWheel(int weaponSlot)

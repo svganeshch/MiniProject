@@ -22,5 +22,7 @@ public class HudManager : MonoBehaviour
 
     public virtual void SetHealth() { }
 
+    public virtual void SetLockedOnTargetCrosshair(Character target) { }
+
     public virtual void SetWeaponWheel(int weaponSlot) { }
 }

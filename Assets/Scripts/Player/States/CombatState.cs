@@ -214,6 +214,8 @@ public class CombatState : State
     {
         player.currentLockedOnTarget = nearestTarget;
         PlayerCamera.Instance.SetLockOnCameraHeight();
+
+        character.hudManager.SetLockedOnTargetCrosshair(nearestTarget);
     }
 
     public override void SwapWeapon()

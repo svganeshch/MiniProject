@@ -67,7 +67,7 @@ public class EnemyIdleState : State
 
             if (angleToTarget > enemy.minimumFOV && angleToTarget < enemy.maximumFOV)
             {
-                if (!Physics.Linecast(enemy.targetLock.position, targetCharacter.targetLockCast.position, obstaclesLayerMask))
+                if (!Physics.Linecast(enemy.targetLockCast.position, targetCharacter.targetLockCast.position, obstaclesLayerMask))
                 {
                     enemy.currentTarget = targetCharacter;
                     Debug.Log("Target found");

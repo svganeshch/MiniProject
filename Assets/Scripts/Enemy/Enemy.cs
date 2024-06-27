@@ -14,7 +14,6 @@ public class Enemy : Character
     public float recallDistance = 10;
     public float minimumFOV = -35;
     public float maximumFOV = 35;
-    public Transform targetLock;
     public Player currentTarget;
 
     [Header("Enemy Movement Smoothing Controls")]
