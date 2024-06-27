@@ -1551,6 +1551,7 @@ MonoBehaviour:
   runningSpeed: 5
   combatSpeed: 2.5
   sprintSpeed: 5
+  targetLockCast: {fileID: 4418594777477749551}
   animator: {fileID: 0}
   controller: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
@@ -1567,7 +1568,6 @@ MonoBehaviour:
   recallDistance: 5
   minimumFOV: -35
   maximumFOV: 35
-  targetLock: {fileID: 4418594777477749551}
   currentTarget: {fileID: 0}
   slowDownThreshold: 5
   minSpeedFactor: 0.4
