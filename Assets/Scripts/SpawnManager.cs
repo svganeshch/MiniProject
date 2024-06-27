@@ -42,6 +42,7 @@ public class SpawnManager : MonoBehaviour
 
             Enemy spawnedEnemy = spawnedObj.GetComponent<Enemy>();
             spawnedEnemy.patrolPoints = patrolPoints;
+            spawnedEnemy.attackProbability = Random.Range(0.5f, 1f);
 
             spawnedObjs.Add(spawnedObj);
         }
