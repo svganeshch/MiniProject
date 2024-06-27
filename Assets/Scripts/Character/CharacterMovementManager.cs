@@ -52,6 +52,8 @@ public abstract class CharacterMovementManager : MonoBehaviour
             speed = character.sprintSpeed;
         else if (character.characterStateMachine.currentState == character.combatState)
             speed = character.combatSpeed;
+        else if (character.moveAmount <= 0.5f)
+            speed = character.walkingSpeed;
         else if (character.moveAmount > 0.5f)
             speed = character.runningSpeed;
 

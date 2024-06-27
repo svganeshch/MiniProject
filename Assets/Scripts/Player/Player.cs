@@ -12,6 +12,8 @@ public class Player : Character
     public float attackComboTreshold = 0.9f;
     public float weaponSwapSlowTime = 0.5f;
 
+    private bool walkEnabled = true;
+
     [Header("Scarf properties")]
     [ColorUsage(true, true)] public Color unarmedBaseColor;
     [ColorUsage(true, true)] public Color unarmedColor;
@@ -37,6 +39,7 @@ public class Player : Character
     [HideInInspector] public InputAction moveAction;
     [HideInInspector] public InputAction jumpAction;
     [HideInInspector] public InputAction sprintAction;
+    [HideInInspector] public InputAction walkToggleAction;
     [HideInInspector] public InputAction dodgeAction;
     [HideInInspector] public InputAction drawWeaponAction;
     [HideInInspector] public InputAction blockAction;
@@ -81,6 +84,7 @@ public class Player : Character
         moveAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
         sprintAction = playerInput.actions["Sprint"];
+        walkToggleAction = playerInput.actions["walkToggle"];
         dodgeAction = playerInput.actions["Dodge"];
         drawWeaponAction = playerInput.actions["DrawWeapon"];
         blockAction = playerInput.actions["Block"];
@@ -101,6 +105,11 @@ public class Player : Character
     protected override void Update()
     {
         base.Update();
+
+        if (walkToggleAction.WasPressedThisFrame())
+        {
+            walkEnabled = !walkEnabled;
+        }
 
         // Always get movement values
         HandlePlayerMovementInput();
@@ -154,7 +163,15 @@ public class Player : Character
             }
             else
             {
-                playerAnimatorManager.SetAnimatorParameters(0, moveAmount);
+                if (walkEnabled && moveAmount > 0)
+                {
+                    moveAmount = 0.5f;
+                    playerAnimatorManager.SetAnimatorParameters(0, 0.5f);
+                }
+                else
+                {
+                    playerAnimatorManager.SetAnimatorParameters(0, moveAmount);
+                }
             }
         }
         else

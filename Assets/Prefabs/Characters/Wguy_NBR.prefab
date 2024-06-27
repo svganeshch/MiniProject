@@ -653,7 +653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 62.72
+      value: 161.752
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -661,7 +661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 37.2
+      value: 41.633
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2087,10 +2087,11 @@ MonoBehaviour:
   rotationDampTime: 15
   animationFadeTime: 0.2
   airControl: 0.5
-  walkingSpeed: 2.5
+  walkingSpeed: 2
   runningSpeed: 5
   combatSpeed: 6
   sprintSpeed: 10
+  targetLockCast: {fileID: 871820040859857859}
   animator: {fileID: 0}
   controller: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
@@ -2106,7 +2107,6 @@ MonoBehaviour:
   attackCancelTreshold: 0.3
   attackComboTreshold: 0.55
   weaponSwapSlowTime: 0.5
-  targetLockCast: {fileID: 871820040859857859}
   unarmedBaseColor: {r: 0.019607844, g: 0.5764706, b: 0.22352941, a: 0}
   unarmedColor: {r: 0.23394139, g: 1.4758214, b: 0.2044835, a: 0}
   katanaBaseColor: {r: 0.4627451, g: 0.4627451, b: 0.4627451, a: 0}
@@ -2145,6 +2145,15 @@ MonoBehaviour:
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: af42691c-5123-4a2a-97b4-a6a9d90106eb
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  walkToggleAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 8fd391c9-5dc2-41c9-bd14-f155e4739893
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
