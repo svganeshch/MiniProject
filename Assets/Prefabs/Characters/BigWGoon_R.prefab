@@ -149,7 +149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6358594061928003579, guid: 41bdc09203daa834e8eb408b5bf5dcff, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1807,7 +1807,7 @@ MonoBehaviour:
     slashSound: {fileID: 8300000, guid: b3aecb26c81473e44a0fff9ff05e29d8, type: 3}
     hitSound: {fileID: 8300000, guid: ce9c91d89424ead4ba9c91b4c82557a0, type: 3}
     weaponSlot: 1
-    weaponDamage: 5
+    weaponDamage: 20
     attackSpeedMultiplier: 0.9
     isDagger: 0
     weaponObj: {fileID: 0}
