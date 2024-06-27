@@ -114,7 +114,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void SetInputDeviceSensitivity()
     {
-        currentDevice = playerInput.devices[0];
+        currentDevice = HelperFunctions.instance.GetCurrenInputDevice();
 
         if (currentDevice == sensDevice)
             return;

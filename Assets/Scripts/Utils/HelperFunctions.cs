@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HelperFunctions : MonoBehaviour
 {
     public static HelperFunctions instance;
+
+    PlayerInput input;
 
     private void Awake()
     {
@@ -10,6 +13,8 @@ public class HelperFunctions : MonoBehaviour
         {
             instance = this;
         }
+
+        input = FindObjectOfType<PlayerInput>();
     }
 
     public static T GetComponentFromTopParent<T>(Transform hitTransform) where T : Component
@@ -76,5 +81,17 @@ public class HelperFunctions : MonoBehaviour
             return -1;
         }
         return 0;
+    }
+
+    public InputDevice GetCurrenInputDevice()
+    {
+        InputDevice currentDevice = input.devices[0];
+
+        if (currentDevice != null)
+        {
+            return currentDevice;
+        }
+
+        return null;
     }
 }

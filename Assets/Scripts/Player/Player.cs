@@ -111,6 +111,14 @@ public class Player : Character
             walkEnabled = !walkEnabled;
         }
 
+        if (walkEnabled)
+        {
+            if (HelperFunctions.instance.GetCurrenInputDevice() is Gamepad)
+            {
+                walkEnabled = false;
+            }
+        }
+
         // Always get movement values
         HandlePlayerMovementInput();
     }
