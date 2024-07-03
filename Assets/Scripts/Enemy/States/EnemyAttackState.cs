@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class EnemyAttackState : State
 {
-    private float comboProbability = 0.25f;
+    private float comboProbability = 0;
+    private int comboAttackCount = 3;
+    private int count = 1;
+
     private bool canAttack;
     private bool isCombo;
 
@@ -19,10 +22,20 @@ public class EnemyAttackState : State
         //character.weaponEquipment.GetCurrentWeapon().weaponAttackScript.OnStartDamageEvent.AddListener(SetDamageState);
         //character.weaponEquipment.GetCurrentWeapon().weaponAttackScript.OnStopDamageEvent.AddListener(ResetDamageState);
 
+        if (enemy.isInstantAttack)
+        {
+            comboProbability = 1;
+            enemy.isInstantAttack = false;
+        }
+        else
+        {
+            comboProbability = enemy.attackComboProbability;
+        }
+
         canAttack = false;
         isCombo = false;
 
-        enemy.isInCoolDown = false;
+        count = 1;
         enemy.attackCoolDownTimer = 0;
 
         startPos = enemy.transform.position;
@@ -39,20 +52,29 @@ public class EnemyAttackState : State
         if (Random.value <= comboProbability)
             isCombo = true;
 
-        if (!enemy.isAttacking && !enemy.isInCoolDown)
+        if (count <= comboAttackCount)
+        {
+            if (character.canCombo)
+            {
+                if (isCombo)
+                {
+                    character.canCombo = false;
+                    isCombo = false;
+                    enemy.enemyAnimatorManager.PlayLiteAttackAction(true, true);
+
+                    count++;
+
+                    return;
+                }
+            }
+        }
+
+        if (!enemy.isAttacking && (!enemy.isInCoolDown || enemy.isInstantAttack))
         {
             canAttack = false;
             enemy.isInCoolDown = true;
 
-            if (isCombo)
-            {
-                isCombo = false;
-                enemy.enemyAnimatorManager.PlayLiteAttackAction(true, true);
-            }
-            else
-            {
-                enemy.enemyAnimatorManager.PlayLiteAttackAction(false, true);
-            }
+            enemy.enemyAnimatorManager.PlayLiteAttackAction(false, true);
         }
     }
 

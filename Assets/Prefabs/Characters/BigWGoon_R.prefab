@@ -257,31 +257,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 38.65
+      value: -4.0757165
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.546845
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 30.07
+      value: 10.401416
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.21595745
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.9764028
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -289,7 +289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -155.057
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1703,6 +1703,7 @@ MonoBehaviour:
   hudManager: {fileID: 0}
   weaponEquipment: {fileID: 0}
   isInCoolDown: 0
+  isInstantAttack: 0
   attackCoolDownTimer: 0
   recallTimer: 0
   detectionRadius: 15
@@ -1715,8 +1716,9 @@ MonoBehaviour:
   attackSpeed: 3.5
   attackCoolDownDuration: 5
   attackRange: 4
-  instantAttackRange: 1.25
+  instantAttackRange: 1.5
   attackProbability: 0.5
+  attackComboProbability: 0.35
   sprintDistance: 10
   sprintSlowDownThreshold: 15
   strafeSpeed: 2

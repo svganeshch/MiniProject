@@ -1434,10 +1434,6 @@ PrefabInstance:
       propertyPath: followTarget
       value: 
       objectReference: {fileID: 2122847577}
-    - target: {fileID: 5824512183474025208, guid: ff2ea1a99e12be34283763f5bf3d15a3, type: 3}
-      propertyPath: m_OcclusionCulling
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8116169642250123877, guid: ff2ea1a99e12be34283763f5bf3d15a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

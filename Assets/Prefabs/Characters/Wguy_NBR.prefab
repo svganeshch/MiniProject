@@ -653,7 +653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 161.752
+      value: 45.31
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -661,7 +661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 41.633
+      value: 42.623
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2350,7 +2350,7 @@ MonoBehaviour:
     weaponObj: {fileID: 0}
     weaponObjTransform: {fileID: 0}
     weaponAttackScript: {fileID: 0}
-  - Enabled: 0
+  - Enabled: 1
     animatorOverrideController: {fileID: 22100000, guid: eb0dbc82df9adeb41a2b674f4ee56689, type: 2}
     weaponPrefab: {fileID: 8170885926518125938, guid: 2de546cec8719dc468e43a4954685422, type: 3}
     weaponHolderPosition: {fileID: 4268612431359179272}

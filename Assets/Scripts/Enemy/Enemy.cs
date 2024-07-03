@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Enemy : Character
 {
     [HideInInspector] public bool isInCoolDown = false;
+    [HideInInspector] public bool isInstantAttack = false;
     [HideInInspector] public float attackCoolDownTimer = 0;
     [HideInInspector] public float recallTimer = 0;
 
@@ -26,6 +27,7 @@ public class Enemy : Character
     public float attackRange = 5f;
     public float instantAttackRange = 2f;
     public float attackProbability = 0.5f;
+    public float attackComboProbability = 0.35f;
 
     [Header("Enemy Sprint Controls")]
     public float sprintDistance = 15;
@@ -112,12 +114,16 @@ public class Enemy : Character
 
     public void HandleInstantAttack()
     {
-        //if (isInCoolDown) return;
+        if (isInCoolDown) return;
 
-        if (navMeshAgent.remainingDistance <= instantAttackRange)
+        if (!isInstantAttack)
         {
-            characterStateMachine.ChangeState(attackState);
-            return;
+            if (navMeshAgent.remainingDistance <= instantAttackRange)
+            {
+                isInstantAttack = true;
+                characterStateMachine.ChangeState(attackState);
+                return;
+            }
         }
     }
 
