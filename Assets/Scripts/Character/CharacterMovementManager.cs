@@ -13,7 +13,7 @@ public abstract class CharacterMovementManager : MonoBehaviour
     protected float groundCheckSphereRadius = 0.3f;
     protected float groundedYVelocity = -20;
     protected float fallStartYVelocity = -5;
-    protected float inAirTime = 0;
+    [HideInInspector] public float inAirTime = 0;
     protected bool fallingVelocitySet = false;
     protected bool isGrounded = false;
 

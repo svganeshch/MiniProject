@@ -14,10 +14,6 @@ public class CharacterRigController : MonoBehaviour
         {
             Instance = this;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
     protected virtual void Update()

@@ -6,6 +6,8 @@ public class JumpState : State
     Vector3 jumpDirection;
     Vector3 freefallDirection;
 
+    float jumpHeight;
+
     public JumpState(Player _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
         player = _character;
@@ -21,11 +23,19 @@ public class JumpState : State
         SetJumpDirectionVelocity();
 
         player.playerAnimatorManager.PlayJumpAction();
+
+        jumpHeight = Mathf.Sqrt(player.jumpHeight * -2 * player.playerMovementManager.gravityForce) / 20;
     }
 
     public override void HandleInput()
     {
         base.HandleInput();
+
+        if (player.liteAttackWeaponAction.WasPressedThisFrame())
+        {
+            if (player.playerMovementManager.inAirTime >= jumpHeight / 3)
+                player.playerAnimatorManager.PlayJumpAttackAction();
+        }
     }
 
     public override void LogicUpdate()
@@ -62,5 +72,12 @@ public class JumpState : State
                 Debug.Log("normal jump");
             }
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        Debug.Log("jump height" + Mathf.Sqrt(player.jumpHeight * -2 * player.playerMovementManager.gravityForce) / 20);
     }
 }

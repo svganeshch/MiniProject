@@ -30,6 +30,9 @@ public class CharacterAnimatorManager : MonoBehaviour
     private static readonly int liteAttack2Hash = Animator.StringToHash("lite_attack2");
     private static readonly int liteAttack3Hash = Animator.StringToHash("lite_attack3");
 
+    // Jump attacks
+    private static readonly int jumpAttackHash = Animator.StringToHash("jump_attack_start");
+
     // Pivot
     private static readonly int turnL90Hash = Animator.StringToHash("Turn_L90");
     private static readonly int turnL180Hash = Animator.StringToHash("Turn_L180");
@@ -167,6 +170,11 @@ public class CharacterAnimatorManager : MonoBehaviour
         character.isAttacking = true;
         PlayCharacterActionAnimation(nextAttackHash, canRotate);
         character.characterSfxManager.PlayWeaponSlashSound();
+    }
+
+    public void PlayJumpAttackAction()
+    {
+        PlayCharacterActionAnimation(jumpAttackHash);
     }
 
     public void PlayPivotAction(int pivotAngle)
