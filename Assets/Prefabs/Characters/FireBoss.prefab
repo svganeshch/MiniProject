@@ -1562,6 +1562,7 @@ MonoBehaviour:
   hudManager: {fileID: 0}
   weaponEquipment: {fileID: 0}
   isInCoolDown: 0
+  isInstantAttack: 0
   attackCoolDownTimer: 0
   recallTimer: 0
   detectionRadius: 15
@@ -1576,6 +1577,7 @@ MonoBehaviour:
   attackRange: 6
   instantAttackRange: 2
   attackProbability: 0.69
+  attackComboProbability: 0.35
   sprintDistance: 10
   sprintSlowDownThreshold: 15
   strafeSpeed: 0.85
@@ -1601,6 +1603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yVelocity: {x: 0, y: 0, z: 0}
   gravityForce: -40
+  inAirTime: 0
   manualUpdate: 0
 --- !u!114 &2884770637332415152
 MonoBehaviour:
@@ -1660,7 +1663,7 @@ MonoBehaviour:
   weapons:
   - Enabled: 1
     animatorOverrideController: {fileID: 22100000, guid: eb0dbc82df9adeb41a2b674f4ee56689, type: 2}
-    weaponPrefab: {fileID: 8170885926518125938, guid: 2de546cec8719dc468e43a4954685422, type: 3}
+    weaponPrefab: {fileID: 2568454058498803269, guid: 3657c6fac1739424d866e7ceb12d8a6a, type: 3}
     weaponHolderPosition: {fileID: 5948667455500855564}
     weaponHolsterPosition: {fileID: 1934983238604913950}
     slashSound: {fileID: 8300000, guid: b3aecb26c81473e44a0fff9ff05e29d8, type: 3}
@@ -4232,7 +4235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2568454058498803269, guid: 3657c6fac1739424d866e7ceb12d8a6a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2949624621748133119, guid: 3657c6fac1739424d866e7ceb12d8a6a, type: 3}
       propertyPath: m_LocalPosition.x
