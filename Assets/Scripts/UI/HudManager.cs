@@ -10,6 +10,11 @@ public class HudManager : MonoBehaviour
         healthManager.onHealthManagerInitializedEvent.AddListener(OnHealthManagerInitialized);
     }
 
+    private void OnEnable()
+    {
+        OnHealthManagerInitialized();
+    }
+
     protected virtual void Update() { }
 
     public void OnHealthManagerInitialized()

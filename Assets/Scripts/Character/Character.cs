@@ -71,8 +71,6 @@ public class Character : MonoBehaviour
 
     protected virtual void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-
         InitializeStates();
         IgnoreMyOwnColliders();
     }

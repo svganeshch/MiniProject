@@ -52,6 +52,7 @@ public class Player : Character
     [HideInInspector] public InputAction weapon2Action;
     [HideInInspector] public InputAction weapon3Action;
     [HideInInspector] public InputAction weapon4Action;
+    [HideInInspector] public InputAction pauseAction;
 
     protected override void Awake()
     {
@@ -98,6 +99,8 @@ public class Player : Character
         weapon2Action = playerInput.actions["Weapon2"];
         weapon3Action = playerInput.actions["Weapon3"];
         weapon4Action = playerInput.actions["Weapon4"];
+
+        pauseAction = playerInput.actions["Pause"];
 
         moveAction.performed += input => inputValues = input.ReadValue<Vector2>();
     }
