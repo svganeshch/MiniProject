@@ -9,6 +9,15 @@ public class MenuManager : MonoBehaviour
 
     public GameObject playerHUD;
 
+    public AudioClip buttonAudioClip;
+
+    AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void Update()
     {
         if (Player.Instance.pauseAction.WasPressedThisFrame())
@@ -19,6 +28,8 @@ public class MenuManager : MonoBehaviour
 
     public void OnPlayButton()
     {
+        audioSource.PlayOneShot(buttonAudioClip);
+
         mainMenuPanel.SetActive(false);
         playerHUD.SetActive(true);
 
@@ -37,6 +48,8 @@ public class MenuManager : MonoBehaviour
 
     public void OnResumeButton()
     {
+        audioSource.PlayOneShot(buttonAudioClip);
+
         pauseMenuPanel.SetActive(false);
         playerHUD.SetActive(true);
 
@@ -45,6 +58,8 @@ public class MenuManager : MonoBehaviour
 
     public void OnQuitButton()
     {
+        audioSource.PlayOneShot(buttonAudioClip);
+
         Application.Quit();
     }
 }
