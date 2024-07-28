@@ -37,7 +37,7 @@ public class Character : MonoBehaviour
     [HideInInspector] public CharacterMovementManager characterMovementManager;
     [HideInInspector] public CharacterSfxManager characterSfxManager;
     [HideInInspector] public HealthManager healthManager;
-    [HideInInspector] public HudManager hudManager;
+    public HudManager hudManager;
     [HideInInspector] public WeaponEquipment weaponEquipment;
 
     // Character States

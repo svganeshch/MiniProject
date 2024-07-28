@@ -73,7 +73,6 @@ public class Player : Character
         base.Start();
 
         // Unity components
-        hudManager = FindObjectOfType<PlayerHudManager>();
         playerInput = GetComponent<PlayerInput>();
         playerMovementManager = GetComponent<PlayerMovementManager>();
         playerAnimatorManager = GetComponent<PlayerAnimatorManager>();

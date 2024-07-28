@@ -1709,6 +1709,9 @@ PrefabInstance:
       insertIndex: 6
       addedObject: {fileID: 454392611428988706}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
+      insertIndex: 7
+      addedObject: {fileID: 3565290561969989918}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 621063570088387430}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
@@ -2102,7 +2105,7 @@ MonoBehaviour:
   hudManager: {fileID: 0}
   weaponEquipment: {fileID: 0}
   jumpHeight: 2.5
-  jumpForwardVelocity: 8
+  jumpForwardVelocity: 5
   freeFallControlVelocity: 2
   attackCancelTreshold: 0.3
   attackComboTreshold: 0.55
@@ -2333,6 +2336,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81583dcb94b6d414e9d4227c7fb51ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  footStepsClipsList: []
+  jumpSound: {fileID: 0}
+  landSound: {fileID: 0}
 --- !u!114 &454392611428988706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2403,6 +2409,28 @@ MonoBehaviour:
     weaponObjTransform: {fileID: 0}
     weaponAttackScript: {fileID: 0}
   weaponSwapSpeed: 4
+--- !u!114 &3565290561969989918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7901887638409407397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96c464dea62fb94ba32a214ded30bc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrainFootStepsData:
+  - {fileID: 11400000, guid: c258917596257ff40bb655580517a6ce, type: 2}
+  - {fileID: 11400000, guid: 4feaa4b0db9098a48ac0d1f04ecc2ec3, type: 2}
+  - {fileID: 11400000, guid: 223160b141a99714c8fb08503c7b68b5, type: 2}
+  - {fileID: 11400000, guid: 153b09cfc8227604dac2ddc5be990623, type: 2}
+  stepInterval: 2.5
+  walkingStepInterval: 1
+  runningStepInterval: 0.5
+  combatStepInterval: 0.3
+  sprintStepInterval: 0.25
 --- !u!82 &621063570088387430
 AudioSource:
   m_ObjectHideFlags: 0

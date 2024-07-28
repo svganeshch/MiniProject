@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
 public abstract class CharacterMovementManager : MonoBehaviour
 {
@@ -19,22 +20,29 @@ public abstract class CharacterMovementManager : MonoBehaviour
 
     protected float horizontalInput;
     protected float verticalInput;
+    protected float speed;
+    protected float m_StepCycle;
+    protected float m_NextStep;
+    protected float speedStepInterval;
 
     protected Character character;
+    protected FootStepsHandler footstepsHandler;
 
     public virtual void Start()
     {
         character = GetComponent<Character>();
+        footstepsHandler = GetComponent<FootStepsHandler>();
     }
 
     public virtual void Update()
     {
+        HandleGroundedInput();
         HandleGroundedMovement();
         HandleGroundCheck();
         HandleRotation();
     }
 
-    protected virtual void HandleGroundedMovement()
+    protected virtual void HandleGroundedInput()
     {
         if (!character.canMove)
             return;
@@ -46,18 +54,50 @@ public abstract class CharacterMovementManager : MonoBehaviour
         moveDirection.Normalize();
         moveDirection.y = 0;
 
-        float speed = character.walkingSpeed;
+        speed = character.walkingSpeed;
+        speedStepInterval = footstepsHandler.walkingStepInterval;
 
         if (character.characterStateMachine.currentState == character.sprintState)
+        {
             speed = character.sprintSpeed;
+            speedStepInterval = footstepsHandler.sprintStepInterval;
+        }
         else if (character.characterStateMachine.currentState == character.combatState)
+        {
             speed = character.combatSpeed;
+            speedStepInterval = footstepsHandler.combatStepInterval;
+        }
         else if (character.moveAmount <= 0.5f)
+        {
             speed = character.walkingSpeed;
+            speedStepInterval = footstepsHandler.walkingStepInterval;
+        }
         else if (character.moveAmount > 0.5f)
+        {
             speed = character.runningSpeed;
+            speedStepInterval = footstepsHandler.runningStepInterval;
+        }
+    }
+
+    protected virtual void HandleGroundedMovement()
+    {
+        if (!isGrounded) return;
 
         character.controller.Move(speed * Time.deltaTime * moveDirection);
+
+        if (character.controller.velocity.sqrMagnitude > 0 && (horizontalInput != 0 || verticalInput != 0))
+        {
+            m_StepCycle += (character.controller.velocity.magnitude + (speed * speedStepInterval)) * Time.deltaTime;
+        }
+
+        if (!(m_StepCycle > m_NextStep))
+        {
+            return;
+        }
+
+        m_NextStep = m_StepCycle + footstepsHandler.stepInterval;
+
+        character.characterSfxManager.PlayFootStepsSound();
     }
 
     protected virtual void HandleGroundCheck()

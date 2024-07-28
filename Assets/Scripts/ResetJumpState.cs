@@ -18,6 +18,8 @@ public class ResetJumpState : StateMachineBehaviour
         {
             if (character.characterStateMachine.currentState == character.jumpState)
             {
+                character.characterSfxManager.PlayLandSound();
+
                 if (character.characterAnimatorManager.CombatBool)
                 {
                     character.characterStateMachine.ChangeState(character.combatState);

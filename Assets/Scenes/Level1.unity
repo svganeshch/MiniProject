@@ -4972,6 +4972,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8220948092499888194, guid: 3ec311d5bdfd8ae449b2480e08750abe, type: 3}
   m_PrefabInstance: {fileID: 6475314852566931318}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1863055561 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5147669859834482255, guid: 3ec311d5bdfd8ae449b2480e08750abe, type: 3}
+  m_PrefabInstance: {fileID: 6475314852566931318}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863055559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02787ee1cb82cdb4c8568dae8242a282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1870376094
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5700,6 +5711,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7317121194342308433, guid: a4ef719fa84df5b4f87cbb46a2768dc9, type: 3}
+      propertyPath: hudManager
+      value: 
+      objectReference: {fileID: 1863055561}
+    - target: {fileID: 7317121194342308433, guid: a4ef719fa84df5b4f87cbb46a2768dc9, type: 3}
+      propertyPath: jumpForwardVelocity
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7413756614538244383, guid: a4ef719fa84df5b4f87cbb46a2768dc9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 47.546

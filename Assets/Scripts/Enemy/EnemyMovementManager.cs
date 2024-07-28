@@ -9,7 +9,6 @@ public class EnemyMovementManager : CharacterMovementManager
     private Vector3 lookDirection;
     private Vector3 targetDirection;
     private Quaternion lookRotation;
-    private float speed;
     private float slowDownThreshold;
     private float speedFactor;
 
@@ -27,7 +26,7 @@ public class EnemyMovementManager : CharacterMovementManager
 
     public override void Update()
     {
-        HandleGroundedMovement();
+        HandleGroundedInput();
         HandleGroundCheck();
         HandleRotation();
 
@@ -37,7 +36,7 @@ public class EnemyMovementManager : CharacterMovementManager
         //    PivotTowardsTarget();
     }
 
-    protected override void HandleGroundedMovement()
+    protected override void HandleGroundedInput()
     {
         if (!enemy.canMove) return;
 

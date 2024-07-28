@@ -23,6 +23,7 @@ public class JumpState : State
         SetJumpDirectionVelocity();
 
         player.playerAnimatorManager.PlayJumpAction();
+        player.characterSfxManager.PlayJumpSound();
 
         jumpHeight = Mathf.Sqrt(player.jumpHeight * -2 * player.playerMovementManager.gravityForce) / 20;
     }
