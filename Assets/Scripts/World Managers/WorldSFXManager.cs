@@ -7,6 +7,8 @@ public class WorldSfxManager : MonoBehaviour
     [Header("Weapon Sound Clips")]
     public AudioClip weaponSlashSound;
     public AudioClip weaponHitFleshSound;
+    public AudioClip weaponDrawSound;
+    public AudioClip weaponHolsterSound;
 
     private void Awake()
     {

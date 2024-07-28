@@ -26,6 +26,16 @@ public class CharacterSfxManager : MonoBehaviour
         audioSource.PlayOneShot(WorldSfxManager.instance.weaponHitFleshSound);
     }
 
+    public void PlayWeaponDrawSound()
+    {
+        audioSource.PlayOneShot(WorldSfxManager.instance.weaponDrawSound);
+    }
+
+    public void PlayWeaponHolsterSound()
+    {
+        audioSource.PlayOneShot(WorldSfxManager.instance.weaponHolsterSound);
+    }
+
     public void PlayFootStepsSound()
     {
         footstepsHandler.CheckLayers();

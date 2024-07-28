@@ -12,7 +12,7 @@ public class Player : Character
     public float attackComboTreshold = 0.9f;
     public float weaponSwapSlowTime = 0.5f;
 
-    private bool walkEnabled = true;
+    public bool walkEnabled = true;
 
     [Header("Scarf properties")]
     [ColorUsage(true, true)] public Color unarmedBaseColor;

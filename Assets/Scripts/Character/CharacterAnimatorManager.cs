@@ -214,6 +214,7 @@ public class CharacterAnimatorManager : MonoBehaviour
                 break;
         }
 
+        character.characterSfxManager.PlayWeaponDrawSound();
         PlayCharacterActionAnimation(weaponToDrawAnimHash, true, true, false);
     }
 
@@ -238,6 +239,7 @@ public class CharacterAnimatorManager : MonoBehaviour
                 break;
         }
 
+        character.characterSfxManager.PlayWeaponHolsterSound();
         PlayCharacterActionAnimation(weaponToHolsterAnimHash, true, true, false);
     }
 

@@ -26,5 +26,5 @@ MonoBehaviour:
   jumpSound: {fileID: 8300000, guid: 0f4dd9cb929f5ac4f82b43558fde29c6, type: 3}
   landSound: {fileID: 8300000, guid: 942019cf9ecd5854ebeb343b12b7f779, type: 3}
   layertags:
-  - Ash
-  - Fire
+  - Ash grass
+  - FireGrass

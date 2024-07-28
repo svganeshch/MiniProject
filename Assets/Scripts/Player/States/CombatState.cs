@@ -26,6 +26,8 @@ public class CombatState : State
     public override void Enter()
     {
         base.Enter();
+
+        player.walkEnabled = false;
         ResetFlags();
     }
 

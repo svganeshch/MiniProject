@@ -37,11 +37,13 @@ public class FootStepsHandler : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 3))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 3, LayerMaskManager.Instance.groundLayerMask))
         {
             if (character.characterAnimatorManager.IsGrounded)
             {
-                Terrain t = hit.transform.GetComponent<Terrain>();
+                hit.transform.TryGetComponent<Terrain>(out Terrain t);
+                if (t == null) return;
+
                 onLayer = HelperFunctions.instance.GetLayerName(transform.position, t);
 
                 if (currentLayer != onLayer)

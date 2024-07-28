@@ -26,7 +26,7 @@ public class EnemyMovementManager : CharacterMovementManager
 
     public override void Update()
     {
-        HandleGroundedInput();
+        HandleGroundedMovement();
         HandleGroundCheck();
         HandleRotation();
 
@@ -36,7 +36,7 @@ public class EnemyMovementManager : CharacterMovementManager
         //    PivotTowardsTarget();
     }
 
-    protected override void HandleGroundedInput()
+    protected override void HandleGroundedMovement()
     {
         if (!enemy.canMove) return;
 

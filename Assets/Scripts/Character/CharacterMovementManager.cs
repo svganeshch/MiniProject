@@ -36,13 +36,12 @@ public abstract class CharacterMovementManager : MonoBehaviour
 
     public virtual void Update()
     {
-        HandleGroundedInput();
         HandleGroundedMovement();
         HandleGroundCheck();
         HandleRotation();
     }
 
-    protected virtual void HandleGroundedInput()
+    protected virtual void HandleGroundedMovement()
     {
         if (!character.canMove)
             return;
@@ -77,11 +76,6 @@ public abstract class CharacterMovementManager : MonoBehaviour
             speed = character.runningSpeed;
             speedStepInterval = footstepsHandler.runningStepInterval;
         }
-    }
-
-    protected virtual void HandleGroundedMovement()
-    {
-        if (!isGrounded) return;
 
         character.controller.Move(speed * Time.deltaTime * moveDirection);
 
