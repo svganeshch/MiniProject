@@ -1483,8 +1483,8 @@ GameObject:
   - component: {fileID: 8789768135856648636}
   - component: {fileID: 1458301178590454362}
   - component: {fileID: 2884770637332415152}
+  - component: {fileID: 1741479344818226711}
   - component: {fileID: 4254533764688477923}
-  - component: {fileID: 1140349109627743921}
   - component: {fileID: 6072003924132418315}
   - component: {fileID: 145487963936558013}
   - component: {fileID: 7910809512489150073}
@@ -1617,6 +1617,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25960807c366bc24592013c2716134a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1741479344818226711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3486678015272806073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f33698b5a6769e4a832e133c94fdb57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 1000
+  currentHealth: 0
+  onHealthManagerInitializedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  character: {fileID: 0}
+  isFacingAttacker: 0
 --- !u!114 &4254533764688477923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1629,25 +1648,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7234bd2526b473842a81399349a5801b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1140349109627743921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3486678015272806073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9914b4523c2152347b008457b4eefa20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Health: 1000
-  currentHealth: 0
-  onHealthManagerInitializedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  character: {fileID: 0}
-  isFacingAttacker: 0
+  footStepsClipsList: []
+  jumpSound: {fileID: 0}
+  landSound: {fileID: 0}
 --- !u!114 &6072003924132418315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4372,7 +4375,7 @@ PrefabInstance:
     - target: {fileID: 5275129206527595726, guid: 5703056ac0899af4a8d8fefeb53b61ae, type: 3}
       propertyPath: healthManager
       value: 
-      objectReference: {fileID: 1140349109627743921}
+      objectReference: {fileID: 1741479344818226711}
     - target: {fileID: 5864523860077028019, guid: 5703056ac0899af4a8d8fefeb53b61ae, type: 3}
       propertyPath: m_Name
       value: EnemyHUD

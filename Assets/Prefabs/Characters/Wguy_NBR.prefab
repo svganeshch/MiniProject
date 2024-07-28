@@ -1695,7 +1695,7 @@ PrefabInstance:
       addedObject: {fileID: 7317121194342308433}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       insertIndex: 2
-      addedObject: {fileID: 3075111692411497671}
+      addedObject: {fileID: 905935027652776838}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 878be35b7dbde0a4fba91646f5dd856e, type: 3}
       insertIndex: 3
       addedObject: {fileID: 2230107421193579711}
@@ -2110,6 +2110,7 @@ MonoBehaviour:
   attackCancelTreshold: 0.3
   attackComboTreshold: 0.55
   weaponSwapSlowTime: 0.5
+  walkEnabled: 1
   unarmedBaseColor: {r: 0.019607844, g: 0.5764706, b: 0.22352941, a: 0}
   unarmedColor: {r: 0.23394139, g: 1.4758214, b: 0.2044835, a: 0}
   katanaBaseColor: {r: 0.4627451, g: 0.4627451, b: 0.4627451, a: 0}
@@ -2278,7 +2279,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
---- !u!114 &3075111692411497671
+--- !u!114 &905935027652776838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2287,10 +2288,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7901887638409407397}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9914b4523c2152347b008457b4eefa20, type: 3}
+  m_Script: {fileID: 11500000, guid: 654de5f255556e745982ed8b301d7979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 400
+  Health: 200
   currentHealth: 0
   onHealthManagerInitializedEvent:
     m_PersistentCalls:

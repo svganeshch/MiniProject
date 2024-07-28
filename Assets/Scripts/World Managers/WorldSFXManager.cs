@@ -9,6 +9,7 @@ public class WorldSfxManager : MonoBehaviour
     public AudioClip weaponHitFleshSound;
     public AudioClip weaponDrawSound;
     public AudioClip weaponHolsterSound;
+    public AudioClip deathGameOverSound;
 
     private void Awake()
     {

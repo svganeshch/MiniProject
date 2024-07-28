@@ -48,3 +48,4 @@ MonoBehaviour:
   weaponHitFleshSound: {fileID: 8300000, guid: ce9c91d89424ead4ba9c91b4c82557a0, type: 3}
   weaponDrawSound: {fileID: 8300000, guid: 0b3065962dc44654a8464ae06babb5a4, type: 3}
   weaponHolsterSound: {fileID: 8300000, guid: a0508b2600f8e0747832085a1ddbffed, type: 3}
+  deathGameOverSound: {fileID: 8300000, guid: 885b564a794572840bf716296658136d, type: 3}

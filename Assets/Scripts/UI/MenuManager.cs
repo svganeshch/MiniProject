@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    public static MenuManager Instance;
+
     public GameObject mainMenuPanel;
     public GameObject pauseMenuPanel;
+    public GameObject deathPanel;
 
     public GameObject playerHUD;
 
@@ -15,6 +19,15 @@ public class MenuManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -54,6 +67,19 @@ public class MenuManager : MonoBehaviour
         playerHUD.SetActive(true);
 
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void OnRetryButton()
+    {
+        audioSource.PlayOneShot(buttonAudioClip);
+
+        SceneManager.LoadScene(0);
+    }
+
+    public void SetDeathMenu()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        deathPanel.SetActive(true);
     }
 
     public void OnQuitButton()

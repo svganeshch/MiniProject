@@ -176,7 +176,7 @@ PrefabInstance:
     - target: {fileID: 5275129206527595726, guid: 5703056ac0899af4a8d8fefeb53b61ae, type: 3}
       propertyPath: healthManager
       value: 
-      objectReference: {fileID: 209440113690251788}
+      objectReference: {fileID: 954737909865760841}
     - target: {fileID: 5864523860077028019, guid: 5703056ac0899af4a8d8fefeb53b61ae, type: 3}
       propertyPath: m_Name
       value: EnemyHUD
@@ -1434,10 +1434,10 @@ PrefabInstance:
       addedObject: {fileID: 3697947172605767490}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       insertIndex: 4
-      addedObject: {fileID: 1291413142701467440}
+      addedObject: {fileID: 954737909865760841}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       insertIndex: 5
-      addedObject: {fileID: 209440113690251788}
+      addedObject: {fileID: 1291413142701467440}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 51342566169fec64b812a8d33468ac61, type: 3}
       insertIndex: 6
       addedObject: {fileID: 832910225229526345}
@@ -1744,6 +1744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yVelocity: {x: 0, y: 0, z: 0}
   gravityForce: -40
+  inAirTime: 0
   manualUpdate: 0
 --- !u!114 &3697947172605767490
 MonoBehaviour:
@@ -1757,6 +1758,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25960807c366bc24592013c2716134a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &954737909865760841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4728202231037051337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f33698b5a6769e4a832e133c94fdb57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 100
+  currentHealth: 0
+  onHealthManagerInitializedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  character: {fileID: 0}
+  isFacingAttacker: 0
 --- !u!114 &1291413142701467440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1769,25 +1789,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7234bd2526b473842a81399349a5801b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &209440113690251788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4728202231037051337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9914b4523c2152347b008457b4eefa20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Health: 100
-  currentHealth: 0
-  onHealthManagerInitializedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  character: {fileID: 0}
-  isFacingAttacker: 0
+  footStepsClipsList: []
+  jumpSound: {fileID: 0}
+  landSound: {fileID: 0}
 --- !u!114 &832910225229526345
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -60,7 +60,5 @@ public class HealthManager : MonoBehaviour
         character.gameObject.GetComponent<Character>().enabled = false;
         character.gameObject.GetComponent<CharacterMovementManager>().enabled = false;
         character.characterAnimatorManager.PlayDeathCommonAnimation();
-
-        Destroy(character.gameObject, 10f);
     }
 }
