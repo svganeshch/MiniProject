@@ -37,26 +37,34 @@ public class FootStepsHandler : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 3, LayerMaskManager.Instance.groundLayerMask))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 3))
         {
             if (character.characterAnimatorManager.IsGrounded)
             {
-                hit.transform.TryGetComponent<Terrain>(out Terrain t);
-                if (t == null) return;
-
-                onLayer = HelperFunctions.instance.GetLayerName(transform.position, t);
-
-                if (currentLayer != onLayer)
+                if (hit.transform.TryGetComponent<Terrain>(out Terrain t))
                 {
-                    currentLayer = onLayer;
+                    onLayer = HelperFunctions.instance.GetLayerName(transform.position, t);
+                    Debug.Log("hit terrain : " + t.name + " Layer : " + onLayer);
 
-                    foreach (FootStepsData footStepsData in terrainFootStepsData)
+                    if (currentLayer != onLayer)
                     {
-                        if (footStepsData.layertags.Contains(currentLayer))
+                        currentLayer = onLayer;
+
+                        foreach (FootStepsData footStepsData in terrainFootStepsData)
                         {
-                            character.characterSfxManager.SetFootStepsSound(footStepsData);
+                            if (footStepsData.layertags.Contains(currentLayer))
+                            {
+                                character.characterSfxManager.SetFootStepsSound(footStepsData);
+                            }
                         }
                     }
+                }
+
+                if (hit.transform.TryGetComponent<SurfaceType>(out SurfaceType surfaceType))
+                {
+                    Debug.Log("hit surface : " + surfaceType.name);
+                    currentLayer = surfaceType.name;
+                    character.characterSfxManager.SetFootStepsSound(surfaceType.footStepsData);
                 }
             }
         }

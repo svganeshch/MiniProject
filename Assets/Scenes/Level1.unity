@@ -3204,7 +3204,8 @@ GameObject:
   - component: {fileID: 1059481172}
   - component: {fileID: 1059481171}
   - component: {fileID: 1059481170}
-  m_Layer: 4
+  - component: {fileID: 1059481174}
+  m_Layer: 0
   m_Name: Water_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3298,6 +3299,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 784202615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1059481174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059481169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09f0b6b7ae100548a96983e616639a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footStepsData: {fileID: 11400000, guid: 859216bd97c3d7f4c8553c379c42b27c, type: 2}
 --- !u!1001 &1119135509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5803,7 +5817,8 @@ GameObject:
   - component: {fileID: 1960337397}
   - component: {fileID: 1960337396}
   - component: {fileID: 1960337395}
-  m_Layer: 4
+  - component: {fileID: 1960337399}
+  m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5897,6 +5912,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 746414442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1960337399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960337394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09f0b6b7ae100548a96983e616639a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footStepsData: {fileID: 11400000, guid: 859216bd97c3d7f4c8553c379c42b27c, type: 2}
 --- !u!1 &1964233486
 GameObject:
   m_ObjectHideFlags: 0

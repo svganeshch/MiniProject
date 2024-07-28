@@ -2427,6 +2427,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4feaa4b0db9098a48ac0d1f04ecc2ec3, type: 2}
   - {fileID: 11400000, guid: 223160b141a99714c8fb08503c7b68b5, type: 2}
   - {fileID: 11400000, guid: 153b09cfc8227604dac2ddc5be990623, type: 2}
+  - {fileID: 11400000, guid: 9a0cffbb8484eb547a68a438ea4f209d, type: 2}
+  - {fileID: 11400000, guid: ee60f88ac4b0c46478ded0b578456cfd, type: 2}
   stepInterval: 2.5
   walkingStepInterval: 1
   runningStepInterval: 0.5
