@@ -2291,7 +2291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654de5f255556e745982ed8b301d7979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 200
+  Health: 1000
   currentHealth: 0
   onHealthManagerInitializedEvent:
     m_PersistentCalls:

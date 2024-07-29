@@ -1706,6 +1706,7 @@ MonoBehaviour:
   isInstantAttack: 0
   attackCoolDownTimer: 0
   recallTimer: 0
+  isBoss: 0
   detectionRadius: 15
   recallDistance: 5
   minimumFOV: -35
@@ -1916,7 +1917,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
