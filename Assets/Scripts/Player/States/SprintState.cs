@@ -2,6 +2,7 @@ public class SprintState : State
 {
     bool sprint;
     bool sprintJump;
+    bool liteAttack;
 
     public SprintState(Player _character, StateMachine _stateMachine) : base(_character, _stateMachine)
     {
@@ -14,6 +15,7 @@ public class SprintState : State
 
         sprint = true;
         sprintJump = false;
+        liteAttack = false;
     }
 
     public override void HandleInput()
@@ -28,6 +30,11 @@ public class SprintState : State
         if (player.jumpAction.WasPressedThisFrame())
         {
             sprintJump = true;
+        }
+
+        if (player.liteAttackWeaponAction.WasPressedThisFrame())
+        {
+            liteAttack = true;
         }
     }
 
@@ -50,6 +57,13 @@ public class SprintState : State
         if (sprintJump)
         {
             stateMachine.ChangeState(player.jumpState);
+        }
+
+        if (liteAttack)
+        {
+            liteAttack = false;
+
+            stateMachine.ChangeState(player.liteAttackState);
         }
     }
 
