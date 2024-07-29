@@ -37,7 +37,14 @@ public class SprintState : State
 
         if (!sprint)
         {
-            stateMachine.ChangeState(player.idleState);
+            if (player.playerAnimatorManager.CombatBool)
+            {
+                stateMachine.ChangeState(player.combatState);
+            }
+            else
+            {
+                stateMachine.ChangeState(player.idleState);
+            }
         }
 
         if (sprintJump)
