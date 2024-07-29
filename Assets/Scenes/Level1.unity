@@ -3687,7 +3687,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 97f9b4dac7d381e498abe8f87d64d873, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.069
+  m_Volume: 0.025
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -8343,6 +8343,22 @@ PrefabInstance:
     - target: {fileID: 1358270504541629882, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
       propertyPath: m_Name
       value: IceLandObjects
+      objectReference: {fileID: 0}
+    - target: {fileID: 3060122079394460091, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3060122079394460091, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3060122079394460091, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3060122079394460091, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3367276537924264846, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
       propertyPath: m_LocalPosition.x
