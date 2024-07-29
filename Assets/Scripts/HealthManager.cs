@@ -13,7 +13,7 @@ public class HealthManager : MonoBehaviour
     private Vector3 attackDirection;
     [HideInInspector] public bool isFacingAttacker;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         character = GetComponent<Character>();
     }

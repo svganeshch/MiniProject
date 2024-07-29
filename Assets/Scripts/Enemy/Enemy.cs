@@ -11,6 +11,7 @@ public class Enemy : Character
     [HideInInspector] public float recallTimer = 0;
 
     [Header("Enemy Controls")]
+    public bool isBoss = false;
     public float detectionRadius = 15;
     public float recallDistance = 10;
     public float minimumFOV = -35;

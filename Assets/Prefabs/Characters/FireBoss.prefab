@@ -1565,6 +1565,7 @@ MonoBehaviour:
   isInstantAttack: 0
   attackCoolDownTimer: 0
   recallTimer: 0
+  isBoss: 1
   detectionRadius: 15
   recallDistance: 5
   minimumFOV: -35

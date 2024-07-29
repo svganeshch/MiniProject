@@ -62,6 +62,14 @@ public class WeaponEquipment : MonoBehaviour
         }
     }
 
+    public void EnableWeapon(Weapon weapon)
+    {
+        if (weapon == null) return;
+
+        weapon.Enabled = true;
+        weapon.weaponObj.SetActive(true);
+    }
+
     public bool SetWeapon(int weaponSlot)
     {
         Weapon selectedWeapon = GetWeaponWithSlot(weaponSlot);

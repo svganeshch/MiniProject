@@ -6105,7 +6105,7 @@ PlayableDirector:
   - key: {fileID: 8211462354581573312, guid: 09f6a45c97b86f545a228cae7a5588ea, type: 2}
     value: {fileID: 2122847578}
   - key: {fileID: -7925216347196361868, guid: 09f6a45c97b86f545a228cae7a5588ea, type: 2}
-    value: {fileID: 6043709859912416406}
+    value: {fileID: 0}
   - key: {fileID: -5284834451843947710, guid: 09f6a45c97b86f545a228cae7a5588ea, type: 2}
     value: {fileID: 1579731202345847552}
   - key: {fileID: 368676545791056618, guid: 09f6a45c97b86f545a228cae7a5588ea, type: 2}
@@ -8340,22 +8340,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1343629330950096459, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1343629330950096459, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1343629330950096459, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1343629330950096459, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1358270504541629882, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
       propertyPath: m_Name
       value: IceLandObjects
@@ -8400,7 +8384,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7597264655118398198, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
+    - target: {fileID: 4688184869221763834, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -8409,11 +8393,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
---- !u!95 &6043709859912416406 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4488144159524536643, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
-  m_PrefabInstance: {fileID: 6043709859912416405}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6475314852566931318
 PrefabInstance:
   m_ObjectHideFlags: 0
