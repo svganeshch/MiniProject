@@ -139,11 +139,13 @@ public class WeaponEquipment : MonoBehaviour
 
     public void StartDamage()
     {
+        if (currentWeapon == null) return;
         currentWeapon.weaponAttackScript.StartDealDamage();
     }
 
     public void StopDamage()
     {
+        if (currentWeapon == null) return;
         currentWeapon.weaponAttackScript.StopDealDamage();
     }
 

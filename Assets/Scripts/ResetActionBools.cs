@@ -31,7 +31,7 @@ public class ResetActionBools : StateMachineBehaviour
             character.characterStateMachine.ChangeState(character.idleState);
         }
 
-        if (!weapon && !animatorManager)
+        if (weapon != null && animatorManager != null)
         {
             weapon.StopDamage();
             animatorManager.DisablePerformAction();

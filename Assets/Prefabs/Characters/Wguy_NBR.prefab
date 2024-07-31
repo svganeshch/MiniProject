@@ -2402,7 +2402,7 @@ MonoBehaviour:
     weaponHolsterPosition: {fileID: 6579692330386521341}
     slashSound: {fileID: 0}
     hitSound: {fileID: 0}
-    weaponSlot: 0
+    weaponSlot: 4
     weaponDamage: 15
     attackSpeedMultiplier: 1
     isDagger: 1
