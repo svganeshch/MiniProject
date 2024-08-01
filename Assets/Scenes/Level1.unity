@@ -7520,7 +7520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7683806388044312935, guid: 42cad917cab31fe499d44fd58aa2b3aa, type: 3}
       propertyPath: Health
-      value: 10
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 9200069212478669300, guid: 42cad917cab31fe499d44fd58aa2b3aa, type: 3}
       propertyPath: m_AnchorMax.y
@@ -9040,7 +9040,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4573642735905161512, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
       propertyPath: Health
-      value: 10
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4688184869221763834, guid: 4ebd8e8fca09f7747a26133da53eb6ea, type: 3}
       propertyPath: m_AnchorMax.y

@@ -36,6 +36,8 @@ public class HealthManager : MonoBehaviour
 
     public virtual void TakeDamage(float weaponDamage, Character attacker, Character receiver)
     {
+        if (character.isDead) return;
+
         attackDirection = (attacker.transform.position - receiver.transform.position).normalized;
         isFacingAttacker = Vector3.Dot(receiver.transform.forward, attackDirection) >= 0.8f;
 
