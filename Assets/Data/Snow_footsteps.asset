@@ -13,20 +13,21 @@ MonoBehaviour:
   m_Name: Snow_footsteps
   m_EditorClassIdentifier: 
   footstepSounds:
+  - {fileID: 8300000, guid: 3f06dcd119362ab4e92a4141798a689e, type: 3}
   - {fileID: 8300000, guid: 3c1967f6644f7ee4cb90dd9da24dd7da, type: 3}
-  - {fileID: 8300000, guid: bc42a9fc9dbd95442849a1d0a23dd41e, type: 3}
   - {fileID: 8300000, guid: 4484cb0b05ef2ae4c9fffdbbbd82c5cd, type: 3}
-  - {fileID: 8300000, guid: 120931fb726356346926852e66a98948, type: 3}
   - {fileID: 8300000, guid: 4f06448e52184d849bf63240240ddada, type: 3}
+  - {fileID: 8300000, guid: bd926afca0aa8ab48b8abfc15454bc3d, type: 3}
+  - {fileID: 8300000, guid: 9929892c95e88f24ea67533fdec16e2e, type: 3}
+  - {fileID: 8300000, guid: 120931fb726356346926852e66a98948, type: 3}
+  - {fileID: 8300000, guid: bc42a9fc9dbd95442849a1d0a23dd41e, type: 3}
   - {fileID: 8300000, guid: 3274935aa2ffdd543aea4fec89c08188, type: 3}
+  - {fileID: 8300000, guid: 4247388d57a4ce84096a96838717c4c8, type: 3}
   - {fileID: 8300000, guid: ee5109b2ca7428843a14b6a36dda384f, type: 3}
   - {fileID: 8300000, guid: 27a83612c761cb54c9eaa211ed9a74f0, type: 3}
-  - {fileID: 8300000, guid: 4247388d57a4ce84096a96838717c4c8, type: 3}
-  - {fileID: 8300000, guid: 9929892c95e88f24ea67533fdec16e2e, type: 3}
-  - {fileID: 8300000, guid: 3f06dcd119362ab4e92a4141798a689e, type: 3}
-  - {fileID: 8300000, guid: bd926afca0aa8ab48b8abfc15454bc3d, type: 3}
   jumpSound: {fileID: 8300000, guid: 5ff6d406771365f46aa326e7e91b10fe, type: 3}
   landSound: {fileID: 8300000, guid: 5039e24f35fce8b4ea426f1543234bba, type: 3}
   layertags:
   - Ice
   - Snow
+  - Ice_Cracked

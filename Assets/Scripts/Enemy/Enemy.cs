@@ -17,6 +17,7 @@ public class Enemy : Character
     public float minimumFOV = -35;
     public float maximumFOV = 35;
     public Player currentTarget;
+    public Sprite bossDefeatMessage;
 
     [Header("Enemy Movement Smoothing Controls")]
     public float slowDownThreshold = 5;
@@ -154,6 +155,7 @@ public class Enemy : Character
         }
     }
 
+#if DEVELOPMENT_BUILD
     public override void OnGUI()
     {
         base.OnGUI();
@@ -161,4 +163,5 @@ public class Enemy : Character
         GUI.color = Color.black;
         GUI.Label(new Rect(0, 20, 200, 20), this.GetType().Name + " : " + characterStateMachine.currentState.ToString());
     }
+#endif
 }

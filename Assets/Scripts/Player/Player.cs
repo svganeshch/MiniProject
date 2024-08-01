@@ -190,6 +190,7 @@ public class Player : Character
         }
     }
 
+#if DEVELOPMENT_BUILD
     public override void OnGUI()
     {
         base.OnGUI();
@@ -197,4 +198,5 @@ public class Player : Character
         GUI.color = Color.red;
         GUI.Label(new Rect(0, 0, 200, 20), this.GetType().Name + " : " + characterStateMachine.currentState.ToString());
     }
+#endif
 }

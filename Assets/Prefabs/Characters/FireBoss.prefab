@@ -1571,6 +1571,7 @@ MonoBehaviour:
   minimumFOV: -35
   maximumFOV: 35
   currentTarget: {fileID: 0}
+  bossDefeatMessage: {fileID: 21300000, guid: 4f54a4807aa7e8146818a1c4d1c1e156, type: 3}
   slowDownThreshold: 5
   minSpeedFactor: 0.4
   attackSpeed: 8

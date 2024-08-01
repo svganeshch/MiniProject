@@ -11108,7 +11108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRadius: 15
-  spawnCount: 5
+  spawnCount: 4
   spawnPrefabs:
   - {fileID: 4728202231037051337, guid: cabedd6853ecd064b8f5a6185e85f494, type: 3}
   - {fileID: 1284864161323918696, guid: 5f846869aae53b349954d81176d731b0, type: 3}
@@ -23272,7 +23272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRadius: 15
-  spawnCount: 5
+  spawnCount: 4
   spawnPrefabs:
   - {fileID: 4728202231037051337, guid: cabedd6853ecd064b8f5a6185e85f494, type: 3}
   - {fileID: 1284864161323918696, guid: 5f846869aae53b349954d81176d731b0, type: 3}

@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
     public GameObject mainMenuPanel;
     public GameObject pauseMenuPanel;
     public GameObject deathPanel;
+    public GameObject victoryPanel;
 
     public GameObject playerHUD;
 
@@ -80,6 +81,12 @@ public class MenuManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         deathPanel.SetActive(true);
+    }
+
+    public void SetVictoryMenu()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        victoryPanel.SetActive(true);
     }
 
     public void OnQuitButton()

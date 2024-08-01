@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HudManager : MonoBehaviour
 {
@@ -30,4 +31,6 @@ public class HudManager : MonoBehaviour
     public virtual void SetLockedOnTargetCrosshair(Character target) { }
 
     public virtual void SetWeaponWheel(int weaponSlot) { }
+
+    public virtual void SetInfoMessage(Sprite msg) { }
 }

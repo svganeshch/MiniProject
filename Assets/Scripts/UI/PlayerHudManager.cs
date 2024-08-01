@@ -9,6 +9,7 @@ public class PlayerHudManager : HudManager
     public Image katana;
     public Image greatSword;
     public Image daggers;
+    public Image infoMessage;
 
     public RectTransform crossHairObj;
     private Transform crosshairTarget;
@@ -20,10 +21,18 @@ public class PlayerHudManager : HudManager
     private int currentWeaponSlot;
 
     private float transitionDuration = 0.25f;
+    private float infoMsgAlphaDuration = 2.5f;
+    private float infoMsgDuration = 5f;
 
     private bool crosshairTargetSet = false;
 
     private Camera cam;
+
+    private void OnDisable()
+    {
+        infoMessage.sprite = null;
+        infoMessage.color = new Color(infoMessage.color.r, infoMessage.color.g, infoMessage.color.b, 0);
+    }
 
     protected override void Start()
     {
@@ -128,6 +137,46 @@ public class PlayerHudManager : HudManager
             case 2: return greatSword;
             case 3: return daggers;
             default: return hand;
+        }
+    }
+
+    public override void SetInfoMessage(Sprite msg)
+    {
+        base.SetInfoMessage(msg);
+
+        infoMessage.sprite = msg;
+
+        StartCoroutine(DisplayMessageAlpha());
+    }
+
+    private IEnumerator DisplayMessageAlpha()
+    {
+        float elapsedTime = 0f;
+        float startAlpha = infoMessage.color.a;
+
+        while (elapsedTime < infoMsgAlphaDuration)
+        {
+            infoMessage.color = new Color(infoMessage.color.r, infoMessage.color.g, infoMessage.color.b, Mathf.Lerp(startAlpha, 1, elapsedTime / infoMsgAlphaDuration));
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(infoMsgDuration);
+        StartCoroutine(FadeDisplaymessage());
+    }
+
+    private IEnumerator FadeDisplaymessage()
+    {
+        float elapsedTime = 0f;
+        float startAlpha = infoMessage.color.a;
+
+        while (elapsedTime < infoMsgAlphaDuration)
+        {
+            infoMessage.color = new Color(infoMessage.color.r, infoMessage.color.g, infoMessage.color.b, Mathf.Lerp(startAlpha, 0, elapsedTime / infoMsgAlphaDuration));
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
         }
     }
 }

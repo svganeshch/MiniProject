@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRadius: 25
-  spawnCount: 8
+  spawnCount: 4
   spawnPrefabs:
   - {fileID: 4728202231037051337, guid: cabedd6853ecd064b8f5a6185e85f494, type: 3}
   - {fileID: 1284864161323918696, guid: 5f846869aae53b349954d81176d731b0, type: 3}
@@ -156,6 +156,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3367276537924264846}
     m_Modifications:
+    - target: {fileID: 284254806491378829, guid: 28320e3b5f0e86e45bf7958302424336, type: 3}
+      propertyPath: attackProbability
+      value: 0.85
+      objectReference: {fileID: 0}
     - target: {fileID: 2042256087280290036, guid: 28320e3b5f0e86e45bf7958302424336, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
